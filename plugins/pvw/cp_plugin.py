@@ -1,27 +1,28 @@
 import sys
 import os
 
-# Find vistrails root dir as we need it for core vt modules
-#vt_home = 'os.environ['VISTRAILS_HOME']'
-vt_home = '/home/aashish/tools/climate_pipes/vistrails.git/vistrails'
-sys.path.append(vt_home)
-
 _currDir = ''
 _dataDir = ''
-_workingDir = ''
+_tmpDir = ''
+_vtHome = ''
 
 def init():
   global _currDir
   global _dataDir
-  global _workingDir
+  global _tmpDir
+  global _vtHome
 
   # This is not set as the script is embedded and hence in order to
   # avoid running into issues of undefined, setting it null for now
   sys.argv = []
 
+  # Find vistrails root dir as we need it for core vt modules
+  _vtHome = os.environ['VISTRAILS_HOME']
+  sys.path.append(_vtHome)
+
   _currDir = os.getcwd()
-  _dataDir = '/home/aashish/tools/climate_pipes/src.git/data'
-  _workingDir = '/home/aashish/tools/paraviewweb/working_dir'
+  _dataDir = os.environ['CP_DATA_DIR']
+  _tmpDir = os.environ['CP_TMP_DIR']
 
   # Check if the package has been enabled or not
   # This needs to get done only once
@@ -48,14 +49,14 @@ def process(message):
   m2.overwrite = True
 
   # For now dump output in the working directory
-  outputPath = _workingDir + '/c.txt'
+  outputPath = _tmpDir + '/c.txt'
 
   m2.outputPath = outputPath
   m2.file = m1.outputFile
   vt.tag_version("Merge1")
   vt.execute()
 
-  vt.save_vistrail(_workingDir + "/helloworld.vt")
+  vt.save_vistrail(_tmpDir + "/helloworld.vt")
 
   out_data['type'] = 'file'
 
