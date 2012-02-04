@@ -1,5 +1,6 @@
 import sys
 import os
+import base64
 
 _currDir = ''
 _dataDir = ''
@@ -30,6 +31,8 @@ def init():
   #qpm.late_enable_package('text')
 
 def process(message):
+
+  # Initialize always
   init()
 
   import core.api
@@ -71,3 +74,14 @@ def process(message):
 
 def execute(message):
   return process(message)
+
+
+# Return binary image data
+def testGetImageBinaryData():
+  filePath = _dataDir + '/files/test.png'
+  file = open(filePath, 'rb')
+  imageData = file.read()
+  imageData = base64.b64encode(imageData)
+  return imageData
+
+
