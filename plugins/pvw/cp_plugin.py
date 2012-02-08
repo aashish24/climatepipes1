@@ -73,6 +73,7 @@ def processWorkFlow(xmlFile):
   vt._controller.set_vistrail(vistrail, locator)
   vt.select_version(action.id)
   vt.execute()
+  vt.close_vistrail()
 
 
 def process(message):
