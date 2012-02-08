@@ -8,6 +8,7 @@ import base64
 _currDir = ''
 _dataDir = ''
 _tmpDir = ''
+_message = ''
 _vtHome = os.environ['VISTRAILS_HOME']
 sys.path.append(_vtHome)
 
@@ -21,102 +22,118 @@ from core.vistrail.vistrail import Vistrail
 from core.db.locator import FileLocator
 from core.packagemanager import get_package_manager
 from core.api import get_api
+from PyQt4 import QtGui, QtCore, QtNetwork
+from PyQt4.QtCore import pyqtSlot
 
-def init():
-  global _currDir
-  global _dataDir
-  global _tmpDir
-  global _vtHome
+class cpApp(QtGui.QApplication):
+    def __init__(self):
+        QtGui.QApplication.__init__(self, sys.argv)
 
-  # This is not set as the script is embedded and hence in order to
-  # avoid running into issues of undefined, setting it null for now
-  sys.argv = []
+    def init(self):
+      global _currDir
+      global _dataDir
+      global _tmpDir
+      global _vtHome
 
-  # Find vistrails root dir as we need it for core vt modules
-  _vtHome = os.environ['VISTRAILS_HOME']
-  sys.path.append(_vtHome)
+      # This is not set as the script is embedded and hence in order to
+      # avoid running into issues of undefined, setting it null for now
+      sys.argv = []
 
-  _currDir = os.getcwd()
-  _dataDir = os.environ['CP_DATA_DIR']
-  _tmpDir = os.environ['CP_TMP_DIR']
+      # Find vistrails root dir as we need it for core vt modules
+      _vtHome = os.environ['VISTRAILS_HOME']
+      sys.path.append(_vtHome)
 
-  # Check if the package has been enabled or not
-  # This needs to get done only once
-  #pm = get_package_manager()
-  #qpm.late_enable_package('text')
+      _currDir = os.getcwd()
+      _dataDir = os.environ['CP_DATA_DIR']
+      _tmpDir = os.environ['CP_TMP_DIR']
 
-  vt_app.init()
+      # Check if the package has been enabled or not
+      # This needs to get done only once
+      #pm = get_package_manager()
+      #qpm.late_enable_package('text')
+      import gui.theme
+      gui.theme.initializeCurrentTheme()
 
-def processWorkFlow(xmlFile):
-  print 'input is', xmlFile
+      vt_app.init()
 
-  # there should probably be a call in the api for this block of code
-  vistrail = Vistrail()
-  locator = FileLocator(xmlFile)
-  workflow = locator.load(Pipeline)
+    def processWorkFlow(self, xmlFile):
+      print 'input is', xmlFile
 
-  action_list = []
-  for module in workflow.module_list:
-    action_list.append(('add', module))
+      # there should probably be a call in the api for this block of code
+      vistrail = Vistrail()
+      locator = FileLocator(xmlFile)
+      workflow = locator.load(Pipeline)
 
-  for connection in workflow.connection_list:
-    action_list.append(('add', connection))
+      action_list = []
+      for module in workflow.module_list:
+        action_list.append(('add', module))
 
-  action = core.db.action.create_action(action_list)
-  vistrail.add_action(action, 0L)
-  vistrail.update_id_scope()
-  vistrail.addTag("Imported workflow", action.id)
+      for connection in workflow.connection_list:
+        action_list.append(('add', connection))
 
-  vt = get_api()
+      action = core.db.action.create_action(action_list)
+      vistrail.add_action(action, 0L)
+      vistrail.update_id_scope()
+      vistrail.addTag("Imported workflow", action.id)
 
-  # there should probably be a call in the api for this next line
-  vt._controller.set_vistrail(vistrail, locator)
-  vt.select_version(action.id)
-  vt.execute()
-  vt.close_vistrail()
+      vt = get_api()
 
+      # there should probably be a call in the api for this next line
+      vt._controller.set_vistrail(vistrail, locator)
+      vt.select_version(action.id)
+      vt.execute()
+      vt.close_vistrail()
 
-def process(message):
-  # Initialize always
-  init()
+    @pyqtSlot()
+    def process(self, message=None):
 
-  return processWorkFlow(message)
+      if(message == None):
+          message = _message
 
-  out_data = {}
-  vt = core.api.get_api()
-  text = vt.get_package("org.vistrails.text")
-  basic = vt.get_package("edu.utah.sci.vistrails.basic")
-  m1 = text.MergeFiles()
-  m1.addFile(_dataDir + "/files/a.txt")
-  m1.addFile(_dataDir + "/files/b.txt")
+      # Initialize always
+      self.init()
 
-  m2 = basic.FileSink()
-  m2.overwrite = True
+      return self.processWorkFlow(message)
 
-  # For now dump output in the working directory
-  outputPath = _tmpDir + '/c.txt'
+      out_data = {}
+      vt = core.api.get_api()
+      text = vt.get_package("org.vistrails.text")
+      basic = vt.get_package("edu.utah.sci.vistrails.basic")
+      m1 = text.MergeFiles()
+      m1.addFile(_dataDir + "/files/a.txt")
+      m1.addFile(_dataDir + "/files/b.txt")
 
-  m2.outputPath = outputPath
-  m2.file = m1.outputFile
-  vt.tag_version("Merge1")
-  vt.execute()
+      m2 = basic.FileSink()
+      m2.overwrite = True
 
-  vt.save_vistrail(_tmpDir + "/helloworld.vt")
+      # For now dump output in the working directory
+      outputPath = _tmpDir + '/c.txt'
 
-  out_data['type'] = 'file'
+      m2.outputPath = outputPath
+      m2.file = m1.outputFile
+      vt.tag_version("Merge1")
+      vt.execute()
 
-  f = open(outputPath)
+      vt.save_vistrail(_tmpDir + "/helloworld.vt")
 
-  try:
-    out_data['data'] = f.read()
-  finally:
-    f.close()
+      out_data['type'] = 'file'
 
-  return out_data
+      f = open(outputPath)
+
+      try:
+        out_data['data'] = f.read()
+      finally:
+        f.close()
+
+      return out_data
 
 # Execute and process incoming message
 def execute(message):
-  return process(message)
+  global _message
+  _message = message
+  app = cpApp();
+  QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
+  return app.exec_()
 
 # Return binary image data
 def testGetImageBinaryData():
