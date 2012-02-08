@@ -81,8 +81,13 @@ class cpApp(QtGui.QApplication):
       # there should probably be a call in the api for this next line
       vt._controller.set_vistrail(vistrail, locator)
       vt.select_version(action.id)
+
+      # Assuming that this call is synchronous
       vt.execute()
+
+      # Close and exit
       vt.close_vistrail()
+      QtGui.QApplication.quit()
 
     @pyqtSlot()
     def process(self, message=None):
