@@ -10,7 +10,9 @@ _dataDir = ''
 _tmpDir = ''
 _message = ''
 _vtHome = os.environ['VISTRAILS_HOME']
+_output = ''
 sys.path.append(_vtHome)
+sys.argv = []
 
 # Import vistrails modules
 import core.api
@@ -24,9 +26,11 @@ from core.packagemanager import get_package_manager
 from core.api import get_api
 from PyQt4 import QtGui, QtCore, QtNetwork
 from PyQt4.QtCore import pyqtSlot
+from core.modules.vistrails_module import Module
 
 class cpApp(QtGui.QApplication):
     def __init__(self):
+        sys.argv = []
         QtGui.QApplication.__init__(self, sys.argv)
 
     def init(self):
@@ -64,8 +68,13 @@ class cpApp(QtGui.QApplication):
       locator = FileLocator(xmlFile)
       workflow = locator.load(Pipeline)
 
-      action_list = []
+      action_list = []      
       for module in workflow.module_list:
+        print type(module)
+        if module.name == 'FileSink':
+            # Is real id is constant? 
+            param = module.get_function_by_real_id(29).params[0]
+            param.strValue = '/home/aashish/Desktop/bar.png'
         action_list.append(('add', module))
 
       for connection in workflow.connection_list:
@@ -84,6 +93,16 @@ class cpApp(QtGui.QApplication):
 
       # Assuming that this call is synchronous
       vt.execute()
+      
+      #if offscreeenModule is not None:        
+      #    print offscreeenModule.id   
+          #print offscreeenModule.module_descriptor        
+          #print help(offscreeenModule.module_descriptor)
+#          ofmodule = offscreeenModule.module_descriptor.module          
+          #print offscreeenModule.module_descriptor.module.get_output('image')
+          #output =  offscreeenModule.module_descriptor.get_output('image')
+          #imageFile = output.name
+          #print 'name is ', imageFile
 
       # Close and exit
       vt.close_vistrail()
@@ -138,7 +157,16 @@ def execute(message):
   _message = message
   app = cpApp();
   QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
-  return app.exec_()
+  app.exec_()
+  f = open('/home/aashish/Desktop/bar.png', 'rb')
+  try:
+    print 'hello dead'
+    imageData = file.read()
+    imageData = base64.b64encode(imageData)
+    return imageData
+  finally:
+    f.close()
+    return None
 
 # Return binary image data
 def testGetImageBinaryData():
