@@ -1,8 +1,9 @@
 
 # Import python modules
-import sys
-import os
 import base64
+import os
+import sys
+import uuid
 
 # Global variables
 _currDir = ''
@@ -10,7 +11,7 @@ _dataDir = ''
 _tmpDir = ''
 _message = ''
 _vtHome = os.environ['VISTRAILS_HOME']
-_output = ''
+_outputFilePath = ''
 sys.path.append(_vtHome)
 sys.argv = []
 
@@ -18,20 +19,19 @@ sys.argv = []
 import core.api
 import core.application as vt_app
 import core.db.action
-# DAK -- I use a separate .vistrails directory for my command-line work...# vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
+# DAK -- I use a separate .vistrails directory for my command-line work...
+# vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
 from core.vistrail.pipeline import Pipeline
 from core.vistrail.vistrail import Vistrail
 from core.db.locator import FileLocator
 from core.packagemanager import get_package_manager
 from core.api import get_api
-from PyQt4 import QtGui, QtCore, QtNetwork
-from PyQt4.QtCore import pyqtSlot
 from core.modules.vistrails_module import Module
 
-class cpApp(QtGui.QApplication):
+class cpApp(object):
     def __init__(self):
         sys.argv = []
-        QtGui.QApplication.__init__(self, sys.argv)
+        #QtGui.QApplication.__init__(self, sys.argv)
 
     def init(self):
       global _currDir
@@ -55,26 +55,25 @@ class cpApp(QtGui.QApplication):
       # This needs to get done only once
       #pm = get_package_manager()
       #qpm.late_enable_package('text')
-      import gui.theme
-      gui.theme.initializeCurrentTheme()
+      #gui.theme.initializeCurrentTheme()
 
       vt_app.init()
 
     def processWorkFlow(self, xmlFile):
-      print 'input is', xmlFile
-
+      global _outputFilePath
+      
       # there should probably be a call in the api for this block of code
       vistrail = Vistrail()
       locator = FileLocator(xmlFile)
       workflow = locator.load(Pipeline)
 
-      action_list = []      
+      action_list = []
       for module in workflow.module_list:
-        print type(module)
         if module.name == 'FileSink':
-            # Is real id is constant? 
+            # Is real id is constant?
             param = module.get_function_by_real_id(29).params[0]
-            param.strValue = '/home/aashish/Desktop/bar.png'
+            _outputFilePath = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.png'
+            param.strValue = _outputFilePath
         action_list.append(('add', module))
 
       for connection in workflow.connection_list:
@@ -93,12 +92,12 @@ class cpApp(QtGui.QApplication):
 
       # Assuming that this call is synchronous
       vt.execute()
-      
-      #if offscreeenModule is not None:        
-      #    print offscreeenModule.id   
-          #print offscreeenModule.module_descriptor        
+
+      #if offscreeenModule is not None:
+      #    print offscreeenModule.id
+          #print offscreeenModule.module_descriptor
           #print help(offscreeenModule.module_descriptor)
-#          ofmodule = offscreeenModule.module_descriptor.module          
+#          ofmodule = offscreeenModule.module_descriptor.module
           #print offscreeenModule.module_descriptor.module.get_output('image')
           #output =  offscreeenModule.module_descriptor.get_output('image')
           #imageFile = output.name
@@ -106,9 +105,9 @@ class cpApp(QtGui.QApplication):
 
       # Close and exit
       vt.close_vistrail()
-      QtGui.QApplication.quit()
+      #QtGui.QApplication.quit()
 
-    @pyqtSlot()
+    #@pyqtSlot()
     def process(self, message=None):
 
       if(message == None):
@@ -156,17 +155,17 @@ def execute(message):
   global _message
   _message = message
   app = cpApp();
-  QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
-  app.exec_()
-  f = open('/home/aashish/Desktop/bar.png', 'rb')
+  app.process();
+  #QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
+  #app.exec_()
+  file = open(_outputFilePath, 'rb')  
   try:
-    print 'hello dead'
     imageData = file.read()
-    imageData = base64.b64encode(imageData)
+    imageData = base64.b64encode(imageData)    
     return imageData
   finally:
-    f.close()
-    return None
+    file.close()
+    os.remove(_outputFilePath)
 
 # Return binary image data
 def testGetImageBinaryData():
