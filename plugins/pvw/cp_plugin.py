@@ -1,73 +1,176 @@
-import sys
-import os
 
+# Import python modules
+import base64
+import os
+import sys
+import uuid
+
+# Global variables
 _currDir = ''
 _dataDir = ''
 _tmpDir = ''
-_vtHome = ''
+_message = ''
+_vtHome = os.environ['VISTRAILS_HOME']
+_outputFilePath = ''
+sys.path.append(_vtHome)
+sys.argv = []
 
-def init():
-  global _currDir
-  global _dataDir
-  global _tmpDir
-  global _vtHome
+# Import vistrails modules
+import core.api
+import core.application as vt_app
+import core.db.action
+# DAK -- I use a separate .vistrails directory for my command-line work...
+# vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
+from core.vistrail.pipeline import Pipeline
+from core.vistrail.vistrail import Vistrail
+from core.db.locator import FileLocator
+from core.packagemanager import get_package_manager
+from core.api import get_api
+from core.modules.vistrails_module import Module
 
-  # This is not set as the script is embedded and hence in order to
-  # avoid running into issues of undefined, setting it null for now
-  sys.argv = []
+class cpApp(object):
+    def __init__(self):
+        sys.argv = []
+        #QtGui.QApplication.__init__(self, sys.argv)
 
-  # Find vistrails root dir as we need it for core vt modules
-  _vtHome = os.environ['VISTRAILS_HOME']
-  sys.path.append(_vtHome)
+    def init(self):
+      global _currDir
+      global _dataDir
+      global _tmpDir
+      global _vtHome
 
-  _currDir = os.getcwd()
-  _dataDir = os.environ['CP_DATA_DIR']
-  _tmpDir = os.environ['CP_TMP_DIR']
+      # This is not set as the script is embedded and hence in order to
+      # avoid running into issues of undefined, setting it null for now
+      sys.argv = []
 
-  # Check if the package has been enabled or not
-  # This needs to get done only once
-  #pm = get_package_manager()
-  #qpm.late_enable_package('text')
+      # Find vistrails root dir as we need it for core vt modules
+      _vtHome = os.environ['VISTRAILS_HOME']
+      sys.path.append(_vtHome)
 
-def process(message):
-  init()
+      _currDir = os.getcwd()
+      _dataDir = os.environ['CP_DATA_DIR']
+      _tmpDir = os.environ['CP_TMP_DIR']
 
-  import core.api
-  import core.application as vt_app
-  from core.packagemanager import get_package_manager
+      # Check if the package has been enabled or not
+      # This needs to get done only once
+      #pm = get_package_manager()
+      #qpm.late_enable_package('text')
+      #gui.theme.initializeCurrentTheme()
 
-  out_data = {}
-  vt_app.init()
-  vt = core.api.get_api()
-  text = vt.get_package("org.vistrails.text")
-  basic = vt.get_package("edu.utah.sci.vistrails.basic")
-  m1 = text.MergeFiles()
-  m1.addFile(_dataDir + "/files/a.txt")
-  m1.addFile(_dataDir + "/files/b.txt")
+      vt_app.init()
 
-  m2 = basic.FileSink()
-  m2.overwrite = True
+    def processWorkFlow(self, xmlFile):
+      global _outputFilePath
 
-  # For now dump output in the working directory
-  outputPath = _tmpDir + '/c.txt'
+      # there should probably be a call in the api for this block of code
+      vistrail = Vistrail()
+      locator = FileLocator(xmlFile)
+      workflow = locator.load(Pipeline)
 
-  m2.outputPath = outputPath
-  m2.file = m1.outputFile
-  vt.tag_version("Merge1")
-  vt.execute()
+      action_list = []
+      for module in workflow.module_list:
+        if module.name == 'FileSink':
+            # Is real id is constant?
+            param = module.get_function_by_real_id(29).params[0]
+            _outputFilePath = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.png'
+            param.strValue = _outputFilePath
+        action_list.append(('add', module))
 
-  vt.save_vistrail(_tmpDir + "/helloworld.vt")
+      for connection in workflow.connection_list:
+        action_list.append(('add', connection))
 
-  out_data['type'] = 'file'
+      action = core.db.action.create_action(action_list)
+      vistrail.add_action(action, 0L)
+      vistrail.update_id_scope()
+      vistrail.addTag("Imported workflow", action.id)
 
-  f = open(outputPath)
+      vt = get_api()
 
-  try:
-    out_data['data'] = f.read()
-  finally:
-    f.close()
+      # there should probably be a call in the api for this next line
+      vt._controller.set_vistrail(vistrail, locator)
+      vt.select_version(action.id)
 
-  return out_data
+      # Assuming that this call is synchronous
+      vt.execute()
 
+      #if offscreeenModule is not None:
+      #    print offscreeenModule.id
+          #print offscreeenModule.module_descriptor
+          #print help(offscreeenModule.module_descriptor)
+#          ofmodule = offscreeenModule.module_descriptor.module
+          #print offscreeenModule.module_descriptor.module.get_output('image')
+          #output =  offscreeenModule.module_descriptor.get_output('image')
+          #imageFile = output.name
+          #print 'name is ', imageFile
+
+      # Close and exit
+      vt.close_vistrail()
+      #QtGui.QApplication.quit()
+
+    #@pyqtSlot()
+    def process(self, message=None):
+
+      if(message == None):
+          message = _message
+
+      # Initialize always
+      self.init()
+
+      return self.processWorkFlow(message)
+
+      out_data = {}
+      vt = core.api.get_api()
+      text = vt.get_package("org.vistrails.text")
+      basic = vt.get_package("edu.utah.sci.vistrails.basic")
+      m1 = text.MergeFiles()
+      m1.addFile(_dataDir + "/files/a.txt")
+      m1.addFile(_dataDir + "/files/b.txt")
+
+      m2 = basic.FileSink()
+      m2.overwrite = True
+
+      # For now dump output in the working directory
+      outputPath = _tmpDir + '/c.txt'
+
+      m2.outputPath = outputPath
+      m2.file = m1.outputFile
+      vt.tag_version("Merge1")
+      vt.execute()
+
+      vt.save_vistrail(_tmpDir + "/helloworld.vt")
+
+      out_data['type'] = 'file'
+
+      f = open(outputPath)
+
+      try:
+        out_data['data'] = f.read()
+      finally:
+        f.close()
+
+      return out_data
+
+# Execute and process incoming message
 def execute(message):
-  return process(message)
+  global _message
+  _message = message
+  app = cpApp();
+  app.process();
+  #QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
+  #app.exec_()
+  file = open(_outputFilePath, 'rb')
+  try:
+    imageData = file.read()
+    imageData = base64.b64encode(imageData)
+    return imageData
+  finally:
+    file.close()
+    os.remove(_outputFilePath)
+
+# Return binary image data
+def testGetImageBinaryData():
+  filePath = _dataDir + '/files/test.png'
+  file = open(filePath, 'rb')
+  imageData = file.read()
+  imageData = base64.b64encode(imageData)
+  return imageData
