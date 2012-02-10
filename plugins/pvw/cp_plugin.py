@@ -61,7 +61,7 @@ class cpApp(object):
 
     def processWorkFlow(self, xmlFile):
       global _outputFilePath
-      
+
       # there should probably be a call in the api for this block of code
       vistrail = Vistrail()
       locator = FileLocator(xmlFile)
@@ -158,10 +158,10 @@ def execute(message):
   app.process();
   #QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
   #app.exec_()
-  file = open(_outputFilePath, 'rb')  
+  file = open(_outputFilePath, 'rb')
   try:
     imageData = file.read()
-    imageData = base64.b64encode(imageData)    
+    imageData = base64.b64encode(imageData)
     return imageData
   finally:
     file.close()
