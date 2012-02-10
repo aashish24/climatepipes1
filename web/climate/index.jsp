@@ -48,7 +48,7 @@
 
 
             // Create a paraview proxy
-            var paraview = new Paraview(serverUrl);
+            paraview = new Paraview(serverUrl);
             paraview.createSession("Tutorial-Session-1", "Sample code given for tutorial purpose", "default");
             plugin = paraview.getPlugin("cp_plugin");
 
@@ -56,11 +56,12 @@
             //var url = plugin.getDataURL();
             //console.log('myurl is ' + url);
 
-            var result = plugin.execute('hello world');
-            document.getElementById("page").innerHTML = result.data;
+            //var result = plugin.execute('hello world');
+            //document.getElementById("page").innerHTML = result.data;
 
             // Draw image now
-            show(plugin.testGetImageBinaryData());
+           //show(plugin.testGetImageBinaryData());
+            show(plugin.execute('/home/aashish/Desktop/test2.xml'))
     </script>
     </body>
 </html>
