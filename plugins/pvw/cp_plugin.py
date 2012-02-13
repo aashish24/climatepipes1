@@ -98,15 +98,15 @@ class cpApp(object):
       vt.close_vistrail()
 
     #@pyqtSlot()
-    def process(self, message=None):
+    def process(self, filePath=None):
 
-      if(message == None):
-          message = _message
+      if(filePath == None):
+          return
 
       # Initialize always
       self.init()
 
-      return self.processWorkFlow(message)
+      return self.processWorkFlow(filePath)
 
       out_data = {}
       vt = core.api.get_api()
@@ -144,10 +144,15 @@ class cpApp(object):
 def execute(message):
   global _message
   _message = message
+
+  # Assuming that message is a XML workflow
+  path = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.xml'
+  file = open(path, 'rw')
+  file.write(message);
+  file.close();
   app = cpApp();
-  app.process();
-  #QtCore.QTimer.singleShot(2000, app, QtCore.SLOT("process()"));
-  #app.exec_()
+  app.process(path);
+
   file = open(_outputFilePath, 'rb')
   try:
     imageData = file.read()
