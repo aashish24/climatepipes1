@@ -54,7 +54,7 @@ class cpApp(object):
       # Check if the package has been enabled or not
       # This needs to get done only once
       #pm = get_package_manager()
-      #qpm.late_enable_package('text')
+      #qpm.late_enable_package('edu.utah.sci.vistrails.vtk')
       #gui.theme.initializeCurrentTheme()
 
       vt_app.init()
@@ -70,10 +70,11 @@ class cpApp(object):
       action_list = []
       for module in workflow.module_list:
         if module.name == 'FileSink':
-            # Is real id is constant?
-            param = module.get_function_by_real_id(29).params[0]
-            _outputFilePath = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.png'
-            param.strValue = _outputFilePath
+           _outputFilePath = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.png'
+           for i in xrange(module.getNumFunctions()):
+             if 'outputPath' == module.functions[i].name:
+               module.functions[i].params[0].strValue = _outputFilePath;
+
         action_list.append(('add', module))
 
       for connection in workflow.connection_list:
@@ -93,19 +94,8 @@ class cpApp(object):
       # Assuming that this call is synchronous
       vt.execute()
 
-      #if offscreeenModule is not None:
-      #    print offscreeenModule.id
-          #print offscreeenModule.module_descriptor
-          #print help(offscreeenModule.module_descriptor)
-#          ofmodule = offscreeenModule.module_descriptor.module
-          #print offscreeenModule.module_descriptor.module.get_output('image')
-          #output =  offscreeenModule.module_descriptor.get_output('image')
-          #imageFile = output.name
-          #print 'name is ', imageFile
-
       # Close and exit
       vt.close_vistrail()
-      #QtGui.QApplication.quit()
 
     #@pyqtSlot()
     def process(self, message=None):
