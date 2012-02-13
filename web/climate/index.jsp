@@ -117,8 +117,7 @@
           \</workflow\>';
 
          // Draw result now
-         image = plugin.execute(wf);
-         show(image);
+         plugin.Asyncexecute(function(image){show(image)}, wf);
     </script>
     </body>
 </html>

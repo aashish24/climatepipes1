@@ -1,21 +1,23 @@
 
-# Import python modules
+# Import python module
 import base64
 import os
 import sys
 import uuid
 
-# Global variables
+# Global variable
 _currDir = ''
 _dataDir = ''
 _tmpDir = ''
-_message = ''
-_vtHome = os.environ['VISTRAILS_HOME']
 _outputFilePath = ''
+
+_vtHome = os.environ['VISTRAILS_HOME']
+_tmpDir = os.environ['CP_TMP_DIR']
+
 sys.path.append(_vtHome)
 sys.argv = []
 
-# Import vistrails modules
+# Import vistrails module
 import core.api
 import core.application as vt_app
 import core.db.action
@@ -32,24 +34,22 @@ class cpApp(object):
     def __init__(self):
         sys.argv = []
         #QtGui.QApplication.__init__(self, sys.argv)
-
+    # -------------------------------------------------------------------------
     def init(self):
       global _currDir
       global _dataDir
-      global _tmpDir
       global _vtHome
 
       # This is not set as the script is embedded and hence in order to
       # avoid running into issues of undefined, setting it null for now
       sys.argv = []
 
-      # Find vistrails root dir as we need it for core vt modules
+      # Find vistrails root dir as we need it for core vt module
       _vtHome = os.environ['VISTRAILS_HOME']
       sys.path.append(_vtHome)
 
       _currDir = os.getcwd()
       _dataDir = os.environ['CP_DATA_DIR']
-      _tmpDir = os.environ['CP_TMP_DIR']
 
       # Check if the package has been enabled or not
       # This needs to get done only once
@@ -59,6 +59,7 @@ class cpApp(object):
 
       vt_app.init()
 
+    # -------------------------------------------------------------------------
     def processWorkFlow(self, xmlFile):
       global _outputFilePath
 
@@ -91,19 +92,20 @@ class cpApp(object):
       vt._controller.set_vistrail(vistrail, locator)
       vt.select_version(action.id)
 
-      # Assuming that this call is synchronous
+      # Assuming that this call is synchronou
       vt.execute()
 
       # Close and exit
       vt.close_vistrail()
 
     #@pyqtSlot()
+    # -------------------------------------------------------------------------
     def process(self, filePath=None):
 
       if(filePath == None):
           return
 
-      # Initialize always
+      # Initialize alway
       self.init()
 
       return self.processWorkFlow(filePath)
@@ -141,17 +143,19 @@ class cpApp(object):
       return out_data
 
 # Execute and process incoming message
+# -----------------------------------------------------------------------------
 def execute(message):
-  global _message
-  _message = message
-
   # Assuming that message is a XML workflow
   path = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.xml'
-  file = open(path, 'rw')
+  file = open(path, 'w')
   file.write(message);
   file.close();
+
   app = cpApp();
   app.process(path);
+
+  # No longer need the workflow file
+  os.remove(path)
 
   file = open(_outputFilePath, 'rb')
   try:
@@ -163,6 +167,7 @@ def execute(message):
     os.remove(_outputFilePath)
 
 # Return binary image data
+# -----------------------------------------------------------------------------
 def testGetImageBinaryData():
   filePath = _dataDir + '/files/test.png'
   file = open(filePath, 'rb')
