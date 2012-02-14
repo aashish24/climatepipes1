@@ -49,13 +49,7 @@ class cpApp(object):
       sys.path.append(_vtHome)
 
       _currDir = os.getcwd()
-      _dataDir = os.environ['CP_DATA_DIR']
-
-      # Check if the package has been enabled or not
-      # This needs to get done only once
-      #pm = get_package_manager()
-      #qpm.late_enable_package('edu.utah.sci.vistrails.vtk')
-      #gui.theme.initializeCurrentTheme()
+      _dataDir = os.environ['CP_DATA_DIR']      
 
       vt_app.init()
 
@@ -101,61 +95,27 @@ class cpApp(object):
     #@pyqtSlot()
     # -------------------------------------------------------------------------
     def process(self, filePath=None):
-
       if(filePath == None):
           return
-
       # Initialize alway
       self.init()
 
-      return self.processWorkFlow(filePath)
-
-      out_data = {}
-      vt = core.api.get_api()
-      text = vt.get_package("org.vistrails.text")
-      basic = vt.get_package("edu.utah.sci.vistrails.basic")
-      m1 = text.MergeFiles()
-      m1.addFile(_dataDir + "/files/a.txt")
-      m1.addFile(_dataDir + "/files/b.txt")
-
-      m2 = basic.FileSink()
-      m2.overwrite = True
-
-      # For now dump output in the working directory
-      outputPath = _tmpDir + '/c.txt'
-
-      m2.outputPath = outputPath
-      m2.file = m1.outputFile
-      vt.tag_version("Merge1")
-      vt.execute()
-
-      vt.save_vistrail(_tmpDir + "/helloworld.vt")
-
-      out_data['type'] = 'file'
-
-      f = open(outputPath)
-
-      try:
-        out_data['data'] = f.read()
-      finally:
-        f.close()
-
-      return out_data
+      return self.processWorkFlow(filePath)    
 
 # Execute and process incoming message
 # -----------------------------------------------------------------------------
 def execute(message):
   # Assuming that message is a XML workflow
-  path = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.xml'
-  file = open(path, 'w')
+  xmlFilePath = _tmpDir + '/cp_tmp_' + uuid.uuid4().hex + '.xml'
+  file = open(xmlFilePath, 'w')
   file.write(message);
   file.close();
 
   app = cpApp();
-  app.process(path);
+  app.process(xmlFilePath);
 
   # No longer need the workflow file
-  os.remove(path)
+  os.remove(xmlFilePath)
 
   file = open(_outputFilePath, 'rb')
   try:
@@ -164,6 +124,7 @@ def execute(message):
     return imageData
   finally:
     file.close()
+    os.remove(xmlFilePath)
     os.remove(_outputFilePath)
 
 # Return binary image data
