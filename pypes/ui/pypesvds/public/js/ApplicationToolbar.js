@@ -53,6 +53,7 @@ var handleOk = function() {this.hide();};
 
 /* AJAX FILE UPLOAD CODE */
 /* create a panel to use */
+/*
 var UploadPanel = new YAHOO.widget.Panel("UploadWindow", {
     zIndex: 25,
     width:"300px",
@@ -65,9 +66,11 @@ var UploadPanel = new YAHOO.widget.Panel("UploadWindow", {
 
 var onUploadCancel = function() {UploadPanel.hide();};
 
-/* this will be called when the upload/submit button is clicked */
+
+// this will be called when the upload/submit button is clicked
+
 var onUploadButtonClick = function(e){
-    /* the second argument tells Connection Manager this is a file upload form */
+    // the second argument tells Connection Manager this is a file upload form
     YAHOO.util.Connect.setForm('docsubmit', true);
 
     var uploadHandler = {
@@ -83,31 +86,31 @@ var onUploadButtonClick = function(e){
     UploadPanel.hide();
 };
 
-/* function that dispays the upload dialog */
+// function that dispays the upload dialog
 var UploadDlg = function() {
     UploadPanel.setHeader("Document Submitter"); 
     UploadPanel.setBody( "<p>Select a document for submission and then click the Submit button.</p><br><form method=\"post\" action=\"/docs\" name=\"submit\" enctype=\"multipart/form-data\" id=\"docsubmit\"><input type=\"file\" name=\"document\"><br><br><div style=\"float:right;\"><input type=\"button\" id=\"uploadButton\" name=\"upload\" value=\"Upload\"><button id=\"uCancelButton\" type=\"button\">x</button></div><br></form><br>");
     UploadPanel.setFooter("To cancel this action, select the Cancel button.");
     UploadPanel.render(document.body);
-    /* z-index hack */
+    // z-index hack
     UploadPanel.cfg.setProperty("zIndex", 25);
     UploadPanel.cfg.setProperty("width", "400px");
     UploadPanel.cfg.setProperty("fixedcenter", true);
 
-    /* Setup dialog buttons */
+    // Setup dialog buttons
     var oSubmitButton = new YAHOO.widget.Button("uploadButton", {label: "Submit", padding: "5px"});
     var oCancelButton = new YAHOO.widget.Button("uCancelButton", {label: "Cancel", padding: "5px"});
 
-    /* show the panel */
+    // show the panel
     UploadPanel.show();
 
-    /* make sure to register the listener */
+    // make sure to register the listener
     YAHOO.util.Event.addListener('uploadButton', 'click', onUploadButtonClick);
     YAHOO.util.Event.addListener('uCancelButton', 'click', onUploadCancel);
 };
-/* END AJAX UPLOAD CODE */
+// END AJAX UPLOAD CODE
 
-/* trigger event handler */
+// trigger event handler
 var onTrigger = function(e){
     var triggerHandler = {
         success: function(oResponse) {
@@ -128,6 +131,7 @@ var onTrigger = function(e){
     YAHOO.util.Connect.asyncRequest('GET', '/data/ui/trigger', triggerHandler);
 };
 
+
 var oButtonRun = new YAHOO.widget.Button({ 
     id: "button_run",  
     type: "split", 
@@ -145,6 +149,7 @@ var oButtonSave = new YAHOO.widget.Button({
     container: "toolbar"  
 }); 
 YAHOO.util.Event.addListener("button_save", 'click', function() { jsBox.register(); });
+*/
 
 var oButtonExport = new YAHOO.widget.Button({ 
     id: "button_export",  
@@ -152,6 +157,7 @@ var oButtonExport = new YAHOO.widget.Button({
     label: "Export", 
     container: "toolbar"  
 });
+
 YAHOO.util.Event.addListener("button_export", 'click', function() {
         myPanel = new YAHOO.widget.Panel("exportWindow", { 
         width:"600px",
@@ -160,15 +166,61 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
         constraintoviewport: true,  
         close:true,  
         draggable:true} ); 
-    
-    var jsonConfig = YAHOO.lang.JSON.stringify(jsBox.jsBoxLayer.getWiring())//.replace(/},{/g, "},\n{");        
+
+    //.replace(/},{/g, "},\n{");
+    var jsonObject = jsBox.jsBoxLayer.getWiring();
+    var jsonConfig = YAHOO.lang.JSON.stringify(jsonObject);
+    var workflowxml = json2workflowxml(jsonObject);
     myPanel.setHeader("Export Project Configuration"); 
-    myPanel.setBody( "<div style='overflow:auto;'>" + jsonConfig + "</div>" );
-    myPanel.setFooter("Copy and paste the output above or send this configuration via <a href=\"mailto:?body=" + escape(jsonConfig) + "&subject=Pypes Configuration File\">email</a>");
+    myPanel.setBody( "<div style='overflow:auto;'><pre>" + workflowxml.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</pre></div>" );
+    myPanel.setFooter( "<div style='overflow:auto;'>" + jsonConfig  + "</div>" );
     myPanel.render(document.body);
     myPanel.show();
 });
-        
+
+
+function json2workflowxml(json) {
+    var result = "<workflow>\n";
+
+    var j = 0;
+    for(var i = 0; i < json.wires.length; i+=1) {
+      var src = json.wires[i].src;
+      var tgt = json.wires[i].tgt;
+      result+="  <connection id=\""+i+"\">\n";
+      result+="    <port id=\""+j+"\" moduleId=\""+src.moduleId
+	+"\" moduleName=\""+json.containers[src.moduleId].name
+	+"\" name=\""+src.termid+"\" type=\"source\" />\n";
+      result+="    <port id=\""+(j+1)+"\" moduleId=\""+tgt.moduleId
+	+"\" moduleName=\""+json.containers[tgt.moduleId].name
+	+"\" name=\""+tgt.termid+"\" type=\"destination\" />\n";
+      result+="  </connection>\n";
+      j+=2;
+    }
+
+    var fid = 0;
+    for(var i = 0; i < json.containers.length; i+=1) {
+      var con = json.containers[i];
+      var pos = con.position;
+      
+      result+="  <module id=\""+i+"\" name=\""+con.name
+	+"\" package=\""+con.package+"\">\n";
+      result+="    <location id="+i+" x=\""+pos[0]+"\" y=\""+pos[1]+"\" />\n";
+      if(con.hasOwnProperty('params') && typeof con.params != "undefined") {
+	for(var key in con.params) {
+	  result+="    <function id=\""+fid+"\" name=\""+key+"\" pos=\""+fid+"\">\n";
+	  result+="      <parameter id=\""+fid+"\" val=\""+con.params[key]+"\">\n";
+	  result+="    </function>\n";
+	  fid+=1;
+	}
+      }
+	    
+      result+="  </module>\n";
+    }
+    result+="</workflow>\n";
+    return result;
+}
+
+/*
 var aboutDialog = new function AboutDialog() {
     this.aboutPanel = new YAHOO.widget.SimpleDialog("aboutDialog", {
         width: "320px",
@@ -202,3 +254,4 @@ var oButtonSignout = new YAHOO.widget.Button({
     container: "toolbar"  
 }); 
 YAHOO.util.Event.addListener("button_signout", 'click', function() {window.location.href="/signout";});
+*/

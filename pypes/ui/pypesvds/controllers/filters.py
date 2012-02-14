@@ -18,7 +18,7 @@ class FiltersController(BaseController):
         """GET /filters: All items in the collection"""
         # url('filters')
         type = request.params.getall('node')[0]
-        if type == 'Adapters':
+        if type == 'Sources':
             s = app_globals.dfg.InputAdapters
         elif type == 'Transformers':
             s = app_globals.dfg.Transformers
@@ -28,7 +28,7 @@ class FiltersController(BaseController):
             s = app_globals.dfg.Operators
         elif type == 'Extractors':
             s = app_globals.dfg.Extractors
-        elif type == 'Publishers':
+        elif type == 'Visualizations':
             s = app_globals.dfg.OutputAdapters
         else:
             s = '[]'
@@ -41,7 +41,8 @@ class FiltersController(BaseController):
         key = app_globals.dfg.newInstance(klass_name)
         ins = app_globals.dfg.Inputs(key)
         outs = app_globals.dfg.Outputs(key)
-        return json.dumps([key, ins, outs])
+        pkg = app_globals.dfg.Package(key)
+        return json.dumps([key, ins, outs, pkg])
 
     def new(self, format='html'):
         """GET /filters/new: Form to create a new item"""

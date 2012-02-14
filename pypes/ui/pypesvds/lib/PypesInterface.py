@@ -138,6 +138,9 @@ class DataFlowGraph(object):
         #return self._registered_instances[key].Outputs
         return self._registered_instances[key].get_out_ports()
 
+    def Package(self, key):
+        return self._registered_instances[key].get_package()
+
     def Instance(self, key):
         return self._registered_instances[key]
 
@@ -254,7 +257,7 @@ class DataFlowGraph(object):
         valid_input = False
         valid_inputs = []
         for container in self.Config['containers']:
-            if container['type'] == 'Adapters':
+            if container['type'] == 'Sources':
                 valid_input = True
                 valid_inputs.append(container['cid'])
         return (valid_input, valid_inputs)

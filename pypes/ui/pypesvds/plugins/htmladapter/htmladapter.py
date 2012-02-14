@@ -12,9 +12,15 @@ class HTML(Component):
     def __init__(self):
         # initialize parent class
         Component.__init__(self)
+
+        self.set_package("edu.utah.sci.vistrails.http")
+
+        self.remove_input("in");
+        self.remove_output("out");
+        self.add_output("file")
         
         # if true, the raw html will be placed in the html field
-        self.set_parameter('keep_html', 'False', ['True', 'False'])
+        self.set_parameter('url', '')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

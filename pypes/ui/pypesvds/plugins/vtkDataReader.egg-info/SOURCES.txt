@@ -1,0 +1,8 @@
+setup.py
+vtkdatareader/vtkdatareader.py
+vtkdatareader/__init__.py
+vtkDataReader.egg-info/PKG-INFO
+vtkDataReader.egg-info/SOURCES.txt
+vtkDataReader.egg-info/dependency_links.txt
+vtkDataReader.egg-info/entry_points.txt
+vtkDataReader.egg-info/top_level.txt

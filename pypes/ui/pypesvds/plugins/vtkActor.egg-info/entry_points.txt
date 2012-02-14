@@ -1,0 +1,3 @@
+[pypesvds.plugins]
+vtkactor = vtkactor.vtkactor:vtkActor
+

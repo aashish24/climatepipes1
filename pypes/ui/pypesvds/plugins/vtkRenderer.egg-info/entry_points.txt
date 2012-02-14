@@ -1,0 +1,3 @@
+[pypesvds.plugins]
+vtkrenderer = vtkrenderer.vtkrenderer:vtkRenderer
+

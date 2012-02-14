@@ -27,6 +27,7 @@ class Component(object):
         self._inputs  = {'in' : [None, 'Default input port'] }
         self._outputs = {'out': [None, 'Default output port']}
         self._parameters = {}
+        self._package = ""
 
     def run(self):
         """Starts this component as a stackless tasklet
@@ -296,6 +297,12 @@ class Component(object):
         """Returns a list of current output ports for this component.
         """
         return sorted(self._outputs.keys())
+
+    def get_package(self):
+        return self._package
+
+    def set_package(self, pkg):
+        self._package = pkg;
 
     def get_parameters(self):
         """Returns a dict of parameters used by this component.

@@ -126,7 +126,7 @@ YAHOO.pypes.ui.tree.AppTree = function () {
        var root = tree.getRoot();
            
        /* add child nodes for tree */
-       var aStates = ["Adapters","Transformers","Filters","Operators","Extractors","Publishers"];
+       var aStates = ["Sources","Transformers","Visualizations"];
            
        for (var i=0, j=aStates.length; i<j; i++) {
             var tempNode = new YAHOO.widget.TextNode(aStates[i], root, false);

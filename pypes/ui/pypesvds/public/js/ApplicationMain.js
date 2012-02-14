@@ -128,6 +128,7 @@ YAHOO.extend(jsBox, WireIt.Container, {
         obj.filterName = this.config.filterName;
         obj.name = this.textarea.value;
         obj.type = this.config.type;
+	obj.package = this.config.package;
         obj.cid = this.config.cid;
         obj.inputs = this.config.inputs;
         obj.outputs = this.config.outputs;
@@ -374,7 +375,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
              * core to be able to send data into the graph.
              * Here we're just hiding them in the javascript.
              */
-            if (type === "Adapters") {
+            if (type === "Sources") {
                 var ins = [];
             } else {
                 var ins = resultArray[1];
@@ -395,6 +396,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
             jsBox.jsBoxLayer.addContainer({
 				"filterName": filterName, 
 				"type":type, 
+				"package":resultArray[3],
 				"cid":compId, 
 				xtype: "jsBox", 
 				"inputs":ins, 

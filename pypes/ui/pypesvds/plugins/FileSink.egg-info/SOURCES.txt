@@ -1,0 +1,8 @@
+setup.py
+filesink/filesink.py
+filesink/__init__.py
+FileSink.egg-info/PKG-INFO
+FileSink.egg-info/SOURCES.txt
+FileSink.egg-info/dependency_links.txt
+FileSink.egg-info/entry_points.txt
+FileSink.egg-info/top_level.txt
