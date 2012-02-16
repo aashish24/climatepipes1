@@ -5,21 +5,21 @@ from pypes.component import Component
 
 log = logging.getLogger(__name__)
 
-class vtkDataReader(Component):
+class vtkUnstructuredGridReader(Component):
     # defines the type of component we're creating.
     __metatype__ = 'TRANSFORMER'
 
     def __init__(self):
         # initialize parent class
         Component.__init__(self)
-        
-        # Optionally add/remove component ports
-        # self.remove_output('out')
-        # self.add_input('in2', 'A description of what this port is used for')
 
-        # Setup any user parameters required by this component 
-        # 2nd arg is the default value, 3rd arg is optional list of choices
-        #self.set_parameter('MyParam', 'opt1', ['opt1', 'opt2', 'opt3'])
+        # Optionally add/remove component ports
+        self.remove_input('in')
+        self.remove_output('out')
+        self.add_input('SetFile', '(edu.utah.sci.vistrails.basic:File)')
+        self.add_output('GetOutputPort0', '(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)')
+
+        self.set_package('edu.utah.sci.vistrails.vtk')                
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

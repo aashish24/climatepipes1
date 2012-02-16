@@ -15,9 +15,10 @@ class HTTPFile(Component):
         
         # Optionally add/remove component ports
         self.remove_output('out')
-        self.add_output('file')
+        self.add_output('file', '(edu.utah.sci.vistrails.basic:File)')
 
-        self.set_parameter('url', '')
+        self.set_parameter('url', '', None, 'edu.utah.sci.vistrails.basic:String')
+        self.set_package("edu.utah.sci.vistrails.http");
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

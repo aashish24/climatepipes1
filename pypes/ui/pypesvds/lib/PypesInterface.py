@@ -138,6 +138,15 @@ class DataFlowGraph(object):
         #return self._registered_instances[key].Outputs
         return self._registered_instances[key].get_out_ports()
 
+    def InputDescs(self, key):
+        #return self._registered_instances[key].Inputs
+        # needs error handling here...
+        return self._registered_instances[key].get_in_descs()
+
+    def OutputDescs(self, key):
+        #return self._registered_instances[key].Outputs
+        return self._registered_instances[key].get_out_descs()
+
     def Package(self, key):
         return self._registered_instances[key].get_package()
 

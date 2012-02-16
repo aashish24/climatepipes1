@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-vtkdatareader = vtkdatareader.vtkdatareader:vtkDataReader
-

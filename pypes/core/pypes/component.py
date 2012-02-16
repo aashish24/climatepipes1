@@ -298,6 +298,16 @@ class Component(object):
         """
         return sorted(self._outputs.keys())
 
+    def get_in_descs(self):
+        """Returns a dictionary of current inputs descriptions for this component.
+        """
+        return self._inputs
+
+    def get_out_descs(self):
+        """Returns a dictionary of current output descriptions for this component.
+        """
+        return self._outputs
+
     def get_package(self):
         return self._package
 
@@ -330,21 +340,25 @@ class Component(object):
             p = None
         return p
 
-    def set_parameter(self, name, parameter, options=None):
+    def set_parameter(self, name, parameter, options=None, ptype=""):
         """Sets a specific parameter for this component.
 
         @param name: The name of teh parameter being set
         @type name: String
         @param parameter: The value being set for this parameter
         @type parameter: String
+        @param ptype: The value type
+        @type ptype: String
         """
         if options is None and self._parameters.has_key(name):
             pset = self._parameters[name][0] = parameter
+            if ptype != "":
+                self._parameters[name][2] = ptype
         else:
             if options is None or not isinstance(options, list):
                 options = []
             try:
-                self._parameters[name] = [parameter, options]
+                self._parameters[name] = [parameter, options, ptype]
             except:
                 pass
 

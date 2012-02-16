@@ -133,6 +133,8 @@ YAHOO.extend(jsBox, WireIt.Container, {
         obj.inputs = this.config.inputs;
         obj.outputs = this.config.outputs;
         obj.params = this.config.params;
+	obj.indescs = this.config.indescs;
+	obj.outdescs = this.config.outdescs;
         return obj;
     },
     
@@ -379,6 +381,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
                 var ins = [];
             } else {
                 var ins = resultArray[1];
+		var indescs = resultArray[4];
             }
 
             /* We don't show output ports on publishers.
@@ -390,6 +393,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
                 var outs = [];
             } else {
                 var outs = resultArray[2];
+		var outdescs = resultArray[5]
             }
 			
 			/* add the component to the canvas */
@@ -401,7 +405,9 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
 				xtype: "jsBox", 
 				"inputs":ins, 
 				"outputs":outs, 
-				"position":[xpos, ypos]
+				"position":[xpos, ypos],
+				"indescs":indescs,
+				"outdescs":outdescs
 			});
         },
         failure: function(oResponse) {

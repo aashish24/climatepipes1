@@ -172,7 +172,7 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
     var jsonConfig = YAHOO.lang.JSON.stringify(jsonObject);
     var workflowxml = json2workflowxml(jsonObject);
     myPanel.setHeader("Export Project Configuration"); 
-    myPanel.setBody( "<div style='overflow:auto;'><pre>" + workflowxml.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</pre></div>" );
+    myPanel.setBody( "<div style='overflow:auto;'><pre>" + workflowxml.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/END_OF_LINE/g,'\n') + "</pre></div>" );
     myPanel.setFooter( "<div style='overflow:auto;'>" + jsonConfig  + "</div>" );
     myPanel.render(document.body);
     myPanel.show();
@@ -180,7 +180,7 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
 
 
 function json2workflowxml(json) {
-    var result = "<workflow>END_OF_LINE";
+    var result = "<workflow version=\"1.0.2\">END_OF_LINE";
 
     var j = 0;
     for(var i = 0; i < json.wires.length; i+=1) {
@@ -189,10 +189,14 @@ function json2workflowxml(json) {
       result+="  <connection id=\""+i+"\">END_OF_LINE";
       result+="    <port id=\""+j+"\" moduleId=\""+src.moduleId
 	+"\" moduleName=\""+json.containers[src.moduleId].name
-	+"\" name=\""+src.termid+"\" type=\"source\" />END_OF_LINE";
+	+"\" name=\""+src.termid+"\" type=\"source"
+	+"\" signature=\""+json.containers[src.moduleId].outdescs[src.termid][1]
+	+"\" />END_OF_LINE";
       result+="    <port id=\""+(j+1)+"\" moduleId=\""+tgt.moduleId
 	+"\" moduleName=\""+json.containers[tgt.moduleId].name
-	+"\" name=\""+tgt.termid+"\" type=\"destination\" />END_OF_LINE";
+	+"\" name=\""+tgt.termid+"\" type=\"destination"
+	+"\" signature=\""+json.containers[tgt.moduleId].indescs[tgt.termid][1]
+	+"\" />END_OF_LINE";
       result+="  </connection>END_OF_LINE";
       j+=2;
     }
@@ -204,11 +208,11 @@ function json2workflowxml(json) {
       
       result+="  <module id=\""+i+"\" name=\""+con.name
 	+"\" package=\""+con.package+"\">END_OF_LINE";
-      result+="    <location id="+i+" x=\""+pos[0]+"\" y=\""+pos[1]+"\" />END_OF_LINE";
+      result+="    <location id=\""+i+"\" x=\""+pos[0]+"\" y=\""+pos[1]+"\" />END_OF_LINE";
       if(con.hasOwnProperty('params') && typeof con.params != "undefined") {
 	for(var key in con.params) {
 	  result+="    <function id=\""+fid+"\" name=\""+key+"\" pos=\""+fid+"\">END_OF_LINE";
-	  result+="      <parameter id=\""+fid+"\" val=\""+con.params[key]+"\">END_OF_LINE";
+	  result+="      <parameter id=\""+fid+"\" type=\""+con.params[key][2]+"\" val=\""+con.params[key][0]+"\" />END_OF_LINE";
 	  result+="    </function>END_OF_LINE";
 	  fid+=1;
 	}
