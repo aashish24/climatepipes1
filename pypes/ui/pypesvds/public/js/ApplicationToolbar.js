@@ -15,12 +15,12 @@ var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", {
     draggable: true, 
     close: true, 
     constraintoviewport: true, 
-    buttons: [{ text:"OK", handler:handleOk}] 
+    buttons: [{text:"OK", handler:handleOk}] 
 });
 
 var submitMenu = [ 
-    { text: 'File', value: 'file', id: 'file_upload' },
-	{ text: 'Trigger', value: 'file', id: 'run_trigger' },
+    {text: 'File', value: 'file', id: 'file_upload'},
+	{text: 'Trigger', value: 'file', id: 'run_trigger'},
     /*{ text: 'Submit URL', value: 'url', id: 'submit_url' }*/
 ]; 
 
@@ -263,25 +263,56 @@ var oButtonAbout = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
+
+function hijackForm(formId, updateId, data)
+{
+  var formObj = document.getElementById('myform');   
+  
+  var callback = {
+      success: function(o) {
+          document.getElementById(updateId).innerHTML = o.responseText;
+      },
+      failure: function(o) {
+          alert("AJAX request failed!" + o);
+      },
+      argument: data
+  }
+
+  // connect to the form and submit it via AJAX
+  YAHOO.util.Connect.setForm(formObj);
+  
+  YAHOO.util.Connect.asyncRequest('POST', formObj.action, callback);  
+}
+
+
 function postwith (to,p)
 {
-  var myForm = document.createElement("form");
+//  var myForm = document.createElement("form");
+//  myForm.method="post" ;
+//  myForm.action = to ;
+//  myForm.id = "myform";
+
+  var myForm = document.getElementById('myform');
   myForm.method="post" ;
   myForm.action = to ;
   var myInput = document.createElement("input") ;
   myInput.setAttribute("value", p) ;
   myInput.setAttribute("name", "wf");
   myForm.appendChild(myInput) ;
-  document.body.appendChild(myForm) ;
-  myForm.submit() ;
-  document.body.removeChild(myForm) ;
+//  document.body.appendChild(myForm) ;
+  hijackForm('myform', 'aashish', p);
+  //myForm.submit();
+
+  myForm.removeChild(myInput);
+//  document.body.removeChild(myForm) ;
+  //submitData(to, p);
+  //redirect();
 }
 
+
 function runme(wf)
-{
-  //wf = wf.replace("\n", "END_OF_LINE");
+{  
   postwith('http://localhost:8080/Climate/index.jsp', wf);
-  alert(wf);
 }
 
 
@@ -290,7 +321,9 @@ YAHOO.util.Event.addListener("button_run", 'click', function()
   var jsonObject = jsBox.jsBoxLayer.getWiring();  
   var workflowxml = json2workflowxml(jsonObject);  
   runme(workflowxml);
+  
 });
+
 
 var bar = function foo()
 {
@@ -299,7 +332,6 @@ var bar = function foo()
 //                    cal.render();
   var p = document.createElement('p');
   p.innerHTML = 'hello';
-  el.appendChild(p);
-  alert(p);
+  el.appendChild(p);  
 //  var cal = new YAHOO.widget.Calendar("aashish");
 }();
