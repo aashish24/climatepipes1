@@ -29,17 +29,44 @@ YAHOO.pypes.ui.layout.Window = function () {
             Event.onDOMReady(function() { 
                 var layout = new YAHOO.widget.Layout({ 
                     units: [ 
-                        { position: 'top', height: 62, body: 'top1', gutter: '1px'}, 
-                        { position: 'bottom', height: 20, resize: false, body: 'bottom1', gutter: '1px'}, 
-                        { position: 'left', width: 180, resize: true, body: 'left1', gutter: '1px', scroll: true}, 
-                        { position: 'center', body: 'center1', gutter: '1px' } 
+                        {position: 'top', height: 62, body: 'top1', gutter: '1px'}, 
+                        {position: 'bottom', height: 20, resize: false, body: 'bottom1', gutter: '1px'}, 
+                        {position: 'left', width: 180, resize: true, body: 'left1', gutter: '1px', scroll: true},
+                        {position: 'right', width: 180, resize: true, body: '', gutter: '1px', scroll: true},
+                        {position: 'center', body: 'center1', gutter: '1px'} 
                     ] 
-                }); 
+                });
+
                 layout.on('render', function() { 
                     layout.getUnitByPosition('left').on('close', function() { 
                         closeLeft(); 
-                    }); 
-                }); 
+                    });
+
+                      // TEST CODE
+//                    var r = layout.getUnitByPosition('right');
+//                    var el = document.getElementById('aashish');
+//                    r.body.appendChild(el);
+//                    cal = new YAHOO.widget.Calendar(el);
+//                    cal.render();
+//                    var p = document.createElement('p');
+//                    p.nodeValue = 'hello there';
+//                    el.appendChild(p);
+//                    alert(p);                    
+//                    var link = document.createElement('a');
+//                    var href = document.createAttribute('href');
+//                    href.nodeValue = '/';
+//                    link.setAttributeNode(href);
+//                    var img = document.createElement('img');
+//                    var srcAttr = document.createAttribute("src");
+//                    srcAttr.nodeValue = "/images/KrupePypeLogo.png";
+//                    img.setAttributeNode(srcAttr);
+//                    link.append(img);
+//                    var span = document.createElement('span');
+//                    span.appendChild(link);
+//                    r.body.appendChild(span);
+//                    alert('ehh');
+                });
+
                 layout.render(); 
                 Event.on('tLeft', 'click', function(ev) { 
                     Event.stopEvent(ev); 
