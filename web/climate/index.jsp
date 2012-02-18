@@ -36,8 +36,8 @@
           {
             alert('Executing workflow');
             var wf = '<%= request.getParameter("wf") %>';
-            wf = wf.replace(/END_OF_LINE/g, '\n');
-
+            wf = wf.replace(/END_OF_LINE/g, '\n');           
+            alert(wf);
             // Create a paraview proxy
             // Set the web service base URL
             var serverUrl = "<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%>/PWService";
