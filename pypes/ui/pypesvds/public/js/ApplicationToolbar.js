@@ -219,7 +219,7 @@ function json2workflowxml(json) {
 	    +"\" pos=\""+fid+"\">END_OF_LINE";
 	  result+="      <parameter alias=\""+con.params[key][3]+"\" id=\""+fid
 	    +"\" name=\"&lt;nodescription&gt;\" pos=\"0\" type=\""+con.params[key][2]
-	    +"\" val=\""+escape(con.params[key][0])+"\" />END_OF_LINE";
+	    +"\" val=\""+con.params[key][0]+"\" />END_OF_LINE";
 	  result+="    </function>END_OF_LINE";
 	  fid+=1;
 	}
