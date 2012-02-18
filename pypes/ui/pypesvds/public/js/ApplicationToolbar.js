@@ -289,10 +289,9 @@ function postwith (to,p)
 }
 
 function runme(wf)
-{
-  //wf = wf.replace("\n", "END_OF_LINE");
-  postwith('http://localhost:8080/Climate/index.jsp', wf);
+{  
   alert(wf);
+  postwith('http://localhost:8080/Climate/index.jsp', wf);  
 }
 
 
@@ -302,15 +301,3 @@ YAHOO.util.Event.addListener("button_run", 'click', function()
   var workflowxml = json2workflowxml(jsonObject);  
   runme(workflowxml);
 });
-
-var bar = function foo()
-{
-  var el = document.getElementById('aashish');  
-//                    cal = new YAHOO.widget.Calendar(el);
-//                    cal.render();
-  var p = document.createElement('p');
-  p.innerHTML = 'hello';
-  el.appendChild(p);
-  alert(p);
-//  var cal = new YAHOO.widget.Calendar("aashish");
-}();
