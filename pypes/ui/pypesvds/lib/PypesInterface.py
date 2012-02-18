@@ -150,6 +150,18 @@ class DataFlowGraph(object):
     def Package(self, key):
         return self._registered_instances[key].get_package()
 
+    def Cache(self, key):
+        return self._registered_instances[key].get_cache()
+
+    def Version(self, key):
+        return self._registered_instances[key].get_version()
+
+    def Namespace(self, key):
+        return self._registered_instances[key].get_namespace()
+
+    def Parameters(self, key):
+        return self._registered_instances[key].get_parameters()
+
     def Instance(self, key):
         return self._registered_instances[key]
 

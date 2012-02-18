@@ -28,6 +28,9 @@ class Component(object):
         self._outputs = {'out': [None, 'Default output port']}
         self._parameters = {}
         self._package = ""
+        self._cache = 1
+        self._namespace = ""
+        self._version = ""
 
     def run(self):
         """Starts this component as a stackless tasklet
@@ -312,7 +315,25 @@ class Component(object):
         return self._package
 
     def set_package(self, pkg):
-        self._package = pkg;
+        self._package = pkg
+
+    def get_cache(self):
+        return self._cache
+
+    def get_version(self):
+        return self._version
+
+    def get_namespace(self):
+        return self._namespace
+
+    def set_cache(self, cache):
+        self._cache = cache
+
+    def set_version(self, version):
+        self._version = version
+
+    def set_namespace(self, namespace):
+        self._namespace = namespace
 
     def get_parameters(self):
         """Returns a dict of parameters used by this component.
@@ -340,7 +361,7 @@ class Component(object):
             p = None
         return p
 
-    def set_parameter(self, name, parameter, options=None, ptype=""):
+    def set_parameter(self, name, parameter, options=None, ptype="", alias = ""):
         """Sets a specific parameter for this component.
 
         @param name: The name of teh parameter being set
@@ -354,11 +375,14 @@ class Component(object):
             pset = self._parameters[name][0] = parameter
             if ptype != "":
                 self._parameters[name][2] = ptype
+            if alias != "":
+                self._parameters[name][3] = alias
         else:
             if options is None or not isinstance(options, list):
                 options = []
             try:
-                self._parameters[name] = [parameter, options, ptype]
+                self._parameters[name] = [parameter, options, ptype, alias]
+                pset = parameter
             except:
                 pass
 

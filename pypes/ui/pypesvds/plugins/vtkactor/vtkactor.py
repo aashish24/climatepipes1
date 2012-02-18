@@ -20,6 +20,7 @@ class vtkActor(Component):
         self.add_output('self', '(edu.utah.sci.vistrails.vtk:vtkActor)')
 
         self.set_package('edu.utah.sci.vistrails.vtk')
+        self.set_version('0.9.3')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

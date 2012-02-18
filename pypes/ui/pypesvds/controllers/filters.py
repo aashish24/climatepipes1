@@ -44,7 +44,11 @@ class FiltersController(BaseController):
         indescs = app_globals.dfg.InputDescs(key)
         outdescs = app_globals.dfg.OutputDescs(key)
         pkg = app_globals.dfg.Package(key)
-        return json.dumps([key, ins, outs, pkg, indescs, outdescs])
+        ver = app_globals.dfg.Version(key)
+        nsp = app_globals.dfg.Namespace(key)
+        cache = app_globals.dfg.Cache(key)
+        params = app_globals.dfg.Parameters(key)
+        return json.dumps([key, ins, outs, pkg, indescs, outdescs, ver, nsp, cache, params])
 
     def new(self, format='html'):
         """GET /filters/new: Form to create a new item"""

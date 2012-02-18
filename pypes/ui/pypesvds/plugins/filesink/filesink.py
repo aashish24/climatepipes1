@@ -26,6 +26,7 @@ class FileSink(Component):
                            'edu.utah.sci.vistrails.basic:Boolean')
 
         self.set_package('edu.utah.sci.vistrails.basic')
+        self.set_version('1.6')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

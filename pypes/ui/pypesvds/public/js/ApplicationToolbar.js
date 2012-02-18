@@ -180,7 +180,9 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
 
 
 function json2workflowxml(json) {
-    var result = "<workflow version=\"1.0.2\">END_OF_LINE";
+    var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"
+      +"\" vistrail_id=\"\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
+      +"\" xsi:schemaLocation=\"http://www.vistrails.org/workflow.xsd\">END_OF_LINE";
 
     var j = 0;
     for(var i = 0; i < json.wires.length; i+=1) {
@@ -206,13 +208,18 @@ function json2workflowxml(json) {
       var con = json.containers[i];
       var pos = con.position;
       
-      result+="  <module id=\""+i+"\" name=\""+con.name
-	+"\" package=\""+con.package+"\">END_OF_LINE";
-      result+="    <location id=\""+i+"\" x=\""+pos[0]+"\" y=\""+pos[1]+"\" />END_OF_LINE";
+      result+="  <module cache=\""+con.cache+"\" id=\""+i+"\" name=\""+con.name
+	+"\" namespace=\""+con.namespace+"\" package=\""+con.package
+	+"\" version=\""+con.version+"\">END_OF_LINE";
+      result+="    <location id=\""+i+"\" x=\""+pos[0]
+	+"\" y=\"-"+pos[1]+"\" />END_OF_LINE";
       if(con.hasOwnProperty('params') && typeof con.params != "undefined") {
 	for(var key in con.params) {
-	  result+="    <function id=\""+fid+"\" name=\""+key+"\" pos=\""+fid+"\">END_OF_LINE";
-	  result+="      <parameter id=\""+fid+"\" type=\""+con.params[key][2]+"\" val=\""+con.params[key][0]+"\" />END_OF_LINE";
+	  result+="    <function id=\""+fid+"\" name=\""+key
+	    +"\" pos=\""+fid+"\">END_OF_LINE";
+	  result+="      <parameter alias=\""+con.params[key][3]+"\" id=\""+fid
+	    +"\" name=\"&lt;nodescription&gt;\" pos=\"0\" type=\""+con.params[key][2]
+	    +"\" val=\""+escape(con.params[key][0])+"\" />END_OF_LINE";
 	  result+="    </function>END_OF_LINE";
 	  fid+=1;
 	}

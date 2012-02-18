@@ -18,7 +18,8 @@ class HTTPFile(Component):
         self.add_output('file', '(edu.utah.sci.vistrails.basic:File)')
 
         self.set_parameter('url', '', None, 'edu.utah.sci.vistrails.basic:String')
-        self.set_package("edu.utah.sci.vistrails.http");
+        self.set_package('edu.utah.sci.vistrails.http')
+        self.set_version('0.9.0')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

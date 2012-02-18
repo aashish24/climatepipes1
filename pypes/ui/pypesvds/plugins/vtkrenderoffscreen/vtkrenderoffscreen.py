@@ -19,6 +19,7 @@ class VTKRenderOffscreen(Component):
         self.add_output('image', '(edu.utah.sci.vistrails.basic:File)')
         
         self.set_package('edu.utah.sci.vistrails.vtk')
+        self.set_version('0.9.3')
         
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)
