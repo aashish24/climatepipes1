@@ -7,6 +7,9 @@ YAHOO.pypes.ui.toolbar.Window = function() {
 	};
 }();*/
 
+// Global paraview
+paraview = null;
+
 var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", { 
 	width: "300px",
     zIndex: 25,
@@ -15,12 +18,12 @@ var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", {
     draggable: true, 
     close: true, 
     constraintoviewport: true, 
-    buttons: [{ text:"OK", handler:handleOk}] 
+    buttons: [{text:"OK", handler:handleOk}] 
 });
 
 var submitMenu = [ 
-    { text: 'File', value: 'file', id: 'file_upload' },
-	{ text: 'Trigger', value: 'file', id: 'run_trigger' },
+    {text: 'File', value: 'file', id: 'file_upload'},
+	{text: 'Trigger', value: 'file', id: 'run_trigger'},
     /*{ text: 'Submit URL', value: 'url', id: 'submit_url' }*/
 ]; 
 
@@ -274,30 +277,94 @@ var oButtonAbout = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
-function postwith (to,p)
+
+function hijackForm(formId, updateId,data)
 {
-  var myForm = document.createElement("form");
-  myForm.method="post" ;
-  myForm.action = to ;
-  var myInput = document.createElement("input") ;
-  myInput.setAttribute("value", p) ;
-  myInput.setAttribute("name", "wf");
-  myForm.appendChild(myInput) ;
-  document.body.appendChild(myForm) ;
-  myForm.submit() ;
-  document.body.removeChild(myForm) ;
+  var formObj = document.getElementById(formId);
+  var postData = "wf=" + data;  
+    
+  var callback =
+  {
+      success: function(o) {
+          alert(o.responseText);
+          document.getElementById(updateId).innerHTML = o.responseText;
+          execute();
+      },
+      failure: function(o) {
+          alert(o.reponseText);
+          alert("AJAX request failed!" + o.toString());
+      }
+  }  
+
+  YAHOO.util.Connect.asyncRequest(formObj.method, formObj.action, callback, postData);
 }
 
-function runme(wf)
-{  
-  alert(wf);
-  postwith('http://localhost:8080/Climate/index.jsp', wf);  
+//-------------------------------------------------------------------
+function updateResultStatus(id, status)
+{
+  var elem = document.getElementById(id);
+  elem.innerHTML = status;
 }
 
+//-------------------------------------------------------------------
+function show(data)
+{
+  // This method might not work on IE
+  imageElem = document.getElementById('nativeimage');  
+  imageElem.src = 'data:image/png;base64,' + data;
 
+  // Update the status
+  updateResultStatus('status', 'Pipe executed successfully');
+}
+
+//-------------------------------------------------------------------
+function manageError(err)
+{
+  // Update the status  
+  updateResultStatus('status', 'Pipe failed to execute');
+
+}
+
+//-------------------------------------------------------------------
+function initializeParaview()
+{
+  if(paraview == null)
+  {
+    var serverUrl = "http://localhost:8080/PWService";
+    paraview = new Paraview(serverUrl);
+  }
+}
+
+//-------------------------------------------------------------------
+function finalizeParaview()
+{
+  if(paraview != null)
+  {
+    paraview.disconnect();
+  }
+}
+
+//-------------------------------------------------------------------
+function processWorkflow(wf)
+{   
+  var wfXML = wf.replace(/END_OF_LINE/g, '\n');  
+
+  // Initialize if required
+  initializeParaview();
+
+  paraview.errorListener = window;
+  paraview.createSession("Climate Pipes Session", "Test Code", "default");
+  plugin = paraview.getPlugin("cp_plugin");
+  plugin.Asyncexecute(function(image){show(image)}, wfXML);
+
+  // Update the statusnso
+  updateResultStatus('status', 'Processing...');
+}
+
+//-------------------------------------------------------------------
 YAHOO.util.Event.addListener("button_run", 'click', function()
 {
   var jsonObject = jsBox.jsBoxLayer.getWiring();  
   var workflowxml = json2workflowxml(jsonObject);  
-  runme(workflowxml);
+  processWorkflow(workflowxml);
 });
