@@ -1,0 +1,8 @@
+setup.py
+vtkunstructuredgridreader/vtkunstructuredgridreader.py
+vtkunstructuredgridreader/__init__.py
+vtkUnstructuredGridReader.egg-info/PKG-INFO
+vtkUnstructuredGridReader.egg-info/SOURCES.txt
+vtkUnstructuredGridReader.egg-info/dependency_links.txt
+vtkUnstructuredGridReader.egg-info/entry_points.txt
+vtkUnstructuredGridReader.egg-info/top_level.txt

@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/button/assets/skins/sam/button.css" />
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/fonts/fonts.css">
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/container/assets/skins/sam/container.css">
-    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" /> 
+    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" />
+   
 
   </head>
      <body style="width:100%; height:100%; background-color:#ffffff;" class="yui-skin-sam">
@@ -32,7 +33,16 @@
 
         <div id="center1">
             <div id="wirelayer" style="" ></div>
-        </div> 
+        </div>
+
+        <div id="right1">
+          <!-- TEST CODE -->
+          <div id="aashish"><p>aashish</p>
+            <div id="test">
+              <object id="foo" name="foo" type="text/html" data="http://www.w3schools.com/"></object>
+            </div>
+          </div>
+        </div>
     </body>
 </html>
 
@@ -58,6 +68,7 @@
 <script type="text/javascript" src="/js/yui-2.6.0/build/json/json-min.js"></script>
 <script type="text/javascript" src="/js/yui-2.6.0/build/yahoo/yahoo-min.js"></script>
 <script type="text/javascript" src="/js/yui-2.6.0/build/menu/menu-min.js"></script>
+<script type="text/javascript" src="/js/yui-2.6.0/build/calendar/calendar.js"></script>
 
 <script src="/js/yui-2.6.0/build/resize/resize-min.js"></script> 
 <script src="/js/yui-2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>

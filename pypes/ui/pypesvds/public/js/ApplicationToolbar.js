@@ -172,7 +172,7 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
     var jsonConfig = YAHOO.lang.JSON.stringify(jsonObject);
     var workflowxml = json2workflowxml(jsonObject);
     myPanel.setHeader("Export Project Configuration"); 
-    myPanel.setBody( "<div style='overflow:auto;'><pre>" + workflowxml.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</pre></div>" );
+    myPanel.setBody( "<div style='overflow:auto;'><pre>" + workflowxml.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/END_OF_LINE/g,'\n') + "</pre></div>" );
     myPanel.setFooter( "<div style='overflow:auto;'>" + jsonConfig  + "</div>" );
     myPanel.render(document.body);
     myPanel.show();
@@ -180,20 +180,26 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
 
 
 function json2workflowxml(json) {
-    var result = "<workflow>\n";
+    var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"
+      +"\" vistrail_id=\"\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
+      +"\" xsi:schemaLocation=\"http://www.vistrails.org/workflow.xsd\">END_OF_LINE";
 
     var j = 0;
     for(var i = 0; i < json.wires.length; i+=1) {
       var src = json.wires[i].src;
       var tgt = json.wires[i].tgt;
-      result+="  <connection id=\""+i+"\">\n";
+      result+="  <connection id=\""+i+"\">END_OF_LINE";
       result+="    <port id=\""+j+"\" moduleId=\""+src.moduleId
 	+"\" moduleName=\""+json.containers[src.moduleId].name
-	+"\" name=\""+src.termid+"\" type=\"source\" />\n";
+	+"\" name=\""+src.termid+"\" type=\"source"
+	+"\" signature=\""+json.containers[src.moduleId].outdescs[src.termid][1]
+	+"\" />END_OF_LINE";
       result+="    <port id=\""+(j+1)+"\" moduleId=\""+tgt.moduleId
 	+"\" moduleName=\""+json.containers[tgt.moduleId].name
-	+"\" name=\""+tgt.termid+"\" type=\"destination\" />\n";
-      result+="  </connection>\n";
+	+"\" name=\""+tgt.termid+"\" type=\"destination"
+	+"\" signature=\""+json.containers[tgt.moduleId].indescs[tgt.termid][1]
+	+"\" />END_OF_LINE";
+      result+="  </connection>END_OF_LINE";
       j+=2;
     }
 
@@ -202,21 +208,26 @@ function json2workflowxml(json) {
       var con = json.containers[i];
       var pos = con.position;
       
-      result+="  <module id=\""+i+"\" name=\""+con.name
-	+"\" package=\""+con.package+"\">\n";
-      result+="    <location id="+i+" x=\""+pos[0]+"\" y=\""+pos[1]+"\" />\n";
+      result+="  <module cache=\""+con.cache+"\" id=\""+i+"\" name=\""+con.name
+	+"\" namespace=\""+con.namespace+"\" package=\""+con.package
+	+"\" version=\""+con.version+"\">END_OF_LINE";
+      result+="    <location id=\""+i+"\" x=\""+pos[0]
+	+"\" y=\"-"+pos[1]+"\" />END_OF_LINE";
       if(con.hasOwnProperty('params') && typeof con.params != "undefined") {
 	for(var key in con.params) {
-	  result+="    <function id=\""+fid+"\" name=\""+key+"\" pos=\""+fid+"\">\n";
-	  result+="      <parameter id=\""+fid+"\" val=\""+con.params[key]+"\">\n";
-	  result+="    </function>\n";
+	  result+="    <function id=\""+fid+"\" name=\""+key
+	    +"\" pos=\""+fid+"\">END_OF_LINE";
+	  result+="      <parameter alias=\""+con.params[key][3]+"\" id=\""+fid
+	    +"\" name=\"&lt;nodescription&gt;\" pos=\"0\" type=\""+con.params[key][2]
+	    +"\" val=\""+con.params[key][0]+"\" />END_OF_LINE";
+	  result+="    </function>END_OF_LINE";
 	  fid+=1;
 	}
       }
 	    
-      result+="  </module>\n";
+      result+="  </module>END_OF_LINE";
     }
-    result+="</workflow>\n";
+    result+="</workflow>END_OF_LINE";
     return result;
 }
 
@@ -255,3 +266,38 @@ var oButtonSignout = new YAHOO.widget.Button({
 }); 
 YAHOO.util.Event.addListener("button_signout", 'click', function() {window.location.href="/signout";});
 */
+
+var oButtonAbout = new YAHOO.widget.Button({ 
+    id: "button_run",  
+    type: "push",  
+    label: "Run",
+    container: "toolbar"  
+});
+
+function postwith (to,p)
+{
+  var myForm = document.createElement("form");
+  myForm.method="post" ;
+  myForm.action = to ;
+  var myInput = document.createElement("input") ;
+  myInput.setAttribute("value", p) ;
+  myInput.setAttribute("name", "wf");
+  myForm.appendChild(myInput) ;
+  document.body.appendChild(myForm) ;
+  myForm.submit() ;
+  document.body.removeChild(myForm) ;
+}
+
+function runme(wf)
+{  
+  alert(wf);
+  postwith('http://localhost:8080/Climate/index.jsp', wf);  
+}
+
+
+YAHOO.util.Event.addListener("button_run", 'click', function()
+{
+  var jsonObject = jsBox.jsBoxLayer.getWiring();  
+  var workflowxml = json2workflowxml(jsonObject);  
+  runme(workflowxml);
+});

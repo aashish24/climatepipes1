@@ -14,12 +14,19 @@ class FileSink(Component):
         Component.__init__(self)
         
         # Optionally add/remove component ports
-        self.remove_output('out')
         self.remove_input('in')
-        self.add_input('file')
+        self.remove_output('out')
+        self.add_input('file', '(edu.utah.sci.vistrails.basic:File)')
 
-        self.set_parameter('outputPath', '')
-        self.set_parameter('file', '')
+        self.set_parameter('outputPath', '', None, 
+                           'edu.utah.sci.vistrails.basic:OutputPath')
+        self.set_parameter('overwrite', 'True', ['True','False'], 
+                           'edu.utah.sci.vistrails.basic:Boolean')
+        self.set_parameter('publishFile', 'True', ['True','False'],
+                           'edu.utah.sci.vistrails.basic:Boolean')
+
+        self.set_package('edu.utah.sci.vistrails.basic')
+        self.set_version('1.6')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

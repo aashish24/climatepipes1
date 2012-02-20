@@ -14,12 +14,16 @@ class vtkRenderer(Component):
         Component.__init__(self)
         
         # Optionally add/remove component ports
-        # self.remove_output('out')
-        # self.add_input('in2', 'A description of what this port is used for')
+        self.remove_input('in')
+        self.remove_output('out')
+        self.add_input('AddActor', '(edu.utah.sci.vistrails.vtk:vtkProp)')
+        self.add_output('self', '(edu.utah.sci.vistrails.vtk:vtkActor)')
 
-        # Setup any user parameters required by this component 
-        # 2nd arg is the default value, 3rd arg is optional list of choices
-        #self.set_parameter('MyParam', 'opt1', ['opt1', 'opt2', 'opt3'])
+        self.set_parameter('SetBackgroundWidget', "0.0,0.0,0.0", None,
+                           'edu.utah.sci.vistrails.basic:Color')
+
+        self.set_package('edu.utah.sci.vistrails.vtk')        
+        self.set_version('0.9.3')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)

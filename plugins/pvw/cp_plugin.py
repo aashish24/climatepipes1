@@ -12,9 +12,11 @@ _tmpDir = ''
 _outputFilePath = ''
 
 _vtHome = os.environ['VISTRAILS_HOME']
+_pyQt4Home = os.environ['PYQT4_HOME']
 _tmpDir = os.environ['CP_TMP_DIR']
 
 sys.path.append(_vtHome)
+sys.path.append(_pyQt4Home)
 sys.argv = []
 
 # Import vistrails module
@@ -123,8 +125,7 @@ def execute(message):
     imageData = base64.b64encode(imageData)
     return imageData
   finally:
-    file.close()
-    os.remove(xmlFilePath)
+    file.close()    
     os.remove(_outputFilePath)
 
 # Return binary image data

@@ -5,21 +5,22 @@ from pypes.component import Component
 
 log = logging.getLogger(__name__)
 
-class HTTPFile(Component):
+class vtkUnstructuredGridReader(Component):
     # defines the type of component we're creating.
-    __metatype__ = 'ADAPTER'
+    __metatype__ = 'TRANSFORMER'
 
     def __init__(self):
         # initialize parent class
         Component.__init__(self)
-        
-        # Optionally add/remove component ports
-        self.remove_output('out')
-        self.add_output('file', '(edu.utah.sci.vistrails.basic:File)')
 
-        self.set_parameter('url', '', None, 'edu.utah.sci.vistrails.basic:String')
-        self.set_package('edu.utah.sci.vistrails.http')
-        self.set_version('0.9.0')
+        # Optionally add/remove component ports
+        self.remove_input('in')
+        self.remove_output('out')
+        self.add_input('SetFile', '(edu.utah.sci.vistrails.basic:File)')
+        self.add_output('GetOutputPort0', '(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)')
+
+        self.set_package('edu.utah.sci.vistrails.vtk')                
+        self.set_version('0.9.3')
 
         # log successful initialization message
         log.info('Component Initialized: %s' % self.__class__.__name__)
@@ -41,7 +42,7 @@ class HTTPFile(Component):
                     log.error(traceback.print_exc())
 
                 # send the document to the next component
-                self.send('file', doc)
+                self.send('out', doc)
 
             # yield the CPU, allowing another component to run
             self.yield_ctrl()

@@ -82,6 +82,7 @@ YAHOO.extend(jsBox, WireIt.Container, {
 		/* create the tooltip object */
 		new YAHOO.widget.Tooltip("ttPorts", {
 			context:ports,
+
 			effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.20},
 			zIndex:50
 		});
@@ -133,6 +134,11 @@ YAHOO.extend(jsBox, WireIt.Container, {
         obj.inputs = this.config.inputs;
         obj.outputs = this.config.outputs;
         obj.params = this.config.params;
+	obj.version = this.config.version;
+	obj.cache = this.config.cache;
+	obj.namespace = this.config.namespace;
+	obj.indescs = this.config.indescs;
+	obj.outdescs = this.config.outdescs;
         return obj;
     },
     
@@ -379,6 +385,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
                 var ins = [];
             } else {
                 var ins = resultArray[1];
+		var indescs = resultArray[4];
             }
 
             /* We don't show output ports on publishers.
@@ -390,6 +397,7 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
                 var outs = [];
             } else {
                 var outs = resultArray[2];
+		var outdescs = resultArray[5]
             }
 			
 			/* add the component to the canvas */
@@ -401,7 +409,13 @@ jsBox.addModule = function (filterName, type, xpos, ypos) {
 				xtype: "jsBox", 
 				"inputs":ins, 
 				"outputs":outs, 
-				"position":[xpos, ypos]
+				"position":[xpos, ypos],
+				"indescs":indescs,
+				"outdescs":outdescs,
+				"version":resultArray[6],
+				"namespace":resultArray[7],
+				"cache":resultArray[8],
+				"params":resultArray[9]
 			});
         },
         failure: function(oResponse) {
