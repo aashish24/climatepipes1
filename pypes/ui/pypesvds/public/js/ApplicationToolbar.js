@@ -10,6 +10,7 @@ YAHOO.pypes.ui.toolbar.Window = function() {
 // Global paraview
 paraview = null;
 
+//-------------------------------------------------------------------
 var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", { 
 	width: "300px",
     zIndex: 25,
@@ -21,12 +22,14 @@ var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", {
     buttons: [{text:"OK", handler:handleOk}] 
 });
 
+//-------------------------------------------------------------------
 var submitMenu = [ 
     {text: 'File', value: 'file', id: 'file_upload'},
 	{text: 'Trigger', value: 'file', id: 'run_trigger'},
     /*{ text: 'Submit URL', value: 'url', id: 'submit_url' }*/
 ]; 
 
+//-------------------------------------------------------------------
 var Toolbar = function() {
 	/* get the toolbar element */
 	var logo = YAHOO.util.Dom.get("toolbar");
@@ -52,6 +55,7 @@ var Toolbar = function() {
 	logo.appendChild(span);
 }();
 
+//-------------------------------------------------------------------
 var handleOk = function() {this.hide();};
 
 /* AJAX FILE UPLOAD CODE */
@@ -154,6 +158,7 @@ var oButtonSave = new YAHOO.widget.Button({
 YAHOO.util.Event.addListener("button_save", 'click', function() { jsBox.register(); });
 */
 
+//-------------------------------------------------------------------
 var oButtonExport = new YAHOO.widget.Button({ 
     id: "button_export",  
     type: "push",  
@@ -161,6 +166,7 @@ var oButtonExport = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
+//-------------------------------------------------------------------
 YAHOO.util.Event.addListener("button_export", 'click', function() {
         myPanel = new YAHOO.widget.Panel("exportWindow", { 
         width:"600px",
@@ -181,7 +187,7 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
     myPanel.show();
 });
 
-
+//-------------------------------------------------------------------
 function json2workflowxml(json) {
     var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"
       +"\" vistrail_id=\"\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
@@ -277,7 +283,8 @@ var oButtonAbout = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
-
+//-------------------------------------------------------------------
+// Not used right now
 function hijackForm(formId, updateId,data)
 {
   var formObj = document.getElementById(formId);
