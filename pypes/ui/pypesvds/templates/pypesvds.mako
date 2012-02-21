@@ -15,14 +15,34 @@
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/button/assets/skins/sam/button.css" />
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/fonts/fonts.css">
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/container/assets/skins/sam/container.css">
-    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" />
-   
+    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" />    
+    
+
+    <script type="text/javascript">
+       //<![CDATA[
+          //var redirect = function()
+          //{
+            //alert('redirected');
+          //  document.getElementById('aashish').innerHTML = '<'+'object id="foo" name="foo" type="text/html" data="http://localhost:8080/Climate/index.jsp"><\/object>';
+         // }
+
+        //]]>
+
+        //test = document.getElementById("test");
+        //var p = document.createElement('p');
+        //p.innerHTML = 'hello foo hi';
+        //p.innerHTML = "\<iframe src=\"http://www.yahoo.com\"\>\<\/iframe\>";
+        //test.appendChild(p);      
+    </script>
+
+    <script src="http://localhost:8080/PWService/js/ParaViewWeb.js" type="text/javascript"></script>
 
   </head>
-     <body style="width:100%; height:100%; background-color:#ffffff;" class="yui-skin-sam">
+     <body onUnload="finalizeParaview()" style="width:100%; height:100%; background-color:#ffffff;" class="yui-skin-sam">
         <div id="top1">
             <div style="background-color:#ec3b97; height:2px;"></div>
-            <div id="toolbar"></div>
+            <div id="toolbar">                
+            </div>
         </div> 
 
         <div id="bottom1"> </div> 
@@ -36,11 +56,11 @@
         </div>
 
         <div id="right1">
-          <!-- TEST CODE -->
-          <div id="aashish"><p>aashish</p>
-            <div id="test">
-              <object id="foo" name="foo" type="text/html" data="http://www.w3schools.com/"></object>
-            </div>
+          <div style="padding-left:20px; padding-top:20px; padding-right:20px" id="results">
+            <p id="status"></p>
+            <br>
+            <image id="nativeimage" />
+              <div id="test"></div>
           </div>
         </div>
     </body>

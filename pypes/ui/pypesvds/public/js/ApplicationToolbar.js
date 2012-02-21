@@ -290,16 +290,8 @@ function postwith (to,p)
 
 function runme(wf)
 {  
-  //alert(wf);
-  //postwith('http://localhost:8080/Climate/index.jsp', wf);  
-
-  // Create a paraview proxy
-  // Set the web service base URL
-  var serverUrl = "http://localhost:8080/PWService";
-  paraview = new Paraview(serverUrl);
-  paraview.createSession("Tutorial-Session-1", "Sample code given for tutorial purpose", "default");
-  plugin = paraview.getPlugin("cp_plugin");
-  plugin.Asyncexecute(function(image){show(image)}, wf);
+  alert(wf);
+  postwith('http://localhost:8080/Climate/index.jsp', wf);  
 }
 
 
