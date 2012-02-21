@@ -7,6 +7,10 @@ YAHOO.pypes.ui.toolbar.Window = function() {
 	};
 }();*/
 
+// Global paraview
+paraview = null;
+
+//-------------------------------------------------------------------
 var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", { 
 	width: "300px",
     zIndex: 25,
@@ -15,15 +19,17 @@ var responseDialog = new YAHOO.widget.SimpleDialog("responseDialog", {
     draggable: true, 
     close: true, 
     constraintoviewport: true, 
-    buttons: [{ text:"OK", handler:handleOk}] 
+    buttons: [{text:"OK", handler:handleOk}] 
 });
 
+//-------------------------------------------------------------------
 var submitMenu = [ 
-    { text: 'File', value: 'file', id: 'file_upload' },
-	{ text: 'Trigger', value: 'file', id: 'run_trigger' },
+    {text: 'File', value: 'file', id: 'file_upload'},
+	{text: 'Trigger', value: 'file', id: 'run_trigger'},
     /*{ text: 'Submit URL', value: 'url', id: 'submit_url' }*/
 ]; 
 
+//-------------------------------------------------------------------
 var Toolbar = function() {
 	/* get the toolbar element */
 	var logo = YAHOO.util.Dom.get("toolbar");
@@ -49,6 +55,7 @@ var Toolbar = function() {
 	logo.appendChild(span);
 }();
 
+//-------------------------------------------------------------------
 var handleOk = function() {this.hide();};
 
 /* AJAX FILE UPLOAD CODE */
@@ -151,6 +158,7 @@ var oButtonSave = new YAHOO.widget.Button({
 YAHOO.util.Event.addListener("button_save", 'click', function() { jsBox.register(); });
 */
 
+//-------------------------------------------------------------------
 var oButtonExport = new YAHOO.widget.Button({ 
     id: "button_export",  
     type: "push",  
@@ -158,6 +166,7 @@ var oButtonExport = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
+//-------------------------------------------------------------------
 YAHOO.util.Event.addListener("button_export", 'click', function() {
         myPanel = new YAHOO.widget.Panel("exportWindow", { 
         width:"600px",
@@ -178,7 +187,7 @@ YAHOO.util.Event.addListener("button_export", 'click', function() {
     myPanel.show();
 });
 
-
+//-------------------------------------------------------------------
 function json2workflowxml(json) {
     var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"
       +"\" vistrail_id=\"\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
@@ -274,30 +283,95 @@ var oButtonAbout = new YAHOO.widget.Button({
     container: "toolbar"  
 });
 
-function postwith (to,p)
+//-------------------------------------------------------------------
+// Not used right now
+function hijackForm(formId, updateId,data)
 {
-  var myForm = document.createElement("form");
-  myForm.method="post" ;
-  myForm.action = to ;
-  var myInput = document.createElement("input") ;
-  myInput.setAttribute("value", p) ;
-  myInput.setAttribute("name", "wf");
-  myForm.appendChild(myInput) ;
-  document.body.appendChild(myForm) ;
-  myForm.submit() ;
-  document.body.removeChild(myForm) ;
+  var formObj = document.getElementById(formId);
+  var postData = "wf=" + data;  
+    
+  var callback =
+  {
+      success: function(o) {
+          alert(o.responseText);
+          document.getElementById(updateId).innerHTML = o.responseText;
+          execute();
+      },
+      failure: function(o) {
+          alert(o.reponseText);
+          alert("AJAX request failed!" + o.toString());
+      }
+  }  
+
+  YAHOO.util.Connect.asyncRequest(formObj.method, formObj.action, callback, postData);
 }
 
-function runme(wf)
-{  
-  alert(wf);
-  postwith('http://localhost:8080/Climate/index.jsp', wf);  
+//-------------------------------------------------------------------
+function updateResultStatus(id, status)
+{
+  var elem = document.getElementById(id);
+  elem.innerHTML = status;
 }
 
+//-------------------------------------------------------------------
+function show(data)
+{
+  // This method might not work on IE
+  imageElem = document.getElementById('nativeimage');  
+  imageElem.src = 'data:image/png;base64,' + data;
 
+  // Update the status
+  updateResultStatus('status', 'Pipe executed successfully');
+}
+
+//-------------------------------------------------------------------
+function manageError(err)
+{
+  // Update the status  
+  updateResultStatus('status', 'Pipe failed to execute');
+
+}
+
+//-------------------------------------------------------------------
+function initializeParaview()
+{
+  if(paraview == null)
+  {
+    var serverUrl = "http://localhost:8080/PWService";
+    paraview = new Paraview(serverUrl);
+  }
+}
+
+//-------------------------------------------------------------------
+function finalizeParaview()
+{
+  if(paraview != null)
+  {
+    paraview.disconnect();
+  }
+}
+
+//-------------------------------------------------------------------
+function processWorkflow(wf)
+{   
+  var wfXML = wf.replace(/END_OF_LINE/g, '\n');  
+
+  // Initialize if required
+  initializeParaview();
+
+  paraview.errorListener = window;
+  paraview.createSession("Climate Pipes Session", "Test Code", "default");
+  plugin = paraview.getPlugin("cp_plugin");
+  plugin.Asyncexecute(function(image){show(image)}, wfXML);
+
+  // Update the statusnso
+  updateResultStatus('status', 'Processing...');
+}
+
+//-------------------------------------------------------------------
 YAHOO.util.Event.addListener("button_run", 'click', function()
 {
   var jsonObject = jsBox.jsBoxLayer.getWiring();  
   var workflowxml = json2workflowxml(jsonObject);  
-  runme(workflowxml);
+  processWorkflow(workflowxml);
 });
