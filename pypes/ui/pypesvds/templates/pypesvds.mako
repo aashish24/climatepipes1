@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html>
  <head>
-  <title>Pypes - Visual Design Studio</title>
+  <title>ClimatePipes</title>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" type="text/css" href="/css/toolbar.css">
     <link rel="stylesheet" type="text/css" href="/css/tree.css">
@@ -109,6 +109,7 @@
 <script type="text/javascript" src="/js/wireit/Layer.js"></script>
 <script type="text/javascript" src="/js/wireit/LayerMap-beta.js"></script>
 
+<!--script type="text/javascript" src="http://localhost:8080/PWService/js/ParaViewWeb.js"></script-->
 <script type="text/javascript" src="/js/ApplicationLayout.js"></script>
 <script type="text/javascript" src="/js/ApplicationMain.js"></script>
 <script type="text/javascript" src="/js/ApplicationToolbar.js"></script>
