@@ -12,7 +12,7 @@ from pypesvds.lib.base import BaseController, render
 log = logging.getLogger(__name__)
 
 class IndexController(BaseController):
-    @authorize(ValidAuthKitUser())
+    #@authorize(ValidAuthKitUser())
     def index(self):
         # Return a rendered template
         #return render('/index.mako')

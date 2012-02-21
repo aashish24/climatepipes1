@@ -1,0 +1,3 @@
+[pypesvds.plugins]
+isofill = isofill.isofill:IsoFill
+

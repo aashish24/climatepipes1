@@ -1,0 +1,8 @@
+setup.py
+itemfilter/itemfilter.py
+itemfilter/__init__.py
+ItemFilter.egg-info/PKG-INFO
+ItemFilter.egg-info/SOURCES.txt
+ItemFilter.egg-info/dependency_links.txt
+ItemFilter.egg-info/entry_points.txt
+ItemFilter.egg-info/top_level.txt
