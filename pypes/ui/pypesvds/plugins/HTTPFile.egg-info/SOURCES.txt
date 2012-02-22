@@ -1,8 +1,0 @@
-setup.py
-httpfile/httpfile.py
-httpfile/__init__.py
-HTTPFile.egg-info/PKG-INFO
-HTTPFile.egg-info/SOURCES.txt
-HTTPFile.egg-info/dependency_links.txt
-HTTPFile.egg-info/entry_points.txt
-HTTPFile.egg-info/top_level.txt

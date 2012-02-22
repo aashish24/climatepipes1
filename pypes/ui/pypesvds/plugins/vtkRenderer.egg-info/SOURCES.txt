@@ -1,8 +1,0 @@
-setup.py
-vtkrenderer/vtkrenderer.py
-vtkrenderer/__init__.py
-vtkRenderer.egg-info/PKG-INFO
-vtkRenderer.egg-info/SOURCES.txt
-vtkRenderer.egg-info/dependency_links.txt
-vtkRenderer.egg-info/entry_points.txt
-vtkRenderer.egg-info/top_level.txt

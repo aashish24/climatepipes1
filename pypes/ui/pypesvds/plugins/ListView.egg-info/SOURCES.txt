@@ -1,8 +1,0 @@
-setup.py
-listview/listview.py
-listview/__init__.py
-ListView.egg-info/PKG-INFO
-ListView.egg-info/SOURCES.txt
-ListView.egg-info/dependency_links.txt
-ListView.egg-info/entry_points.txt
-ListView.egg-info/top_level.txt

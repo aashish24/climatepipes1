@@ -1,8 +1,0 @@
-setup.py
-vtkrenderoffscreen/vtkrenderoffscreen.py
-vtkrenderoffscreen/__init__.py
-VTKRenderOffscreen.egg-info/PKG-INFO
-VTKRenderOffscreen.egg-info/SOURCES.txt
-VTKRenderOffscreen.egg-info/dependency_links.txt
-VTKRenderOffscreen.egg-info/entry_points.txt
-VTKRenderOffscreen.egg-info/top_level.txt

@@ -126,7 +126,7 @@ YAHOO.pypes.ui.tree.AppTree = function () {
        var root = tree.getRoot();
            
        /* add child nodes for tree */
-       var aStates = ["Sources","Transformers","Visualizations"];
+       var aStates = ["Modules"];
            
        for (var i=0, j=aStates.length; i<j; i++) {
             var tempNode = new YAHOO.widget.TextNode(aStates[i], root, false);
@@ -140,6 +140,8 @@ YAHOO.pypes.ui.tree.AppTree = function () {
         tree.subscribe("dblClickEvent", function(oArgs) {
             jsBox.addModule(oArgs.node.label, oArgs.node.type, 100, 100); 
         });
+
+       tree.expandAll();
     }
 
     return {

@@ -1,8 +1,0 @@
-setup.py
-isofill/isofill.py
-isofill/__init__.py
-IsoFill.egg-info/PKG-INFO
-IsoFill.egg-info/SOURCES.txt
-IsoFill.egg-info/dependency_links.txt
-IsoFill.egg-info/entry_points.txt
-IsoFill.egg-info/top_level.txt

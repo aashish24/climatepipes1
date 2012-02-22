@@ -1,8 +1,0 @@
-setup.py
-metafilter/metafilter.py
-metafilter/__init__.py
-MetaFilter.egg-info/PKG-INFO
-MetaFilter.egg-info/SOURCES.txt
-MetaFilter.egg-info/dependency_links.txt
-MetaFilter.egg-info/entry_points.txt
-MetaFilter.egg-info/top_level.txt

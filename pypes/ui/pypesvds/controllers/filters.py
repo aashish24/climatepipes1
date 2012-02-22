@@ -20,7 +20,7 @@ class FiltersController(BaseController):
         type = request.params.getall('node')[0]
         if type == 'Sources':
             s = app_globals.dfg.InputAdapters
-        elif type == 'Transformers':
+        elif type == 'Modules':
             s = app_globals.dfg.Transformers
         elif type == 'Filters':
             s = app_globals.dfg.Filters

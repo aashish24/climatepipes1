@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-listview = listview.listview:ListView
-

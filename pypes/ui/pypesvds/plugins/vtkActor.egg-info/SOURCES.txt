@@ -1,8 +1,0 @@
-setup.py
-vtkactor/vtkactor.py
-vtkactor/__init__.py
-vtkActor.egg-info/PKG-INFO
-vtkActor.egg-info/SOURCES.txt
-vtkActor.egg-info/dependency_links.txt
-vtkActor.egg-info/entry_points.txt
-vtkActor.egg-info/top_level.txt

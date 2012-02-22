@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-itemfilter = itemfilter.itemfilter:ItemFilter
-

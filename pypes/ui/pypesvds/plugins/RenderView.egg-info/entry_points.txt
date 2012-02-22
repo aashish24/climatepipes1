@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-renderview = renderview.renderview:RenderView
-

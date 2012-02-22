@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-vtkdatasetmapper = vtkdatasetmapper.vtkdatasetmapper:vtkDataSetMapper
-

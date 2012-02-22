@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-httpfile = httpfile.httpfile:HTTPFile
-

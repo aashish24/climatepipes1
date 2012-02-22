@@ -1,8 +1,0 @@
-setup.py
-renderview/renderview.py
-renderview/__init__.py
-RenderView.egg-info/PKG-INFO
-RenderView.egg-info/SOURCES.txt
-RenderView.egg-info/dependency_links.txt
-RenderView.egg-info/entry_points.txt
-RenderView.egg-info/top_level.txt

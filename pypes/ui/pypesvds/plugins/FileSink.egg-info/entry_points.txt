@@ -1,3 +1,0 @@
-[pypesvds.plugins]
-filesink = filesink.filesink:FileSink
-

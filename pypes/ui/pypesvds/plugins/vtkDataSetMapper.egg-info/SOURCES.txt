@@ -1,8 +1,0 @@
-setup.py
-vtkdatasetmapper/vtkdatasetmapper.py
-vtkdatasetmapper/__init__.py
-vtkDataSetMapper.egg-info/PKG-INFO
-vtkDataSetMapper.egg-info/SOURCES.txt
-vtkDataSetMapper.egg-info/dependency_links.txt
-vtkDataSetMapper.egg-info/entry_points.txt
-vtkDataSetMapper.egg-info/top_level.txt
