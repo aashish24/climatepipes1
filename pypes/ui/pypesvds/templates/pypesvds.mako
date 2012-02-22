@@ -15,32 +15,50 @@
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/button/assets/skins/sam/button.css" />
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/fonts/fonts.css">
     <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/container/assets/skins/sam/container.css">
-    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" />    
-    
+    <link rel="stylesheet" type="text/css" href="/js/yui-2.6.0/build/assets/skins/sam/resize.css" />
+    <style type="text/css">      
+      @import "http://serverapi.arcgisonline.com/jsapi/arcgis/2.7/js/dojo/resources/dojo.css";
+      @import "http://serverapi.arcgisonline.com/jsapi/arcgis/2.7/js/dojo/dijit/themes/tundra/tundra.css";
+      INPUT.hintTextbox { color: #888; } INPUT.hintTextboxActive { color: #000; }
+    </style>
 
+    <script type="text/javascript" src="/js/hint-textbox.js"></script>
+
+    <script type="text/javascript">var djConfig = {parseOnLoad: true};</script>
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.7"></script>
     <script type="text/javascript">
-       //<![CDATA[
-          //var redirect = function()
-          //{
-            //alert('redirected');
-          //  document.getElementById('aashish').innerHTML = '<'+'object id="foo" name="foo" type="text/html" data="http://localhost:8080/Climate/index.jsp"><\/object>';
-         // }
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.form.DateTextBox");
+      dojo.require("esri.map");
+      var map;
+      function init() {
+        var initExtent = new esri.geometry.Extent({"xmin":-13618161,"ymin":5892040,"xmax":-13450611,"ymax":5962515,"spatialReference":{"wkid":102100}});
+        map = new esri.Map("map",{extent:initExtent});
 
-        //]]>
+        //Add world imagery to the map. View the ArcGIS Online site for services http://arcgisonline/home/search.html?t=content&f=typekeywords:service
+        var basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
+        map.addLayer(basemap);
 
-        //test = document.getElementById("test");
-        //var p = document.createElement('p');
-        //p.innerHTML = 'hello foo hi';
-        //p.innerHTML = "\<iframe src=\"http://www.yahoo.com\"\>\<\/iframe\>";
-        //test.appendChild(p);      
+        var referenceLayer = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer");
+        map.addLayer(referenceLayer);
+
+
+        dojo.connect(map, 'onLoad', function(theMap) {
+          //resize the map when the browser resizes
+          dojo.connect(dijit.byId('map'), 'resize', map,map.resize);
+        });        
+      }
+
+      dojo.addOnLoad(init);
     </script>
 
     <script src="http://localhost:8080/PWService/js/ParaViewWeb.js" type="text/javascript"></script>
 
   </head>
-     <body onUnload="finalizeParaview()" style="width:100%; height:100%; background-color:#ffffff;" class="yui-skin-sam">
+     <body onUnload="finalizeParaview()" style="background-color:#fff; width:100%; height:100%;" class="yui-skin-sam">
         <div id="top1">
-            <div style="background-color:#ec3b97; height:2px;"></div>
+            <div style="height:2px;"></div>
             <div id="toolbar">                
             </div>
         </div> 
@@ -48,11 +66,25 @@
         <div id="bottom1"> </div> 
 
         <div id="left1">
-            <div id="tree" style="width:97%; padding-left:10px; padding-top:10px; float:right; background-color:#ebebeb; height:97%; overflow-y:auto;"><p></p></div>
+            <div id="tree" style="width:97%; padding-left:10px; padding-top:10px; float:right; height:97%; overflow-y:auto;"><p></p></div>
         </div> 
 
-        <div id="center1">
-            <div id="wirelayer" style="" ></div>
+        <div id="center1" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px">
+            <p>Search using pipes </p>            
+            <div id="wirelayer" style="height:35%; padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
+            <p>Search using location </p>            
+            <div id="maps">
+              <div id="map" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
+              <br>
+              <form name="query">                
+                <input type="text" name="date1" id="date1" value="MM-DD-YY" style="width:15%" class="hintTextbox" />
+                <input type="text" name="date2" id="date2" value="MM-DD-YY" style="width:15%" class="hintTextbox" />
+                <input type="text" name="bounds" id="bounds" value="UL-Lat:UL-Lon:LR-Lat:LR:Lon" style="width:29.5%" class="hintTextbox" />
+                <br><br>
+                <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Enter search terms"/>                
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
         </div>
 
         <div id="right1">

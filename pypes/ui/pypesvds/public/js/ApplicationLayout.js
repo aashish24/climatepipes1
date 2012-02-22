@@ -32,8 +32,8 @@ YAHOO.pypes.ui.layout.Window = function () {
                         {position: 'top', height: 62, body: 'top1', gutter: '1px'}, 
                         {position: 'bottom', height: 20, resize: false, body: 'bottom1', gutter: '1px'}, 
                         {position: 'left', width: 180, resize: true, body: 'left1', gutter: '1px', scroll: true},
-                        {position: 'right', width: 600, resize: true, body: 'right1', gutter: '1px', scroll: true},
-                        {position: 'center', width: 600, body: 'center1', gutter: '1px'}
+                        {position: 'right', width: 620, resize: true, body: 'right1', gutter: '1px', scroll: true},
+                        {position: 'center', width: 620, resize: true, body: 'center1', gutter: '1px'}
                     ] 
                 });
 
