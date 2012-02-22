@@ -74,14 +74,14 @@
             <div id="wirelayer" style="height:35%; padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
             <p>Search using location </p>            
             <div id="maps">
-              <div id="map" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
+              <div id="map" style="height:40%; padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
               <br>
               <form name="query">                
-                <input type="text" name="date1" id="date1" value="MM-DD-YY" style="width:15%" class="hintTextbox" />
-                <input type="text" name="date2" id="date2" value="MM-DD-YY" style="width:15%" class="hintTextbox" />
-                <input type="text" name="bounds" id="bounds" value="UL-Lat:UL-Lon:LR-Lat:LR:Lon" style="width:29.5%" class="hintTextbox" />
+                <input type="text" name="date1" id="date1" value="FROM (MM-DD-YY)" style="width:15%" class="hintTextbox" />
+                <input type="text" name="date2" id="date2" value="TO (MM-DD-YY)" style="width:15%" class="hintTextbox" />
+                <input type="text" name="bounds" id="bounds" value="REGION (UL-Lat:UL-Lon:LR-Lat:LR:Lon)" style="width:29.5%" class="hintTextbox" />
                 <br><br>
-                <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Enter search terms"/>                
+                <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Query"/>
                 <input type="submit" value="Submit" />
               </form>
             </div>
