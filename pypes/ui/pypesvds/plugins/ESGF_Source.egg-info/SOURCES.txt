@@ -1,0 +1,8 @@
+setup.py
+esgf_source/esgf_source.py
+esgf_source/__init__.py
+ESGF_Source.egg-info/PKG-INFO
+ESGF_Source.egg-info/SOURCES.txt
+ESGF_Source.egg-info/dependency_links.txt
+ESGF_Source.egg-info/entry_points.txt
+ESGF_Source.egg-info/top_level.txt

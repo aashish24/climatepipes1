@@ -1,0 +1,8 @@
+setup.py
+dataview/dataview.py
+dataview/__init__.py
+DataView.egg-info/PKG-INFO
+DataView.egg-info/SOURCES.txt
+DataView.egg-info/dependency_links.txt
+DataView.egg-info/entry_points.txt
+DataView.egg-info/top_level.txt

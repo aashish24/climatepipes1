@@ -1,0 +1,3 @@
+[pypesvds.plugins]
+filter = filter.filter:Filter
+

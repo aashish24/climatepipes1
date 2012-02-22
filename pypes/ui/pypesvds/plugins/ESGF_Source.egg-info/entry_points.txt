@@ -1,0 +1,3 @@
+[pypesvds.plugins]
+esgf_source = esgf_source.esgf_source:ESGF_Source
+

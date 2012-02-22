@@ -1,0 +1,8 @@
+setup.py
+isofillview/isofillview.py
+isofillview/__init__.py
+IsoFillView.egg-info/PKG-INFO
+IsoFillView.egg-info/SOURCES.txt
+IsoFillView.egg-info/dependency_links.txt
+IsoFillView.egg-info/entry_points.txt
+IsoFillView.egg-info/top_level.txt
