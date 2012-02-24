@@ -1,0 +1,105 @@
+var vt_modules = [
+
+      {
+	"name": "ESGF",
+	"container": {
+          "xtype": "climatePipes.Container",
+          "icon": "wireit/res/icons/application_edit.png",
+
+          "fields": [
+            {"inputParams": {"label": "Username", "name": "username", "required": true}, 
+	     "type": "string", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:String"},
+            {"inputParams": {"label": "Password", "name": "password", "required": true},
+	     "type": "password", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:String"}
+          ],
+	  "terminals": [
+            {"name": "esgf_out", "direction": [0,1], "offsetPosition": {"left": 160, "bottom": -15},
+	     "ddConfig": {"type": "o(edu.nyupoly.cs.climatepipes:ESGF)", 
+			  "allowedTypes": ["i(edu.nyupoly.cs.climatepipes:ESGF)"]}}
+	  ],
+	  "vt": {
+	    "cache":1,
+	    "namespace":"",
+	    "package":"edu.nyupoly.cs.climatepipes",
+	    "version":"0.1.0"
+	  }
+	}
+      },
+
+      {
+	"name": "Query",
+
+	"container": {
+          "xtype": "climatePipes.Container",
+          "icon": "wireit/res/icons/comment.png",
+          "fields": [
+            {"inputParams": {"label": "Keywords", "name": "keywords" },
+	     "type": "string", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:String"},
+            {"inputParams": {"label": "From", "name": "datefrom", "value": "01/01/1900", "showMsg": true,  "required": true},
+	     "type": "date", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:Date"},
+            {"inputParams": {"label": "To", "name": "dateto", "value": "12/21/2012", "showMsg": true,  "required": true},
+	     "type": "date", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:Date"},
+            {"inputParams": {"label": "Location", "name": "location", "required": true, "selectValues": locationList},
+	     "type": "select", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:Date"},
+            {"inputParams": {"label": "# of Items", "name": "numitems", "value": 1, "showMsg": true},
+	     "type": "integer", "alias":"", "vtype":"edu.utah.sci.vistrails.basic:Integer"}
+          ],
+	  "terminals": [
+	    {"name": "q_in", "direction": [0,-1], "offsetPosition": {"left": 160, "top": -15 },
+	     "ddConfig": {"type": "i(edu.nyupoly.cs.climatepipes:ESGF)", "allowedTypes": ["o(edu.nyupoly.cs.climatepipes:ESGF)"]}},
+	     
+	    {"name": "q_out", "direction": [0,1], "ddConfig": {"type": "query_out", "allowedTypes": ["query_in"]},
+	     "offsetPosition": {"left": 160, "bottom": -15 }}
+	  ],
+	  "vt": {
+	    "cache":1,
+	    "namespace":"",
+	    "package":"edu.nyupoly.cs.climatepipes",
+	    "version":"0.1.0"
+	  }
+	}
+      },
+      {
+	"name": "ListData",
+	"container": {
+          "xtype":"climatePipes.Container",
+          "icon": "wireit/res/icons/arrow_join.png",
+          "fields": [
+            {"type": "hidden", "inputParams": {"name": "hidden_vis_field"},
+	     "alias":"", "vtype":"edu.utah.sci.vistrails.basic:String"}
+          ],
+          "terminals": [
+            {"name": "list_data_in", "direction": [0,-1], "ddConfig": {"type": "query_in", "allowedTypes": ["query_out"]},
+	     "offsetPosition": {"left": 160, "top": -15 }}
+          ],
+	  "vt": {
+	    "cache":1,
+	    "namespace":"",
+	    "package":"edu.nyupoly.cs.climatepipes",
+	    "version":"0.1.0"
+	  }
+	}
+      },
+
+      {
+	"name": "Visualize",
+	"container": {
+          "xtype":"climatePipes.Container",
+          "icon": "wireit/res/icons/color_wheel.png",
+          "fields": [
+            {"type": "hidden", "inputParams": {"name": "hidden_vis_field"},
+	     "alias":"", "vtype":"edu.utah.sci.vistrails.basic:String"}
+          ],
+          "terminals": [
+            {"name": "vis_in", "direction": [0,-1], "ddConfig": {"type": "query_in", "allowedTypes": ["query_out"]},
+	     "offsetPosition": {"left": 160, "top": -15 }}
+          ],
+	  "vt": {
+	    "cache":1,
+	    "namespace":"",
+	    "package":"edu.nyupoly.cs.climatepipes",
+	    "version":"0.1.0"
+	  }
+	}
+      }
+    ];
