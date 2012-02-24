@@ -107,7 +107,7 @@ var climatePipes = {
           ],
           "terminals": [
             {"name": "list_data_in", "direction": [0,-1], "ddConfig": {"type": "query_in", "allowedTypes": ["query_out"]},
-	     "offsetPosition": {"left": 160, "top": -15 }}
+	     "offsetPosition": {"left": 65, "top": -15 }}
           ],
 	  "vt": {
 	    "cache":1,
@@ -129,7 +129,7 @@ var climatePipes = {
           ],
           "terminals": [
             {"name": "vis_in", "direction": [0,-1], "ddConfig": {"type": "query_in", "allowedTypes": ["query_out"]},
-	     "offsetPosition": {"left": 160, "top": -15 }}
+	     "offsetPosition": {"left": 65, "top": -15 }}
           ],
 	  "vt": {
 	    "cache":1,
