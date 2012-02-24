@@ -26,10 +26,10 @@ var climatePipes = {
     layoutOptions : {
       units: [
 	{ position: 'top', height: 50, body: 'top'},
-	{ position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
+	{ position: 'left', width: 200, resize: true, body: 'left-all', gutter: '5px', collapse: true,
 	  collapseSize: 25, header: 'Modules', scroll: true, animate: true },
-	{ position: 'center', body: 'center', gutter: '5px' },
-	{ position: 'right', width: 320, resize: true, body: 'right', gutter: '5px', collapse: true, 
+	{ position: 'center', body: 'center-all', gutter: '5px' },
+	{ position: 'right', width: 500, resize: true, body: 'right', gutter: '5px', collapse: true,
 	  collapseSize: 25, /*header: 'Properties', scroll: true,*/ animate: true }
       ]
     },

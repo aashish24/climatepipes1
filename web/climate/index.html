@@ -28,7 +28,7 @@
 	width: 350px; /* Prevent the modules from scratching on the right */
       }
 
-      div.WireIt-InOutContainer {	
+      div.WireIt-InOutContainer {
 	width: 150px;
       }
 
@@ -134,8 +134,8 @@
 
       /*
       YAHOO.util.Event.onDOMReady( function() {
-        var editor = new WireIt.WiringEditor(climatePipes); 
-      
+        var editor = new WireIt.WiringEditor(climatePipes);
+
         // Open the infos panel
         editor.accordionView.openPanel(2);
       });
@@ -144,7 +144,7 @@
     </script>
 
     <!-- ESRI/ArcGIS  -->
-    <style type="text/css">      
+    <style type="text/css">
       /* @import "http://serverapi.arcgisonline.com/jsapi/arcgis/2.7/js/dojo/resources/dojo.css"; */
       @import "http://serverapi.arcgisonline.com/jsapi/arcgis/2.7/js/dojo/dijit/themes/tundra/tundra.css";
       INPUT.hintTextbox { color: #888; } INPUT.hintTextboxActive { color: #000; }
@@ -165,24 +165,24 @@
                                                    "xmax":-13450611,"ymax":5962515,
                                                    "spatialReference":{"wkid":102100}});
         map = new esri.Map("map",{extent:initExtent});
-      
-        // Add world imagery to the map. View the ArcGIS Online site for services 
+
+        // Add world imagery to the map. View the ArcGIS Online site for services
         // http://arcgisonline/home/search.html?t=content&f=typekeywords:service
         var basemap = new esri.layers.ArcGISTiledMapServiceLayer(
           "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer");
         map.addLayer(basemap);
-      
+
         var referenceLayer = new esri.layers.ArcGISTiledMapServiceLayer(
           "http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer");
         map.addLayer(referenceLayer);
-      
-      
+
+
         dojo.connect(map, 'onLoad', function(theMap) {
           //resize the map when the browser resizes
           dojo.connect(dijit.byId('map'), 'resize', map,map.resize);
-        });        
+        });
       }
-      
+
       dojo.addOnLoad(init);
     </script>
 
@@ -192,78 +192,69 @@
   </head>
 
   <body class="yui-skin-sam" onUnload="finalizeParaview()">
-
+    <!--TOP-------------------------------------------------------------------->
     <div id="top">
       <div class="logo">ClimatePipes</div>
       <div id="toolbar"></div>
       <div class="topright">
-	<span>Hello there !</span>
+        <span>Hello there !</span>
       </div>
     </div>
 
-
-    <div id="left">
+    <!--LEFT-------------------------------------------------------------------->
+    <div id="left-all">
+      <div id="left">
+        <!-- Placeholder for modules -->
+      </div>
+      <div style='position: relative;'>
+        <ul id="accordionView">
+          <li>
+            <h2>Minimap</h2>
+            <div style='position: relative;'>
+              <div id="layerMap"></div>
+            </div>
+          </li>
+          <li>
+            <h2>Infos</h2>
+            <div>
+              <div style="padding: 10px;">
+                <p>This example shows how to use the <i>ImageContainer</i> and <i>FormContainer</i> in a language definition.</p>
+                <br />
+                <p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
+                <br />
+                <p><a href="climatepipes.js" target="_new">Click here to view the language definition for this editor.</a></p>
+              </div>
+            </div>
+          </li>
+        </ul>
+     </div>
     </div>
-    
+
+    <!--RIGHT-------------------------------------------------------------------->
     <div id="right">
-      <ul id="accordionView">
-	<li>
-	  <h2>Properties</h2>
-	  <div>
-	    <div id="propertiesForm"></div>
-	  </div>
-	</li>
-	<li>
-	  <h2>Minimap</h2>
-	  <div style='position: relative;'>
-	    <div id="layerMap"></div>
-	  </div>
-	</li>
-	<li>
-	  <h2>Infos</h2>
-	  <div>
-	    <div style="padding: 10px;">
-	      <p>This example shows how to use the <i>ImageContainer</i> and <i>FormContainer</i> in a language definition.</p>
-	      <br />
-	      <p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
-	      <br />
-	      <p><a href="climatepipes.js" target="_new">Click here to view the language definition for this editor.</a></p>
-	    </div>
-	  </div>
-	</li>	
-      </ul>
+      <!-- Placeholder for results -->
     </div>
     
-    <div id="center"></div>
-    <!--div id="mycenter">
+    <!--CENTER-------------------------------------------------------------------->
+    <div id="center-all" style="height:100%">
       <p>Search using pipes</p>
-      <div id="center"></div>
-      <div id="maps">
-	<p>Search using location</p>
-	<div id="map" style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
-	<br>
-	<form name="query">                
-	  <input type="text" name="date1" id="date1" value="FROM (MM-DD-YY)" style="width:15%" class="hintTextbox" />
-	  <input type="text" name="date2" id="date2" value="TO (MM-DD-YY)" style="width:15%" class="hintTextbox" />
-	  <input type="text" name="bounds" id="bounds" value="REGION (UL-Lat:UL-Lon:LR-Lat:LR:Lon)" 
-		 style="width:29.5%" class="hintTextbox" />
-	  <br><br>
-	  <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Query"/>
-	  <input type="submit" value="Submit" />
-	</form>
-      </div>
-    </div-->
-    
-    <div id="helpPanel">
-      <div class="hd">Welcome to the ClimatePipes</div>
-      <div class="bd" style="text-align: left;">
-	
-	<p>This example shows how to use the <i>ImageContainer</i> and <i>FormContainer</i> in a language definition.</p>
-	<br /><p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
-	<br /><p><a href="climatepipes.js" target="_new">Click here to view the language definition for this editor.</a></p>
-	<br /><p>Close this dialog to test ClimatePipes</p>
+      <div id="center" style="height:45%"></div>
+      <div id="maps" style="height:55%; margin-left:auto; margin-right: auto">
+        <p>Search using location</p>
+        <div id="map" style="width:80%; height:65%; margin-left:auto; margin-right: auto; padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom:10px"></div>
+        <br>
+        <form name="query" style="width:80%; margin-left:auto; margin-right: auto;">
+          <input type="text" name="date1" id="date1" value="FROM (MM-DD-YY)" style="width:15%" class="hintTextbox" />
+          <input type="text" name="date2" id="date2" value="TO (MM-DD-YY)" style="width:15%" class="hintTextbox" />
+          <input type="text" name="bounds" id="bounds" value="REGION (UL-Lat:UL-Lon:LR-Lat:LR:Lon)"
+           style="width:29.5%" class="hintTextbox" />
+          <br><br>
+          <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Query"/>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     </div>
-    
+
+    <!--HELP-------------------------------------------------------------------->
   </body>
 </html>
