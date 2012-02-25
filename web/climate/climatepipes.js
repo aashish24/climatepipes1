@@ -2079,16 +2079,21 @@ function json2workflowxml(json) {
     for(var i = 0; i < json.wires.length; i+=1) {
       var src = json.wires[i].src;
       var tgt = json.wires[i].tgt;
+      if(json.modules[src.moduleId].config.sig[src.terminal][0] == 'i') {
+	var tmp = src;
+	src = tgt;
+	tgt = tmp;
+      }
       result+="  <connection id=\""+i+"\">END_OF_LINE";
       result+="    <port id=\""+j+"\" moduleId=\""+src.moduleId
 	+"\" moduleName=\""+json.modules[src.moduleId].name
 	+"\" name=\""+src.terminal+"\" type=\"source"
-	+"\" signature=\""+json.modules[src.moduleId].config.sig[src.terminal]
+	+"\" signature=\""+json.modules[src.moduleId].config.sig[src.terminal].substr(1)
 	+"\" />END_OF_LINE";
       result+="    <port id=\""+(j+1)+"\" moduleId=\""+tgt.moduleId
 	+"\" moduleName=\""+json.modules[tgt.moduleId].name
 	+"\" name=\""+tgt.terminal+"\" type=\"destination"
-	+"\" signature=\""+json.modules[tgt.moduleId].config.sig[tgt.terminal]
+	+"\" signature=\""+json.modules[tgt.moduleId].config.sig[tgt.terminal].substr(1)
 	+"\" />END_OF_LINE";
       result+="  </connection>END_OF_LINE";
       j+=2;
@@ -2148,7 +2153,7 @@ YAHOO.extend(climatePipes.Container, WireIt.FormContainer, {
 
       //add signature info
       for(var i in this.options.terminals) {
-	obj.sig[this.options.terminals[i].name] = this.options.terminals[i].ddConfig.type.substr(1);
+	obj.sig[this.options.terminals[i].name] = this.options.terminals[i].ddConfig.type;
       }
 
       //add parameter info
