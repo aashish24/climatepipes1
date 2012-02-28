@@ -1,0 +1,206 @@
+<vistrail id="" name="" version="1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vistrails.org/vistrail.xsd">
+  <action date="2012-02-28 10:42:53" id="1" prevId="0" session="0" user="dakoop">
+    <annotation id="0" key="__description__" value="Copied from pipeline" />
+    <add id="0" objectId="0" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="0" name="vtkDataSetReader" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="1" objectId="0" parentObjId="0" parentObjType="module" what="location">
+      <location id="0" x="70.783446712" y="203.656462585" />
+    </add>
+    <add id="2" objectId="1" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="1" name="vtkContourFilter" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="3" objectId="1" parentObjId="1" parentObjType="module" what="location">
+      <location id="1" x="72.783446712" y="105.656462585" />
+    </add>
+    <add id="4" objectId="2" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="2" name="vtkDataSetMapper" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="5" objectId="2" parentObjId="2" parentObjType="module" what="location">
+      <location id="2" x="67.783446712" y="0.656462585034" />
+    </add>
+    <add id="6" objectId="3" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="3" name="vtkActor" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="7" objectId="3" parentObjId="3" parentObjType="module" what="location">
+      <location id="3" x="72.783446712" y="-70.343537415" />
+    </add>
+    <add id="8" objectId="4" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="4" name="vtkRenderer" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="9" objectId="4" parentObjId="4" parentObjType="module" what="location">
+      <location id="4" x="73.783446712" y="-149.343537415" />
+    </add>
+    <add id="10" objectId="5" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="5" name="VTKRenderOffscreen" namespace="" package="edu.utah.sci.vistrails.vtk" version="0.9.3" />
+    </add>
+    <add id="11" objectId="1" parentObjId="5" parentObjType="module" what="function">
+      <function id="1" name="height" pos="3" />
+    </add>
+    <add id="12" objectId="1" parentObjId="1" parentObjType="function" what="parameter">
+      <parameter alias="" id="1" name="&lt;nodescription&gt;" pos="0" type="edu.utah.sci.vistrails.basic:Integer" val="400" />
+    </add>
+    <add id="13" objectId="0" parentObjId="5" parentObjType="module" what="function">
+      <function id="0" name="width" pos="2" />
+    </add>
+    <add id="14" objectId="0" parentObjId="0" parentObjType="function" what="parameter">
+      <parameter alias="" id="0" name="&lt;nodescription&gt;" pos="0" type="edu.utah.sci.vistrails.basic:Integer" val="400" />
+    </add>
+    <add id="15" objectId="5" parentObjId="5" parentObjType="module" what="location">
+      <location id="5" x="73.783446712" y="-224.343537415" />
+    </add>
+    <add id="16" objectId="6" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="6" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="17" objectId="2" parentObjId="6" parentObjType="module" what="function">
+      <function id="2" name="name" pos="0" />
+    </add>
+    <add id="18" objectId="2" parentObjId="2" parentObjType="function" what="parameter">
+      <parameter alias="" id="2" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="SetValue" />
+    </add>
+    <add id="19" objectId="6" parentObjId="6" parentObjType="module" what="location">
+      <location id="6" x="-140.869614512" y="199.921768707" />
+    </add>
+    <add id="20" objectId="7" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="7" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="21" objectId="3" parentObjId="7" parentObjType="module" what="function">
+      <function id="3" name="name" pos="0" />
+    </add>
+    <add id="22" objectId="3" parentObjId="3" parentObjType="function" what="parameter">
+      <parameter alias="" id="3" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="width" />
+    </add>
+    <add id="23" objectId="7" parentObjId="7" parentObjType="module" what="location">
+      <location id="7" x="-83.2879818594" y="-33.4353741497" />
+    </add>
+    <add id="24" objectId="8" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="8" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="25" objectId="4" parentObjId="8" parentObjType="module" what="function">
+      <function id="4" name="name" pos="0" />
+    </add>
+    <add id="26" objectId="4" parentObjId="4" parentObjType="function" what="parameter">
+      <parameter alias="" id="4" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="height" />
+    </add>
+    <add id="27" objectId="8" parentObjId="8" parentObjType="module" what="location">
+      <location id="8" x="-207.5430839" y="-32.425170068" />
+    </add>
+    <add id="28" objectId="9" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="9" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="29" objectId="5" parentObjId="9" parentObjType="module" what="function">
+      <function id="5" name="name" pos="0" />
+    </add>
+    <add id="30" objectId="5" parentObjId="5" parentObjType="function" what="parameter">
+      <parameter alias="" id="5" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="SetFile" />
+    </add>
+    <add id="31" objectId="9" parentObjId="9" parentObjType="module" what="location">
+      <location id="9" x="70.783446712" y="300.656462585" />
+    </add>
+    <add id="32" objectId="10" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="10" name="OutputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="33" objectId="6" parentObjId="10" parentObjType="module" what="function">
+      <function id="6" name="name" pos="0" />
+    </add>
+    <add id="34" objectId="6" parentObjId="6" parentObjType="function" what="parameter">
+      <parameter alias="" id="6" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="image" />
+    </add>
+    <add id="35" objectId="10" parentObjId="10" parentObjType="module" what="location">
+      <location id="10" x="82.783446712" y="-338.343537415" />
+    </add>
+    <add id="36" objectId="0" parentObjId="" parentObjType="" what="connection">
+      <connection id="0" />
+    </add>
+    <add id="37" objectId="1" parentObjId="0" parentObjType="connection" what="port">
+      <port id="1" moduleId="9" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="38" objectId="0" parentObjId="0" parentObjType="connection" what="port">
+      <port id="0" moduleId="0" moduleName="vtkDataSetReader" name="SetFile" signature="(edu.utah.sci.vistrails.basic:File)" type="destination" />
+    </add>
+    <add id="39" objectId="1" parentObjId="" parentObjType="" what="connection">
+      <connection id="1" />
+    </add>
+    <add id="40" objectId="3" parentObjId="1" parentObjType="connection" what="port">
+      <port id="3" moduleId="5" moduleName="VTKRenderOffscreen" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="41" objectId="2" parentObjId="1" parentObjType="connection" what="port">
+      <port id="2" moduleId="10" moduleName="OutputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="destination" />
+    </add>
+    <add id="42" objectId="2" parentObjId="" parentObjType="" what="connection">
+      <connection id="2" />
+    </add>
+    <add id="43" objectId="5" parentObjId="2" parentObjType="connection" what="port">
+      <port id="5" moduleId="4" moduleName="vtkRenderer" name="self" signature="(edu.utah.sci.vistrails.vtk:vtkRenderer)" type="source" />
+    </add>
+    <add id="44" objectId="4" parentObjId="2" parentObjType="connection" what="port">
+      <port id="4" moduleId="5" moduleName="VTKRenderOffscreen" name="renderer" signature="(edu.utah.sci.vistrails.vtk:vtkRenderer)" type="destination" />
+    </add>
+    <add id="45" objectId="3" parentObjId="" parentObjType="" what="connection">
+      <connection id="3" />
+    </add>
+    <add id="46" objectId="7" parentObjId="3" parentObjType="connection" what="port">
+      <port id="7" moduleId="3" moduleName="vtkActor" name="self" signature="(edu.utah.sci.vistrails.vtk:vtkActor)" type="source" />
+    </add>
+    <add id="47" objectId="6" parentObjId="3" parentObjType="connection" what="port">
+      <port id="6" moduleId="4" moduleName="vtkRenderer" name="AddActor" signature="(edu.utah.sci.vistrails.vtk:vtkProp)" type="destination" />
+    </add>
+    <add id="48" objectId="4" parentObjId="" parentObjType="" what="connection">
+      <connection id="4" />
+    </add>
+    <add id="49" objectId="9" parentObjId="4" parentObjType="connection" what="port">
+      <port id="9" moduleId="2" moduleName="vtkDataSetMapper" name="self" signature="(edu.utah.sci.vistrails.vtk:vtkDataSetMapper)" type="source" />
+    </add>
+    <add id="50" objectId="8" parentObjId="4" parentObjType="connection" what="port">
+      <port id="8" moduleId="3" moduleName="vtkActor" name="SetMapper" signature="(edu.utah.sci.vistrails.vtk:vtkMapper)" type="destination" />
+    </add>
+    <add id="51" objectId="5" parentObjId="" parentObjType="" what="connection">
+      <connection id="5" />
+    </add>
+    <add id="52" objectId="11" parentObjId="5" parentObjType="connection" what="port">
+      <port id="11" moduleId="1" moduleName="vtkContourFilter" name="GetOutputPort0" signature="(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)" type="source" />
+    </add>
+    <add id="53" objectId="10" parentObjId="5" parentObjType="connection" what="port">
+      <port id="10" moduleId="2" moduleName="vtkDataSetMapper" name="SetInputConnection0" signature="(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)" type="destination" />
+    </add>
+    <add id="54" objectId="6" parentObjId="" parentObjType="" what="connection">
+      <connection id="6" />
+    </add>
+    <add id="55" objectId="13" parentObjId="6" parentObjType="connection" what="port">
+      <port id="13" moduleId="0" moduleName="vtkDataSetReader" name="GetOutputPort0" signature="(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)" type="source" />
+    </add>
+    <add id="56" objectId="12" parentObjId="6" parentObjType="connection" what="port">
+      <port id="12" moduleId="1" moduleName="vtkContourFilter" name="SetInputConnection0" signature="(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)" type="destination" />
+    </add>
+    <add id="57" objectId="7" parentObjId="" parentObjType="" what="connection">
+      <connection id="7" />
+    </add>
+    <add id="58" objectId="15" parentObjId="7" parentObjType="connection" what="port">
+      <port id="15" moduleId="1" moduleName="vtkContourFilter" name="SetValue" signature="(edu.utah.sci.vistrails.basic:Integer,edu.utah.sci.vistrails.basic:Float)" type="destination" />
+    </add>
+    <add id="59" objectId="14" parentObjId="7" parentObjType="connection" what="port">
+      <port id="14" moduleId="6" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="60" objectId="8" parentObjId="" parentObjType="" what="connection">
+      <connection id="8" />
+    </add>
+    <add id="61" objectId="17" parentObjId="8" parentObjType="connection" what="port">
+      <port id="17" moduleId="5" moduleName="VTKRenderOffscreen" name="width" signature="(edu.utah.sci.vistrails.basic:Integer)" type="destination" />
+    </add>
+    <add id="62" objectId="16" parentObjId="8" parentObjType="connection" what="port">
+      <port id="16" moduleId="7" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="63" objectId="9" parentObjId="" parentObjType="" what="connection">
+      <connection id="9" />
+    </add>
+    <add id="64" objectId="19" parentObjId="9" parentObjType="connection" what="port">
+      <port id="19" moduleId="5" moduleName="VTKRenderOffscreen" name="height" signature="(edu.utah.sci.vistrails.basic:Integer)" type="destination" />
+    </add>
+    <add id="65" objectId="18" parentObjId="9" parentObjType="connection" what="port">
+      <port id="18" moduleId="8" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+  </action>
+  <annotation id="1" key="__abstraction_origin_uuid__" value="a42e8817-6233-11e1-873d-0023dfde3d57" />
+  <annotation id="2" key="__abstraction_uuid__" value="a42e8817-6233-11e1-873d-0023dfde3d57" />
+  <annotation id="3" key="__abstraction_uuid_2__" value="b9841aab-6233-11e1-bdcf-0023dfde3d57" />
+</vistrail>

@@ -48,6 +48,7 @@ class WebSink(Module):
             print strValue,
 
 _modules = [WebSink]
+_subworkflows = ["vtkIsosurfaceOffscreen.xml"]
 
 def initialize():
     global web_out_dir

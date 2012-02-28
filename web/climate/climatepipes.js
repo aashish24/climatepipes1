@@ -3231,6 +3231,162 @@ var vt_modules = [
   "name": "WebSink"
  }, 
  {
+  "category": "org-vistrails-climatepipes", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "SetValue[0]", 
+      "label": "SetValue[0]"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Float", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "SetValue[1]", 
+      "label": "SetValue[1]"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "width", 
+      "label": "width"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "height", 
+      "label": "height"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:File", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "SetFile", 
+      "label": "SetFile"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "SetValue", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 64.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:Integer,edu.utah.sci.vistrails.basic:Float)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:Integer,edu.utah.sci.vistrails.basic:Float)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "width", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 128.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:Integer)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "height", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 192.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:Integer)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "SetFile", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 256.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:File)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "image", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:File)", 
+       "i(edu.utah.sci.vistrails.basic:Path)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.0.1", 
+    "package": "org.vistrails.climatepipes"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "vtkIsosurfaceOffscreen"
+ }, 
+ {
   "category": "edu-utah-sci-vistrails-http", 
   "container": {
    "fields": [
