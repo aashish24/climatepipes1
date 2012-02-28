@@ -32,7 +32,6 @@ def login():
         except Exception, err:
             print "Could not connect : ";
             return 0;
-
     return keyCertFile
 
 # -----------------------------------------------------------------------------
