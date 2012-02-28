@@ -1,0 +1,1 @@
+PYTHONHOME=/vistrails/bin/VisTrailsTrunk.app/Contents/Resources /vistrails/bin/VisTrailsTrunk.app/Contents/MacOS/python modules_to_json.py > all_modules.json

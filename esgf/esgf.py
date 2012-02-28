@@ -3,6 +3,8 @@ import os
 import urllib2
 import libxml2
 import string
+import subprocess
+import time
 
 # -----------------------------------------------------------------------------
 def login():
@@ -17,7 +19,7 @@ def login():
     host = 'pcmdi3.llnl.gov'
     port = 2119
     user = 'nix'
-    password = '2pw4kw'
+    password = '2PW4kw'
     keyCertFile = '/tmp/keyCert.esgf'
     if(not(os.path.exists(keyCertFile))):
         print keyCertFile + " does not exist"
@@ -30,7 +32,6 @@ def login():
         except Exception, err:
             print "Could not connect : ";
             return 0;
-
     return keyCertFile
 
 # -----------------------------------------------------------------------------
@@ -42,7 +43,11 @@ def httpDownloadFile(keyCertFile,url,fnm):
     cmd = "wget --certificate %s -t 2 -T 10 --private-key %s -O %s %s --no-check-certificate" % (keyCertFile,keyCertFile,fnm,url)
     pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     time.sleep(.1)
-    return pipe
+    out,err = pipe.communicate()
+    if(len(out)):
+        return out
+    else:
+        return err
 
 # -----------------------------------------------------------------------------
 def fetchXML(url):
@@ -101,8 +106,8 @@ def fetchData(url):
     '''
     return map(getCatalogData, getCatalog(fetchXML(url)))
 
-url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
-data = fetchData(url)
+# url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
+# data = fetchData(url)
 
 # -----------------------------------------------------------------------------
 # Extra code to test stuff
@@ -110,4 +115,3 @@ data = fetchData(url)
 # import xml.etree.ElementTree as xml
 # xdata = xml.fromstring(data)
 # xml.dump(xdata)
-
