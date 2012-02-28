@@ -4,7 +4,7 @@ from core.modules.basic_modules import String, Integer, List
 import esgf
 
 
-# # -----------------------------------------------------------------------Login
+# ------------------------------------------------------------------------Login
 class ESGFLogin(Module):
     '''
     ESGFLogin is used to login to ESGF
