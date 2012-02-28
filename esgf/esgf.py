@@ -44,7 +44,11 @@ def httpDownloadFile(keyCertFile,url,fnm):
     cmd = "wget --certificate %s -t 2 -T 10 --private-key %s -O %s %s --no-check-certificate" % (keyCertFile,keyCertFile,fnm,url)
     pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     time.sleep(.1)
-    return pipe
+    out,err = pipe.communicate()
+    if(len(out)):
+        return out
+    else:
+        return err
 
 # -----------------------------------------------------------------------------
 def fetchXML(url):
