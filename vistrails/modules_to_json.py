@@ -1,10 +1,14 @@
 import itertools
 import json
 
-def create_components(reg, vt_package):
+def create_components(reg, vt_package, which_modules=None):
     modules = []
     for desc in vt_package.descriptor_list:
+        if which_modules is not None and desc.name not in which_modules:
+            continue
+        category = desc.package.replace('.', '-')
         module = {"name": desc.name,
+                  "category": category,
                   "container": \
                       {"xtype": "climatePipes.Container",
                        "icon": "wireit/res/icons/application_edit.png",
@@ -63,28 +67,63 @@ def create_components(reg, vt_package):
                     container["terminals"].append(terminal)
                     x_offset += x_step
                 if reg.is_method(port_spec):
-                    field = {"inputParams": {"label": port_spec.name,
-                                             "name": port_spec.name.lower(),
-                                             "required": True},
-                             "type": "string",
-                             "alias": "",
-                             "vtype": port_spec.sigstring[1:-1],
-                             }
-                    container["fields"].append(field)
+                    if which_modules is not None and \
+                            which_modules[desc.name] is not None and \
+                            port_spec.name not in which_modules[desc.name]:
+                        continue
+                    ps_descs = port_spec.descriptors()
+                    for i, ps_desc in enumerate(ps_descs):
+                        if len(ps_descs) > 1:
+                            label = port_spec.name + "[%d]" % i
+                        else:
+                            label = port_spec.name
+                        field = {"inputParams": {"label": label,
+                                                 "name": label,
+                                                 "required": True},
+                                 "type": "string",
+                                 "alias": "",
+                                 "vtype": ps_desc.sigstring,
+                                 # port_spec.sigstring[1:-1],
+                                 }
+                        container["fields"].append(field)
         modules.append(module)
     modules.sort(key=lambda x: x["name"])
-    print "var vt_modules =", json.dumps(modules, indent=1)
+    return modules
                 
 def run():
     import sys
     sys.path.append('/vistrails/src/git/vistrails')
     import core.application as vt_app
-    vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
+    # vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
+    vt_app.init()
+
+    from core.api import get_api
+    vt = get_api()
+    vt.load_package("edu.utah.sci.vistrails.vtk", "vtk")
+    vt.load_package("org.vistrails.climatepipes", "climatepipes")
+    vt.load_package("edu.utah.sci.vistrails.http", "HTTP")
 
     from core.modules.module_registry import get_module_registry
     reg = get_module_registry()
     basic_pkg = reg.get_package_by_name('edu.utah.sci.vistrails.basic')
-    create_components(reg, basic_pkg)
+    basic_modules = create_components(reg, basic_pkg)
+    vtk_pkg = reg.get_package_by_name('edu.utah.sci.vistrails.vtk')
+    vtk_modules = create_components(reg, vtk_pkg, {'vtkDataSetReader': \
+                                                       set(['SetFile']),
+                                                   'vtkContourFilter': \
+                                                       set(['SetValue']),
+                                                   'vtkDataSetMapper': set() ,
+                                                   'vtkActor': set(),
+                                                   'vtkRenderer': set(),
+                                                   'VTKRenderOffscreen': \
+                                                       set(['height', 
+                                                            'width'])})
+    climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
+    climatepipes_modules = create_components(reg, climatepipes_pkg)
+    http_pkg = reg.get_package_by_name("edu.utah.sci.vistrails.http")
+    http_modules = create_components(reg, http_pkg, {"HTTPFile": None})
+    modules = basic_modules + vtk_modules + climatepipes_modules + http_modules
+    print "var vt_modules =", json.dumps(modules, indent=1) + ';'
 
 if __name__ == '__main__':
     run()
