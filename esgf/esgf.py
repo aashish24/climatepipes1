@@ -101,8 +101,8 @@ def fetchData(url):
     '''
     return map(getCatalogData, getCatalog(fetchXML(url)))
 
-url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
-data = fetchData(url)
+# url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
+# data = fetchData(url)
 
 # -----------------------------------------------------------------------------
 # Extra code to test stuff
@@ -110,4 +110,3 @@ data = fetchData(url)
 # import xml.etree.ElementTree as xml
 # xdata = xml.fromstring(data)
 # xml.dump(xdata)
-
