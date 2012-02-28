@@ -19,7 +19,7 @@ def login():
     host = 'pcmdi3.llnl.gov'
     port = 2119
     user = 'nix'
-    password = '2pw4kw'
+    password = '2PW4kw'
     keyCertFile = '/tmp/keyCert.esgf'
     if(not(os.path.exists(keyCertFile))):
         print keyCertFile + " does not exist"
