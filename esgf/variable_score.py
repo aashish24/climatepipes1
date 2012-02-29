@@ -3,8 +3,8 @@ import synonyms
 
 def match_using_synonyms( in_token, query_token ):
   syns = synonyms.get_synonyms_strict( query_token )
-  print 'query_token is ', query_token
-  print 'synonyms are ', syns
+  # print 'query_token is ', query_token
+  # print 'synonyms are ', syns
   for i in syns:    
     if( i.lower() == in_token.lower() ):
       return 0.5
