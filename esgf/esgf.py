@@ -5,6 +5,7 @@ import libxml2
 import string
 import subprocess
 import time
+import synonyms
 
 # -----------------------------------------------------------------------------
 def login():
@@ -48,6 +49,21 @@ def httpDownloadFile(keyCertFile,url,fnm):
         return out
     else:
         return err
+    
+# -----------------------------------------------------------------------------
+def prependQuery(str):
+    '''
+    Given an example string 'text' return  &query="text"
+    '''
+    return '&query="'+str+'"'
+    
+# -----------------------------------------------------------------------------
+def makeESGFSearchURL(searchString):
+    '''
+    Takes a base url and searchString and returns a url to be used with ESGF
+    '''
+    q = "".join(map(prependQuery, synonyms.get_synonyms_strict(searchString)))
+    return 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'+q
 
 # -----------------------------------------------------------------------------
 def fetchXML(url):
