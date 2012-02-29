@@ -1,6 +1,8 @@
 import myproxy_logon
+import httplib
 import os
 import urllib2
+import urlparse
 import libxml2
 import string
 import subprocess
@@ -8,8 +10,14 @@ import time
 import variable_score
 import synonyms
 
+from ndg.httpsclient.utils import open_url, Configuration
+from ndg.httpsclient import ssl_context_util
+
+
+stashedKeyCertFname = None
+
 # -----------------------------------------------------------------------------
-def login():
+def login(host=None, port=None, user=None, password=None, keyCertFile=None):
     '''
     Predefined login parameters are used to generate a key/certificate if not
     already exists
@@ -18,53 +26,66 @@ def login():
     TODO: If the file exists check time it has been around for and if expired
           delete and regenerate.
     '''
-    host = 'pcmdi3.llnl.gov'
-    port = 2119
-    user = 'nix'
-    password = '2pw4kw'
-    keyCertFile = '/tmp/keyCert.esgf'
-    if(not(os.path.exists(keyCertFile))):
-        print keyCertFile + " does not exist"
-        try:
-            myproxy_logon.myproxy_logon(host,
-                                        user,
-                                        password,
-                                        keyCertFile,
-                                        port=port)
-        except Exception, err:
-            print "Could not connect : ";
-            return 0;
+    if host is None:
+        host = 'pcmdi3.llnl.gov'
+    if port is None:
+        port = 2119
+    if user is None:
+        user = 'nix'
+    if password is None:
+        password = '2pw4kw'
+    if keyCertFile is not None and os.path.getsize(keyCertFile) > 0:
+        return keyCertFile
+    elif stashedKeyCertFname is not None:
+        return stashedKeyCertFname
+    elif keyCertFile is None:
+        keyCertFile = '/tmp/keyCert.esgf'
+
+    # let the exception propogate, it will be caught and shown as error
+    myproxy_logon.myproxy_logon(host,
+                                user,
+                                password,
+                                keyCertFile,
+                                port=port)
     return keyCertFile
 
 # -----------------------------------------------------------------------------
-def httpDownloadFile(keyCertFile,url,fnm):
+def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     '''
     Download the given file from url and save it into fnm. The keyCertFile is
     used for authentication and typically got after some form of login process.
     '''
-    cmd = "wget --certificate %s -t 2 -T 10 --private-key %s -O %s %s --no-check-certificate" % (keyCertFile,keyCertFile,fnm,url)
-    pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    time.sleep(.1)
-    out,err = pipe.communicate()
-    if(len(out)):
-        return out
-    else:
-        return err
-    
-# -----------------------------------------------------------------------------
-def prependQuery(str):
-    '''
-    Given an example string 'text' return  &query="text"
-    '''
-    return '&query="'+str+'"'
-    
-# -----------------------------------------------------------------------------
-def makeESGFSearchURL(searchString):
-    '''
-    Takes a base url and searchString and returns a url to be used with ESGF
-    '''
-    q = "".join(map(prependQuery, synonyms.get_synonyms_strict(searchString)))
-    return 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'+q
+    ssl_context = ssl_context_util.make_ssl_context(keyCertFile, 
+                                                    keyCertFile,
+                                                    None,
+                                                    None,
+                                                    False,
+                                                    url)
+    config = Configuration(ssl_context, False)
+    return_code, return_msg, response = open_url(url, config)
+    if return_code == httplib.OK:
+        try:
+            file_size = int(response.info().getheaders("Content-Length")[0])
+        except:
+            file_size = -1
+
+        print "Downloading %d Bytes" % file_size
+        file_size_dl = 0
+        f = open(fnm, 'w')
+        while True:
+            buf = response.read(8192)
+            if not buf:
+                break
+            f.write(buf)
+            file_size_dl += len(buf)
+            status = "%10d [%3.2f%%]" % (file_size_dl, 
+                                         file_size_dl * 100. / file_size)
+            status = status + chr(8)*(len(status)+1)
+            print status,
+        f.close()
+        response.close()
+        return True
+    return False
 
 # -----------------------------------------------------------------------------
 def fetchXML(url):
