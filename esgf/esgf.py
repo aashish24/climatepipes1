@@ -76,7 +76,7 @@ def getURLAndVariables(context,attr):
     '''
     context.setContextNode(attr)
     url = context.xpathEval("./@urlPath")[0]
-    return {"url":'http://pcmdi9.llnl.gov/thredds/fileServer/'+url.content, "variables":[i.content for i in context.xpathEval("./ns:variables/ns:variable[@name]")]}
+    return {"url":'http://pcmdi9.llnl.gov/thredds/fileServer/'+url.content, "variables":[i.content for i in context.xpathEval("./ns:variables/ns:variable[@name]")], "rank":0}
 
 # -----------------------------------------------------------------------------
 def getMetadataAndFiles(stringDoc):
@@ -89,8 +89,7 @@ def getMetadataAndFiles(stringDoc):
     files=[]
     for attr in context.xpathEval("/ns:catalog/ns:dataset/ns:dataset[@urlPath]"):
         files[len(files):] =  [getURLAndVariables(context,attr)]
-    return {'metadata':variables,
-            'files':files}
+    return files
 
 # -----------------------------------------------------------------------------
 def getCatalogData(url):
