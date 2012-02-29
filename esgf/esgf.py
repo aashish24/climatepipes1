@@ -1,12 +1,13 @@
 import myproxy_logon
 import os
-import urllib2
+# import urllib2
 import libxml2
 import string
 import subprocess
 import time
 import synonyms
 import variable_score
+import httplib2
 
 # -----------------------------------------------------------------------------
 def login():
@@ -72,8 +73,11 @@ def fetchXML(url):
     Fetches data from the url. Cleanes all the "\n" characters and returns the
     clean string.
     '''
-    u = urllib2.urlopen(url)
-    data = u.read()
+    # u = urllib2.urlopen(url)
+    # data = u.read()
+    
+    resp, data = httplib2.Http().request(url)
+ 
     data=string.replace(data, "\r\n", "")
     data=string.replace(data, "\n", "")
     return data
