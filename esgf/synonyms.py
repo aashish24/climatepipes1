@@ -21,8 +21,7 @@ def remove_duplicates( synlist ):
 # Using wordnet to get synonyms
 #------------------------------------------------------------------------------
 def get_all_synonyms( word ):
-  import nltk
-  from nltk.tokenize import word_tokenize as wst
+  import nltk  
   from nltk.corpus import wordnet
 
   sets = wordnet.synsets( word )
