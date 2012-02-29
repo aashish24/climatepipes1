@@ -30,11 +30,14 @@ def get_all_synonyms( word ):
   syns = []
   for i in sets:
     names = wordnet.synset( i.name )
-    tags = nltk.pos_tag( names.lemma_names )
-
-    for j in tags:
-      if should_keep( j[1] ) == True:
-        syns.append( j[0] )
+    # Always preserve nouns
+    if ( i.name ).find( '.n.' ) != -1:
+      syns += names.lemma_names
+    else:
+      tags = nltk.pos_tag( names.lemma_names )
+      for j in tags:
+        if should_keep( j[1] ) == True:
+          syns.append( j[0] )
   return syns
 
 # Given a string get synonyms for nouns, adv, prep, and number
