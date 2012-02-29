@@ -98,12 +98,23 @@ def getCatalogData(url):
     '''
     return getMetadataAndFiles(fetchXML(url))
 
+ # -----------------------------------------------------------------------------
+def merge(seq):
+    '''
+    Merge a sequence of lists into a single one.
+    '''
+    merged = []
+    for s in seq:
+        for x in s:
+            merged.append(x)
+    return merged
+
 # -----------------------------------------------------------------------------
 def fetchData(url):
     '''
     Fetches all relevand info from the given url
     '''
-    return map(getCatalogData, getCatalog(fetchXML(url)))
+    return merge(map(getCatalogData, getCatalog(fetchXML(url))))
 
 # url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
 # data = fetchData(url)
