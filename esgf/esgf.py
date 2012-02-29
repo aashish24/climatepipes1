@@ -87,7 +87,8 @@ def getMetadataAndFiles(stringDoc):
     '''
     context = libxml2.parseDoc(stringDoc).xpathNewContext()
     context.xpathRegisterNs("ns","http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0")
-    variables = [attr.content for attr in context.xpathEval("/ns:catalog/ns:dataset/ns:variables/ns:variable[@name]")]
+    # variables = [{"variable":attr.content, "rank":0} for attr in context.xpathEval("/ns:catalog/ns:dataset/ns:variables/ns:variable[@name]")]
+    # print variables
     files=[]
     for attr in context.xpathEval("/ns:catalog/ns:dataset/ns:dataset[@urlPath]"):
         files[len(files):] =  [getURLAndVariables(context,attr)]
