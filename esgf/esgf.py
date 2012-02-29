@@ -6,6 +6,7 @@ import string
 import subprocess
 import time
 import synonyms
+import variable_score
 
 # -----------------------------------------------------------------------------
 def login():
@@ -129,11 +130,44 @@ def merge(seq):
     return merged
 
 # -----------------------------------------------------------------------------
-def fetchData(url):
+def variableRank(diction, query):
+    '''
+    '''
+    return {'name': diction['name'],
+            "rank": variable_score.get_rank(diction['name'],query)}
+
+# -----------------------------------------------------------------------------
+def variablesRankAndSort(lst,query):
+    '''
+    '''
+    return sorted(map((lambda x: variableRank(x,query)),lst),
+                  key=lambda x:x['rank'],
+                  reverse=True)
+
+# -----------------------------------------------------------------------------
+def fileRank(diction,query):
+    '''
+    '''
+    variables = variablesRankAndSort(diction['variables'], query);
+    return {'url': diction['url'],
+            'var': variables,
+            'rank' : variables[0]['rank']}
+
+# -----------------------------------------------------------------------------
+def filesRankAndSort(lst, query):
+    '''
+    '''
+    return sorted(map((lambda x:fileRank(x,query)),lst),
+                  key=lambda x:x['rank'],
+                  reverse=True)
+    
+# -----------------------------------------------------------------------------
+def fetchData(url,query):
     '''
     Fetches all relevand info from the given url
     '''
-    return merge(map(getCatalogData, getCatalog(fetchXML(url))))
+    return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
+                            query)
 
 # url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
 # data = fetchData(url)
