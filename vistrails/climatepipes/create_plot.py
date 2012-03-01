@@ -6,7 +6,7 @@ def create_vcs_isofill(filename):
     f = cdms2.open(filename)
     
     # We are interested in variable mrro
-    s=f("mrro")
+    s=f("clt")
 
     # Define the axis
     s=s(latitude=(-90.0, 90.0),squeeze=1,longitude=(-180.0, 175.0),)
