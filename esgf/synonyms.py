@@ -1,7 +1,7 @@
 
-# Keep only Nouns, Adverbs, Preposition, and Number
 #------------------------------------------------------------------------------
 def should_keep( str ):
+  """Keep only Nouns, Adverbs, Preposition, and Number"""
   lstr = str.upper()
   if( lstr == "N" or lstr == "ADV" or lstr == "NUM" or lstr == "NP"
       or lstr == "NN" ):
@@ -13,15 +13,15 @@ def should_keep( str ):
 def simple_path( path ):
   return [s.lemmas[0].name for s in path]
 
-# Remove duplicate words ( requires python > 2.5.4 )
 #------------------------------------------------------------------------------
 def remove_duplicates( synlist ):
+  """Remove duplicate words ( requires python > 2.5.4 )"""
   return list( set( synlist ) )
 
-# Using wordnet to get synonyms
 #------------------------------------------------------------------------------
 def get_all_synonyms( word ):
-  import nltk  
+  """Use wordnet to get synonyms"""
+  import nltk
   from nltk.corpus import wordnet
 
   sets = wordnet.synsets( word )
@@ -39,10 +39,12 @@ def get_all_synonyms( word ):
           syns.append( j[0] )
   return syns
 
-# Given a string get synonyms for nouns, adv, prep, and number
-# Usage: get_synonyms_strict( 'sea temperature at height 1000' )
 #------------------------------------------------------------------------------
 def get_synonyms_strict( str ):
+  """Given a string get synonyms for nouns, adv, prep, and number
+
+  Usage: get_synonyms_strict( 'sea temperature at height 1000' )
+  """
   import nltk
   from nltk.tokenize import word_tokenize as wst
 
