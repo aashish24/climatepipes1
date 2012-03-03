@@ -2,7 +2,7 @@ import cdms2
 import vcs
 
 #fnm = '/home/aashish/tools/cdat/install/sample_data/clt.nc'
-def create_vcs_isofill(filename):
+def create_vcs_isofill(filename, out_fname):
     f = cdms2.open(filename)
     
     # We are interested in variable mrro
@@ -80,5 +80,16 @@ def create_vcs_isofill(filename):
     # Set plot dimensions
     x.setbgoutputdimensions(width=2000,units="pixel")
     x.plot(s,iso,t,bg=1,continents=1,ratio="auto")
+    # x.plot(s,iso,t,continents=1,ratio="auto")
 
-    return x
+    x.png(out_fname)
+    # return x
+
+if __name__ == '__main__':
+    if sys.platform == 'darwin':
+        from PyQt4 import QtGui
+        app = QtGui.QApplication([])
+    create_vcs_isofill('/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc',
+                       '/tmp/foo.png')
+    if sys.platform == 'darwin':
+        app.quit()
