@@ -14,6 +14,9 @@ vt_app.init(_vtOptions)
 from core.api import get_api
 
 def execute(wf_xml):
+    if sys.platform == 'darwin':
+        from PyQt4 import QtGui
+        app = QtGui.QApplication([])
     session = uuid.uuid4().hex
     wf_xml_fname = os.path.join(_tmpDir, "vt_wf_%s.xml" % session)
     # out_fname = os.path.join(_tmpDir, "vt_out_%s.txt" % session)
@@ -50,4 +53,6 @@ def execute(wf_xml):
     # f = open('/tmp/test.out', 'w')
     # print >>f, result
     # f.close()
+    if sys.platform == 'darwin':
+        app.quit()
     return result

@@ -8,11 +8,12 @@ from core.modules.basic_modules import Constant, File
 from identifiers import *
 
 from create_plot import *
-from convert import *
+# from convert import *
 
 web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
-                   "/home/benbu/local/tomcat"),
+                   "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
+    # "/home/benbu/local/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -56,7 +57,7 @@ class WebSink(Module):
 ##############################################################################
 
 class ClimateIsoFill(Module):
-    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:Module)"),
+    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
                     ("data_list", "(edu.utah.sci.vistrails.basic:List)")]
 
     _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
@@ -75,11 +76,9 @@ class ClimateIsoFill(Module):
             if suffix != "nc":
                 print "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix
                 return
-            
-            vcsiso = create_vcs_isofill(data.name)
-            output = self.interpreter.filePool.create_file(suffix='.png')
-            vcsiso.png(output.name)
 
+            output = self.interpreter.filePool.create_file(suffix='.png')   
+            vcsiso = create_vcs_isofill(data.name, output.name)
             self.setResult("image", output)
 
 ##############################################################################
