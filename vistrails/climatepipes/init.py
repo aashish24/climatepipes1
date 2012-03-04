@@ -12,7 +12,7 @@ from convert import *
 
 web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
-                   "/home/benbu/local/tomcat"),
+                   "/cp/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -101,7 +101,7 @@ class CropImage(Module):
             
                 img = crop_whitespace(image.name)
                 output = self.interpreter.filePool.create_file(suffix='.png')
-                ims.save(output.name, "PNG")
+                img.save(output.name, "PNG")
 
                 self.setResult("image", output)
 
