@@ -33,11 +33,11 @@ class ESGFSearch(Module):
     def compute(self):
         query = self.getInputFromPort("query")
         url = self.getInputFromPort("url")
-        result = esgf.fetchData(url);
+        result = esgf.fetchData(esgf.makeESGFSearchURL(query));
         self.setResult("value", result)
     
-    _input_ports = [('query', String,True),
-                    ('url', String )]
+    _input_ports = [('query', String),
+                    ('url', String ,True)]
     _output_ports = [('value', List)]
 
 # ---------------------------------------------------------------------Download
