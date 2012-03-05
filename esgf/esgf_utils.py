@@ -8,17 +8,9 @@ import subprocess
 import time
 import synonyms
 import variable_score
-import httplib2
 
 from ndg.httpsclient.utils import open_url, Configuration
 from ndg.httpsclient import ssl_context_util
-
-
-stashedKeyCertFname = None
-
-from ndg.httpsclient.utils import open_url, Configuration
-from ndg.httpsclient import ssl_context_util
-
 
 stashedKeyCertFname = None
 
@@ -100,10 +92,11 @@ def fetchXML(url):
     Fetches data from the url. Cleanes all the "\n" characters and returns the
     clean string.
     '''
-    # u = urllib2.urlopen(url)
-    # data = u.read()
     
-    resp, data = httplib2.Http().request(url)
+    u = urllib2.urlopen(urlparse.urldefrag(url)[0])
+    data = u.read()
+    
+    # resp, data = httplib2.Http().request(url)
  
     data=string.replace(data, "\r\n", "")
     data=string.replace(data, "\n", "")
