@@ -3,7 +3,6 @@ import httplib
 import os
 import urllib2
 import urlparse
-import libxml2
 import string
 import subprocess
 import time
@@ -53,6 +52,7 @@ def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     Download the given file from url and save it into fnm. The keyCertFile is
     used for authentication and typically got after some form of login process.
     '''
+    # print "DAK GETTING URL:", url
     ssl_context = ssl_context_util.make_ssl_context(keyCertFile, 
                                                     keyCertFile,
                                                     None,
@@ -67,7 +67,7 @@ def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
         except:
             file_size = -1
 
-        print "Downloading %d Bytes" % file_size
+        # print "Downloading %d Bytes" % file_size
         file_size_dl = 0
         f = open(fnm, 'w')
         while True:
@@ -78,8 +78,8 @@ def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
             file_size_dl += len(buf)
             status = "%10d [%3.2f%%]" % (file_size_dl, 
                                          file_size_dl * 100. / file_size)
-            status = status + chr(8)*(len(status)+1)
-            print status,
+            # status = status + chr(8)*(len(status)+1)
+            # print status
         f.close()
         response.close()
         return True
@@ -102,6 +102,7 @@ def getCatalog(stringDoc):
     '''
     Gets all the catelogs from a string document
     '''
+    import libxml2
     doc = libxml2.parseDoc(stringDoc)
     return [attr.content for attr in doc.xpathEval("/response/result//arr[@name='url']/str[1]")]
 
@@ -154,6 +155,9 @@ def fetchData(url):
     Fetches all relevand info from the given url
     '''
     return merge(map(getCatalogData, getCatalog(fetchXML(url))))
+
+if __name__ == '__main__':
+    httpDownloadFile(login(), 'http://pcmdi9.llnl.gov/thredds/fileServer/cmip5_data/cmip5/output2/INM/inmcm4/rcp85/mon/landIce/LImon/r1i1p1/mrfso/1/mrfso_LImon_inmcm4_rcp85_r1i1p1_200601-210012.nc', '/tmp/dataTestFile2.nc')
 
 # url = 'http://pcmdi9.llnl.gov/esg-search/search?project=CMIP5&index_node=pcmdi9.llnl.gov'
 # data = fetchData(url)

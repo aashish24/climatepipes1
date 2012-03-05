@@ -1,9 +1,10 @@
-# import sys
-# sys.path.append('/vistrails/climatepipes/src/esgf')
+import os
+import sys
+sys.path.append(os.path.dirname(__file__))
 import core.modules.module_registry
 from core.modules.vistrails_module import Module, ModuleError
 from core.modules.basic_modules import String, Integer, List, File
-import esgf
+import esgf_utils
 
 
 # ------------------------------------------------------------------------Login
@@ -29,9 +30,9 @@ class ESGFLogin(Module):
                                   'Key certificate "%s" does not exist' % \
                                       keyCertFile.name)
         else:
-            keyCertFile = self.interpreter.filePool.create_file()
+            keyCertFile = self.interpreter.filePool.create_file(suffix='.pem')
         
-        result = esgf.login(host, port, user, password, keyCertFile.name)
+        result = esgf_utils.login(host, port, user, password, keyCertFile.name)
         if result != keyCertFile.name:
             keyCertFile.name = result
             keyCertFile.upToDate = True
@@ -53,7 +54,7 @@ class ESGFSearch(Module):
     def compute(self):
         query = self.forceGetInputFromPort("query", None)
         url = self.getInputFromPort("url")
-        result = esgf.fetchData(url);
+        result = esgf_utils.fetchData(url);
         self.setResult("value", result)
     
     _input_ports = [('query', "(edu.utah.sci.vistrails.basic:String)", True),
@@ -69,9 +70,12 @@ class ESGFDownloadFile(Module):
         keyCertFile = self.getInputFromPort("keyCertFile")
         url = self.getInputFromPort("url")
         # fileName = self.getInputFromPort("fileName")
-        outputFile = self.interpreter.filePool.create_file()
-        
-        result = esgf.httpDownloadFile(keyCertFile.name, url, outputFile.name)
+        # outputFile = File()
+        # outputFile.name = "/tmp/dataTestFile2.nc"
+        # outputFile.upToDate = True
+
+        outputFile = self.interpreter.filePool.create_file(suffix='.nc')
+        result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
         self.setResult("outputFile", outputFile)
 
     _input_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)"),

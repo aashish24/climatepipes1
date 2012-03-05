@@ -14,6 +14,7 @@ web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
                    "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
     # "/home/benbu/local/tomcat"),
+    # "/cp/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -74,9 +75,8 @@ class ClimateIsoFill(Module):
         if isinstance(data, File):
             suffix = os.path.splitext(data.name)[1][1:]
             if suffix != "nc":
-                print "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix
-                return
-
+                raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
+            
             output = self.interpreter.filePool.create_file(suffix='.png')   
             vcsiso = create_vcs_isofill(data.name, output.name)
             self.setResult("image", output)
@@ -100,14 +100,14 @@ class CropImage(Module):
             
                 img = crop_whitespace(image.name)
                 output = self.interpreter.filePool.create_file(suffix='.png')
-                ims.save(output.name, "PNG")
+                img.save(output.name, "PNG")
 
                 self.setResult("image", output)
 
 ##############################################################################
 
 _modules = [WebSink, ClimateIsoFill, CropImage]
-_subworkflows = ["vtkIsosurfaceOffscreen.xml"]
+# _subworkflows = ["vtkIsosurfaceOffscreen.xml"]
 
 def initialize():
     global web_out_dir
