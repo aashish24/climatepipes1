@@ -13,7 +13,23 @@ import core.application as vt_app
 vt_app.init(_vtOptions)
 from core.api import get_api
 
+class DupOutput(StringIO.StringIO):
+    def write(self, *args, **kwargs):
+        sys.__stdout__.write(*args, **kwargs)
+        StringIO.StringIO.write(self, *args, **kwargs)
+    
+    def writelines(self, *args, **kwargs):
+        sys.__stdout__.writelines(*args, **kwargs)
+        StringIO.StringIO.writelines(self, *args, **kwargs)
+    
+    def flush(self, *args, **kwargs):
+        sys.__stdout__.flush(*args, **kwargs)
+        StringIO.StringIO.flush(self, *args, **kwargs)
+
 def execute(wf_xml):
+    if sys.platform == 'darwin':
+        from PyQt4 import QtGui
+        app = QtGui.QApplication([])
     session = uuid.uuid4().hex
     wf_xml_fname = os.path.join(_tmpDir, "vt_wf_%s.xml" % session)
     # out_fname = os.path.join(_tmpDir, "vt_out_%s.txt" % session)
@@ -28,14 +44,19 @@ def execute(wf_xml):
         vt.load_workflow(wf_xml_fname)
         
         # hijack stdout and dump it to a file
-        sys.stdout = StringIO.StringIO()
+        sys.stdout = DupOutput()
         # sys.stdout = open(out_fname, 'w')
+        print >>sys.__stdout__, "Starting execution"
         vt.execute()
+        sys.stdout.flush()
+        print >>sys.__stdout__, "Done executing"
         result = sys.stdout.getvalue()
+        print >>sys.__stdout__, "Result:", result
         sys.stdout.close()
         sys.stdout = sys.__stdout__
-        
+        print >>sys.__stdout__, "Closing vistrail"
         vt.close_vistrail()
+        print >>sys.__stdout__, "Done closing vistrail"
         # result = open(out_fname).read()
     # except Exception, e:
     #     f = open('/tmp/test.error', 'w')
@@ -47,7 +68,13 @@ def execute(wf_xml):
             os.unlink(wf_xml_fname)
         # if os.path.exists(out_fname):
         #     os.unlink(out_fname)
-    # f = open('/tmp/test.out', 'w')
-    # print >>f, result
-    # f.close()
+
+        # f = open('/tmp/test.out', 'w')
+        # print >>f, result
+        # f.close()
+        # if sys.platform == 'darwin':
+        #     app.quit()
+        print >>sys.__stdout__, "Returning result"
+        return result
+    print >>sys.__stdout__, "Returning result"
     return result
