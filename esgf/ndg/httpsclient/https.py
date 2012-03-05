@@ -118,6 +118,4 @@ class HTTPSContextHandler(AbstractHTTPHandler):
         customHTTPSContextConnection = type('CustomHTTPSContextConnection',
                                             (HTTPSConnection, object),
                                             {'ssl_context': self.ssl_context})
-        print "GETTING URL:", req.get_full_url()
-        print "SSL_CONTEXT:", self.ssl_context
         return self.do_open(customHTTPSContextConnection, req)

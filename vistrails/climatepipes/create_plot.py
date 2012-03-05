@@ -4,9 +4,10 @@ import vcs
 #fnm = '/home/aashish/tools/cdat/install/sample_data/clt.nc'
 def create_vcs_isofill(filename, out_fname):
     f = cdms2.open(filename)
-    
+    # print f.listvariables()
+
     # We are interested in variable mrro
-    s=f("clt")
+    s=f("mrfso")
 
     # Define the axis
     s=s(latitude=(-90.0, 90.0),squeeze=1,longitude=(-180.0, 175.0),)
@@ -86,10 +87,12 @@ def create_vcs_isofill(filename, out_fname):
     # return x
 
 if __name__ == '__main__':
+    import sys
     if sys.platform == 'darwin':
         from PyQt4 import QtGui
         app = QtGui.QApplication([])
     create_vcs_isofill('/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc',
                        '/tmp/foo.png')
+
     if sys.platform == 'darwin':
         app.quit()

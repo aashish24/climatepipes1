@@ -1,3 +1,4 @@
+Error: could not import pycf
 var vt_modules = [
  {
   "category": "edu-utah-sci-vistrails-basic", 
@@ -1986,756 +1987,7 @@ var vt_modules = [
   "name": "Variant"
  }, 
  {
-  "category": "edu-utah-sci-vistrails-vtk", 
-  "container": {
-   "fields": [
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "width", 
-      "label": "width"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "height", 
-      "label": "height"
-     }
-    }
-   ], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "renderer", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 80.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkRenderer)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkRenderer)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "width", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Integer)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "height", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 240.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Integer)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "image", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.basic:File)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.basic:File)", 
-       "i(edu.utah.sci.vistrails.basic:Path)", 
-       "i(edu.utah.sci.vistrails.basic:Constant)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "VTKRenderOffscreen"
- }, 
- {
-  "category": "edu-utah-sci-vistrails-vtk", 
-  "container": {
-   "fields": [], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetPropertyKeys", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 35.55555555555556
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkInformation)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkInformation)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddConsumer", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 71.11111111111111
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkObject)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetUserMatrix", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 106.66666666666667
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkMatrix4x4)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkMatrix4x4)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetUserTransform", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 142.22222222222223
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkLinearTransform)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkLinearTransform)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetMapper", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 177.77777777777777
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkMapper)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkMapper)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetProperty", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 213.33333333333331
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProperty)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProperty)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetBackfaceProperty", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 248.88888888888886
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProperty)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProperty)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetTexture", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 284.4444444444444
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkTexture)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkTexture)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "self", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkActor)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkActor)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkProp3D)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkActor"
- }, 
- {
-  "category": "edu-utah-sci-vistrails-vtk", 
-  "container": {
-   "fields": [
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "SetValue[0]", 
-      "label": "SetValue[0]"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Float", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "SetValue[1]", 
-      "label": "SetValue[1]"
-     }
-    }
-   ], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInformation", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 29.09090909090909
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkInformation)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkInformation)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetExecutive", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 58.18181818181818
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetDefaultExecutivePrototype", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 87.27272727272727
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddInputConnection", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 116.36363636363636
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInput_1", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 145.45454545454544
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkDataObject)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkDataObject)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetOutput", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 174.54545454545453
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkDataObject)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkDataObject)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddInput_1", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 203.63636363636363
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkDataObject)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkDataObject)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInputConnection0", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 232.72727272727272
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetLocator", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 261.8181818181818
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkIncrementalPointLocator)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkIncrementalPointLocator)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetScalarTree", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 290.9090909090909
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkScalarTree)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkScalarTree)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "self", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 106.66666666666667
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkContourFilter)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkContourFilter)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkPolyDataAlgorithm)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkAlgorithm)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "GetOutputPort0", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 213.33333333333334
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkContourFilter"
- }, 
- {
-  "category": "edu-utah-sci-vistrails-vtk", 
-  "container": {
-   "fields": [], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInformation", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 29.09090909090909
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkInformation)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkInformation)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetExecutive", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 58.18181818181818
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetDefaultExecutivePrototype", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 87.27272727272727
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddInputConnection", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 116.36363636363636
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetClippingPlanes_1", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 145.45454545454544
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkPlaneCollection)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkPlaneCollection)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetClippingPlanes_2", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 174.54545454545453
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkPlanes)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkPlanes)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddClippingPlane", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 203.63636363636363
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkPlane)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkPlane)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetLookupTable", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 232.72727272727272
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkScalarsToColors)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkScalarsToColors)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInputConnection0", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 261.8181818181818
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInput", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 290.9090909090909
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkDataSet)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkDataSet)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "self", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkDataSetMapper)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkDataSetMapper)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkMapper)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkAbstractMapper3D)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkAbstractMapper)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkAlgorithm)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkDataSetMapper"
- }, 
- {
-  "category": "edu-utah-sci-vistrails-vtk", 
+  "category": "org-vistrails-climatepipes", 
   "container": {
    "fields": [
     {
@@ -2744,434 +1996,10 @@ var vt_modules = [
      "type": "string", 
      "inputParams": {
       "required": true, 
-      "name": "SetFile", 
-      "label": "SetFile"
-     }
-    }
-   ], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInformation", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 45.714285714285715
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkInformation)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkInformation)"
-      ]
+      "name": "data", 
+      "label": "data"
      }
     }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetExecutive", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 91.42857142857143
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetDefaultExecutivePrototype", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 137.14285714285714
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkExecutive)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkExecutive)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddInputConnection", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 182.85714285714286
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetInputArray", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 228.57142857142858
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkCharArray)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkCharArray)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetFile", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 274.2857142857143
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:File)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:File)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "self", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 106.66666666666667
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkDataSetReader)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkDataSetReader)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkDataReader)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkAlgorithm)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "GetOutputPort0", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 213.33333333333334
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkAlgorithmOutput)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkDataSetReader"
- }, 
- {
-  "category": "edu-utah-sci-vistrails-vtk", 
-  "container": {
-   "fields": [], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddActor2D", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 22.857142857142858
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProp)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddProp", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 45.714285714285715
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProp)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddViewProp", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 68.57142857142857
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProp)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetPass", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 91.42857142857143
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkRenderPass)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkRenderPass)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetBackgroundTexture", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 114.28571428571429
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkTexture)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkTexture)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetDelegate", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 137.14285714285714
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkRendererDelegate)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkRendererDelegate)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetActiveCamera", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkCamera)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkCamera)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddActor", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 182.85714285714286
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProp)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddCuller", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 205.71428571428572
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkCuller)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkCuller)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddLight", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 228.57142857142858
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkLight)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkLight)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "AddVolume", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 251.42857142857144
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkProp)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkProp)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetLightCollection", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 274.2857142857143
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:vtkLightCollection)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:vtkLightCollection)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetVTKCell", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 297.1428571428571
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.vtk:VTKCell)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.vtk:VTKCell)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "self", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.vtk:vtkRenderer)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.vtk:vtkRenderer)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkViewport)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObject)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkObjectBase)", 
-       "i(edu.utah.sci.vistrails.vtk:vtkBaseModule)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.9.3", 
-    "package": "edu.utah.sci.vistrails.vtk"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkRenderer"
- }, 
- {
-  "category": "org-vistrails-climatepipes", 
-  "container": {
-   "fields": [
     {
      "alias": "", 
      "vtype": "edu.utah.sci.vistrails.basic:List", 
@@ -3195,9 +2023,9 @@ var vt_modules = [
       "left": 106.66666666666667
      }, 
      "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Module)", 
+      "type": "i(edu.utah.sci.vistrails.basic:File)", 
       "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Module)"
+       "o(edu.utah.sci.vistrails.basic:File)"
       ]
      }
     }, 
@@ -3367,162 +2195,6 @@ var vt_modules = [
   "name": "WebSink"
  }, 
  {
-  "category": "org-vistrails-climatepipes", 
-  "container": {
-   "fields": [
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "SetValue[0]", 
-      "label": "SetValue[0]"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Float", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "SetValue[1]", 
-      "label": "SetValue[1]"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "width", 
-      "label": "width"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "height", 
-      "label": "height"
-     }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:File", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "SetFile", 
-      "label": "SetFile"
-     }
-    }
-   ], 
-   "terminals": [
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetValue", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 64.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Integer,edu.utah.sci.vistrails.basic:Float)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Integer,edu.utah.sci.vistrails.basic:Float)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "width", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 128.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Integer)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "height", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 192.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:Integer)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "SetFile", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 256.0
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:File)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:File)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "image", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 160.0
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.basic:File)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.basic:File)", 
-       "i(edu.utah.sci.vistrails.basic:Path)", 
-       "i(edu.utah.sci.vistrails.basic:Constant)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }
-   ], 
-   "vt": {
-    "cache": 1, 
-    "namespace": "", 
-    "version": "0.0.1", 
-    "package": "org.vistrails.climatepipes"
-   }, 
-   "xtype": "climatePipes.Container", 
-   "icon": "wireit/res/icons/application_edit.png"
-  }, 
-  "name": "vtkIsosurfaceOffscreen"
- }, 
- {
   "category": "edu-utah-sci-vistrails-http", 
   "container": {
    "fields": [
@@ -3586,5 +2258,344 @@ var vt_modules = [
    "icon": "wireit/res/icons/application_edit.png"
   }, 
   "name": "HTTPFile"
+ }, 
+ {
+  "category": "com-kitware-climatepipes-esgf", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:File", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "keyCertFile", 
+      "label": "keyCertFile"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "url", 
+      "label": "url"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "keyCertFile", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 106.66666666666667
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:File)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "url", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 213.33333333333334
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "outputFile", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:File)", 
+       "i(edu.utah.sci.vistrails.basic:Path)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.9.0", 
+    "package": "com.kitware.climatepipes.esgf"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "ESGFDownloadFile"
+ }, 
+ {
+  "category": "com-kitware-climatepipes-esgf", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "host", 
+      "label": "host"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "port", 
+      "label": "port"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "user", 
+      "label": "user"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "password", 
+      "label": "password"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:File", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "keyCertFile", 
+      "label": "keyCertFile"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "host", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 53.333333333333336
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "port", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 106.66666666666667
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:Integer)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "user", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "password", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 213.33333333333334
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "keyCertFile", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 266.66666666666669
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:File)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "keyCertFile", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:File)", 
+       "i(edu.utah.sci.vistrails.basic:Path)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.9.0", 
+    "package": "com.kitware.climatepipes.esgf"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "ESGFLogin"
+ }, 
+ {
+  "category": "com-kitware-climatepipes-esgf", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "query", 
+      "label": "query"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "url", 
+      "label": "url"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "url", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "value", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:List)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:List)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.9.0", 
+    "package": "com.kitware.climatepipes.esgf"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "ESGFSearch"
  }
 ];

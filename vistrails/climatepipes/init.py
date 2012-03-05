@@ -75,9 +75,8 @@ class ClimateIsoFill(Module):
         if isinstance(data, File):
             suffix = os.path.splitext(data.name)[1][1:]
             if suffix != "nc":
-                print "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix
-                return
-
+                raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
+            
             output = self.interpreter.filePool.create_file(suffix='.png')   
             vcsiso = create_vcs_isofill(data.name, output.name)
             self.setResult("image", output)
@@ -108,7 +107,7 @@ class CropImage(Module):
 ##############################################################################
 
 _modules = [WebSink, ClimateIsoFill, CropImage]
-_subworkflows = ["vtkIsosurfaceOffscreen.xml"]
+# _subworkflows = ["vtkIsosurfaceOffscreen.xml"]
 
 def initialize():
     global web_out_dir
