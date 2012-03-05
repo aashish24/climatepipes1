@@ -2725,6 +2725,11 @@ var vt_modules = [
  }
 ];
 
+function manageError(error) {
+    // Some message 
+    alert(error);
+    return true; // Propagate the error
+}
 
 var locationList = ["World", "Asia", "Africa", "North America", "South America", 
                     "Antarctica", "Europe", "Australia",
@@ -2794,6 +2799,7 @@ var climatePipes = {
 
       var serverUrl = "/PWService";
       var paraview = new Paraview(serverUrl);
+      paraview.errorListener = window;
       paraview.createSession("mysession", "comment", "default");
       var vtPlugin = paraview.getPlugin("vt_plugin");
       // var result = vtPlugin.execute(workflowxml);
