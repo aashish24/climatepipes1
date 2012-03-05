@@ -1,32 +1,38 @@
-import os
-import StringIO
-import sys
-import uuid
-
-_vtHome = os.environ.get("VISTRAILS_HOME", "/vistrails/src/git/vistrails")
-_tmpDir = os.environ.get("VT_TMP_DIR", "/tmp")
-_vtOptions = {'dotVistrails': '/Users/dakoop/.vistrails.cmdline'}
-
-sys.path.append(_vtHome)
-sys.path.append('/vistrailsinc/paraview_src/ParaView/build/Utilities/VTKPythonWrapping/site-packages/paraview')
-import core.application as vt_app
-vt_app.init(_vtOptions)
-from core.api import get_api
-
-class DupOutput(StringIO.StringIO):
-    def write(self, *args, **kwargs):
-        sys.__stdout__.write(*args, **kwargs)
-        StringIO.StringIO.write(self, *args, **kwargs)
-    
-    def writelines(self, *args, **kwargs):
-        sys.__stdout__.writelines(*args, **kwargs)
-        StringIO.StringIO.writelines(self, *args, **kwargs)
-    
-    def flush(self, *args, **kwargs):
-        sys.__stdout__.flush(*args, **kwargs)
-        StringIO.StringIO.flush(self, *args, **kwargs)
 
 def execute(wf_xml):
+    import os
+    import StringIO
+    import sys
+    import uuid
+
+    _vtHome = os.environ.get("VISTRAILS_HOME", "/vistrails/src/git/vistrails")
+    _tmpDir = os.environ.get("VT_TMP_DIR", "/tmp")
+    _vtOptions = {'dotVistrails': '/Users/dakoop/.vistrails.cmdline'}
+
+    sys.path.append(_vtHome)
+    sys.path.append('/vistrailsinc/paraview_src/ParaView/build/Utilities/VTKPythonWrapping/site-packages/paraview')
+    print >>sys.__stdout__, "RUNNING INIT"
+    import core.application as vt_app
+    vt_app.init(_vtOptions)
+    print >>sys.__stdout__, "DONE WITH INIT"
+    from core.api import get_api
+
+    class DupOutput(StringIO.StringIO):
+        def write(self, *args, **kwargs):
+            sys.__stdout__.write(*args, **kwargs)
+            StringIO.StringIO.write(self, *args, **kwargs)
+
+        def writelines(self, *args, **kwargs):
+            sys.__stdout__.writelines(*args, **kwargs)
+            StringIO.StringIO.writelines(self, *args, **kwargs)
+
+        def flush(self, *args, **kwargs):
+            sys.__stdout__.flush(*args, **kwargs)
+            StringIO.StringIO.flush(self, *args, **kwargs)
+
+
+    print >>sys.__stdout__, "STARTING EXECUTE"
+    print >>sys.__stdout__, "NEXT LINE"
     if sys.platform == 'darwin':
         from PyQt4 import QtGui
         app = QtGui.QApplication([])
@@ -74,7 +80,9 @@ def execute(wf_xml):
         # f.close()
         # if sys.platform == 'darwin':
         #     app.quit()
+        vt_app.finalize_vistrails(None)
         print >>sys.__stdout__, "Returning result"
         return result
+    vt_app.finalize_vistrails(None)
     print >>sys.__stdout__, "Returning result"
     return result
