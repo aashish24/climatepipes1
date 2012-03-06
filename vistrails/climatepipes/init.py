@@ -8,13 +8,11 @@ from core.modules.basic_modules import Constant, File
 from identifiers import *
 
 from create_plot import *
-# from convert import *
+from convert import *
 
 web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
                    "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
-    # "/home/benbu/local/tomcat"),
-    # "/cp/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -57,29 +55,49 @@ class WebSink(Module):
 
 ##############################################################################
 
+class ClimateIsoFillParams(Module):
+    _input_ports = [("file", "(edu.utah.sci.vistrails.basic:File)"),
+                    ("var", "(edu.utah.sci.vistrails.basic:String)"),
+                    ("lat", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)"),
+                    ("lon", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)")]
+
+    _output_ports = [("data", "(edu.utah.sci.vistrails.basic:List)")]
+
+    def compute(self):
+        if self.hasInputFromPort("file"):
+            f = self.getInputFromPort("file")
+            var = self.forceGetInputFromPort("var", None)
+            lat = self.forceGetInputFromPort("lat", None)
+            lon = self.forceGetInputFromPort("lon", None)
+
+            self.setResult("data", [[f, var, lat, lon]])
+
+##############################################################################
+
 class ClimateIsoFill(Module):
-    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
-                    ("data_list", "(edu.utah.sci.vistrails.basic:List)")]
+    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:List)")]
 
     _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
 
     def compute(self):
-        data = 0
         if self.hasInputFromPort("data"):
             data = self.getInputFromPort("data")
-        elif self.hasInputFromPort("data_list"):
-            data = self.getInputFromPort("data_list")[0]
-        else:
-            return
+            #data is an Nx4 array, each row represents a data file and its info
+            #we just use the top of the list for this visualization
+            topdata = data[0]
+            datafile = topdata[0]
+            datavar = topdata[1]
+            lat = topdata[2]
+            lon = topdata[3]
 
-        if isinstance(data, File):
-            suffix = os.path.splitext(data.name)[1][1:]
-            if suffix != "nc":
-                raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
+            if isinstance(datafile, File):
+                suffix = os.path.splitext(datafile.name)[1][1:]
+                if suffix != "nc":
+                    raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
             
-            output = self.interpreter.filePool.create_file(suffix='.png')   
-            vcsiso = create_vcs_isofill(data.name, output.name)
-            self.setResult("image", output)
+                output = self.interpreter.filePool.create_file(suffix='.png')   
+                vcsiso = create_vcs_isofill(datafile.name, datavar, lat, lon, output.name)
+                self.setResult("image", output)
 
 ##############################################################################
 
@@ -106,8 +124,8 @@ class CropImage(Module):
 
 ##############################################################################
 
-_modules = [WebSink, ClimateIsoFill, CropImage]
-# _subworkflows = ["vtkIsosurfaceOffscreen.xml"]
+_modules = [WebSink, ClimateIsoFill, ClimateIsoFillParams, CropImage]
+_subworkflows = ["Visualize.xml"]
 
 def initialize():
     global web_out_dir
