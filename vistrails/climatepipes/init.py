@@ -7,11 +7,18 @@ from core.modules.basic_modules import Constant, File
 
 from identifiers import *
 
+import vcs_util
+# from convert import *
+
 web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
                    "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
+    # "/home/benbu/local/tomcat"),
+    # "/cp/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
+
+##############################################################################
 
 class WebSink(Module):
     _input_ports = [("value", "(edu.utah.sci.vistrails.basic:Module)"),
@@ -47,8 +54,111 @@ class WebSink(Module):
             print 'Content-Type: %s' % contentType
             print strValue,
 
-_modules = [WebSink]
-_subworkflows = ["vtkIsosurfaceOffscreen.xml"]
+
+##############################################################################
+
+class CDMSVariable(Module):
+    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
+                    ("variable", "(edu.utah.sci.vistrails.basic:String)")]
+    _output_ports = [("value", "(%s:CDMSVariable)" % identifier)]
+
+    def compute(self):
+        data = self.getInputFromPort("data")
+        var_name = self.getInputFromPort("variable")
+        self.var = vcs_util.get_variable(data.name, var_name)
+        self.setResult("value", self)
+            
+class ListVariables(Module):
+    _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)")]
+    _output_ports = [("variables", "(edu.utah.sci.vistrails.basic:List)")]
+    
+    def compute(self):
+        data = self.getInputFromPort("data")
+        suffix = os.path.splitext(data.name)[1][1:]
+        if suffix != "nc":
+            raise ModuleError(self, "Invalid file type.  " \
+                                  "Expecting '.nc' and got '.%s'" % suffix)
+        variables = vcs_util.get_variable_list(data.name)
+        self.setResult("variables", variables)
+
+class vcsPlot(Module):
+    _input_ports = [("variable", "(%s:CDMSVariable)" % identifier),
+                    ("variable2", "(%s:CDMSVariable)" % identifier)]
+    _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
+    
+    def compute(self):
+        variable = self.getInputFromPort("variable")
+        variable2 = self.forceGetInputFromPort("variable2", None)
+        if variable2 is not None:
+            var2 = variable2.var
+        else:
+            var2 = None            
+        output = self.interpreter.filePool.create_file(suffix='.png')   
+        image = vcs_util.plot(self.plot_type, output.name, variable.var, var2)
+        self.setResult("image", output)
+
+# class ClimateIsoFill(Module):
+#     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
+#                     ("variable", "(edu.utah.sci.vistrails.basic:String)"),
+#                     ("data_list", "(edu.utah.sci.vistrails.basic:List)")]
+
+#     _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
+
+#     def compute(self):
+#         if self.hasInputFromPort("data"):
+#             data = self.getInputFromPort("data")
+#         elif self.hasInputFromPort("data_list"):
+#             data = self.getInputFromPort("data_list")[0]
+#         else:
+#             raise ModuleError(self, 
+#                               'Missing value from both port data and data_list')
+#         var = self.getInputFromPort("variable")
+
+#         if isinstance(data, File):
+#             suffix = os.path.splitext(data.name)[1][1:]
+#             if suffix != "nc":
+#                 raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
+            
+#             output = self.interpreter.filePool.create_file(suffix='.png')   
+#             vcsiso = create_vcs_isofill(data.name, variable, output.name)
+#             self.setResult("image", output)
+
+##############################################################################
+
+class CropImage(Module):
+    _input_ports = [("image", "(edu.utah.sci.vistrails.basic:Module)")]
+
+    _output_ports= [("image", "(edu.utah.sci.vistrails.basic:File)")]
+
+    def compute(self):
+        if self.hasInputFromPort("image"):
+            image = self.getInputFromPort("image")
+
+            if isinstance(image, File):
+                suffix = os.path.splitext(image.name)[1][1:]
+                if suffix != "png":
+                    print "Error: Invalid file type. Expecting '.png' and got '.%s'" % suffix
+                    return
+            
+                img = crop_whitespace(image.name)
+                output = self.interpreter.filePool.create_file(suffix='.png')
+                img.save(output.name, "PNG")
+
+                self.setResult("image", output)
+
+##############################################################################
+
+_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage]
+# FIXME we should probably use uvcdat's code for this...
+for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
+                  'Outline', 'Scatter', 'Taylordiagram', 'Vector', 'XvsY', \
+                  'Xyvsy', 'Yxvsx']:
+    klass = type("vcs" + plot_type, (vcsPlot,),
+                 {'plot_type': plot_type})
+    _modules.append(klass)
+    
+
+# _subworkflows = ["vtkIsosurfaceOffscreen.xml"]
 
 def initialize():
     global web_out_dir
