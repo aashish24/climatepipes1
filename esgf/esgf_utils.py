@@ -102,6 +102,38 @@ def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     return False
 
 # -----------------------------------------------------------------------------
+def prependQuery(str):
+    '''
+    Given an example string 'text' return  &query="text"
+    '''
+    return '&query="'+str+'"'
+
+# -----------------------------------------------------------------------------
+def getIndexNode(url):
+    '''
+    Given a URL returns the the index node 
+    Example: getIndexNode('http://pcmdi9.llnl.gov/something/somethings')
+    -> returns pcmdi9.llnl.gov
+    '''
+    return url.split('/')[2]
+
+# -----------------------------------------------------------------------------
+def makeESGFSearchURL(url,project,searchString):
+    '''
+    Takes a base url and searchString and returns a url to be used with ESGF
+    '''
+    if(searchString):
+        q = "".join(map(prependQuery, synonyms.get_synonyms_strict(searchString)))
+    else:
+        q = ""
+
+    indexNode = getIndexNode(url)
+    if(indexNode == "localhost" or indexNode== "kitware.com"):
+        return "http://localhost/ClimatePipes/index.xml"
+    else:
+        return url+'/esg-search/search?project='+project+'&index_node='+getIndexNode(url)+q
+
+# -----------------------------------------------------------------------------
 def fetchXML(url):
     '''
     Fetches data from the url. Cleanes all the "\n" characters and returns the
