@@ -1,22 +1,22 @@
 var vt_modules = [];
 
-if(simple_modules != null) {
+if(typeof subworkflow_modules == 'object') {
     vt_modules = vt_modules.concat(simple_modules);
 }
 
-if(basic_modules != null) {
+if(typeof basic_modules == 'object') {
     vt_modules = vt_modules.concat(basic_modules);
 }
 
-if(esgf_modules != null) {
+if(typeof esgf_modules == 'object') {
     vt_modules = vt_modules.concat(esgf_modules);
 }
 
-if(climatepipes_modules == null) {
+if(typeof climatepipes_modules == 'object') {
     vt_modules = vt_modules.concat(climatepipes_modules);
 }
 
-if(http_modules != null) {
+if(typeof http_modules == 'object') {
     vt_modules = vt_modules.concat(http_modules);
 }
 
