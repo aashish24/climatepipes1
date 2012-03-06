@@ -131,7 +131,7 @@ def makeESGFSearchURL(url,project,searchString):
     if(indexNode == "localhost" or indexNode== "kitware.com"):
         return "http://localhost/ClimatePipes/index.xml"
     else:
-        return url+'/esg-search/search?project='+project+'&index_node='+getIndexNode(url)+q
+        return url+'/esg-search/search?project='+project+'&index_node='+indexNode+q
 
 # -----------------------------------------------------------------------------
 def fetchXML(url):
