@@ -8,13 +8,11 @@ from core.modules.basic_modules import Constant, File
 from identifiers import *
 
 import vcs_util
-# from convert import *
+from convert import *
 
 web_server_path = os.path.join( \
     os.environ.get("CATALINA_HOME", 
                    "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
-    # "/home/benbu/local/tomcat"),
-    # "/cp/tomcat"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -54,6 +52,25 @@ class WebSink(Module):
             print 'Content-Type: %s' % contentType
             print strValue,
 
+
+##############################################################################
+
+class ClimateIsoFillParams(Module):
+    _input_ports = [("file", "(edu.utah.sci.vistrails.basic:File)"),
+                    ("var", "(edu.utah.sci.vistrails.basic:String)"),
+                    ("lat", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)"),
+                    ("lon", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)")]
+
+    _output_ports = [("data", "(edu.utah.sci.vistrails.basic:List)")]
+
+    def compute(self):
+        if self.hasInputFromPort("file"):
+            f = self.getInputFromPort("file")
+            var = self.forceGetInputFromPort("var", None)
+            lat = self.forceGetInputFromPort("lat", None)
+            lon = self.forceGetInputFromPort("lon", None)
+
+            self.setResult("data", [[f, var, lat, lon]])
 
 ##############################################################################
 
@@ -123,6 +140,7 @@ class vcsPlot(Module):
 #             vcsiso = create_vcs_isofill(data.name, variable, output.name)
 #             self.setResult("image", output)
 
+
 ##############################################################################
 
 class CropImage(Module):
@@ -156,9 +174,6 @@ for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
     klass = type("vcs" + plot_type, (vcsPlot,),
                  {'plot_type': plot_type})
     _modules.append(klass)
-    
-
-# _subworkflows = ["vtkIsosurfaceOffscreen.xml"]
 
 def initialize():
     global web_out_dir
