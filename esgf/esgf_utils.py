@@ -2,6 +2,7 @@ import myproxy_logon
 import httplib
 import os
 import urllib2
+import libxml2
 import urlparse
 import string
 import subprocess
@@ -154,7 +155,6 @@ def getCatalog(stringDoc):
     '''
     Gets all the catelogs from a string document
     '''
-    import libxml2
     doc = libxml2.parseDoc(stringDoc)
     return [attr.content for attr in doc.xpathEval("/response/result//arr[@name='url']/str[1]")]
 
