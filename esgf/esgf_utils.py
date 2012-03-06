@@ -238,8 +238,13 @@ def fetchData(url,query):
     '''
     Fetches all relevand info from the given url
     '''
-    return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
-                            query)
+    if(query):
+        return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
+                                query)
+    else:
+        return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
+                                "")
+
 
 if __name__ == '__main__':
     httpDownloadFile(login(), 'http://pcmdi9.llnl.gov/thredds/fileServer/cmip5_data/cmip5/output2/INM/inmcm4/rcp85/mon/landIce/LImon/r1i1p1/mrfso/1/mrfso_LImon_inmcm4_rcp85_r1i1p1_200601-210012.nc', '/tmp/dataTestFile2.nc')

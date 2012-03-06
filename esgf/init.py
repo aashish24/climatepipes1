@@ -55,7 +55,8 @@ class ESGFSearch(Module):
         query = self.forceGetInputFromPort("query", None)
         url = self.force.GetInputFromPort("url",'http://pcmdi9.llnl.gov')
         project = self.force.GetInputFromPort("project",'CMIP5')
-        result = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query));
+        result = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query)
+                                      ,query);
         self.setResult("value", result)
     
     _input_ports = [('query', "(edu.utah.sci.vistrails.basic:String)", True),
