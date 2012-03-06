@@ -100,7 +100,8 @@ if __name__ == '__main__':
     if sys.platform == 'darwin':
         from PyQt4 import QtGui
         app = QtGui.QApplication([])
-    clt_fname = '/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc'
+    #clt_fname = '/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc'
+    clt_fname = '/cp/cdat/install/sample_data/clt.nc'
     print get_variable_list(clt_fname)
     clt = get_variable(clt_fname, 'clt')
     u = get_variable(clt_fname, 'u')

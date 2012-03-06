@@ -94,20 +94,21 @@ def run():
     import sys
     sys.path.append('/vistrails/src/git/vistrails')
     import core.application as vt_app
-    vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
-    # vt_app.init()
+    #vt_app.init({'dotVistrails': '/Users/dakoop/.vistrails.cmdline'})
+    vt_app.init()
 
     from core.api import get_api
     vt = get_api()
     # vt.load_package("edu.utah.sci.vistrails.vtk", "vtk")
     vt.load_package("org.vistrails.climatepipes", "climatepipes")
-    vt.load_package("edu.utah.sci.vistrails.http", "HTTP")
-    vt.load_package("com.kitware.climatepipes.esgf", "esgf")
+    #vt.load_package("edu.utah.sci.vistrails.http", "HTTP")
+    vt.load_package("com.kitware.climatepipes.esgf", "esgf")    
+    #vt.load_package("com.kitware.climatepipes.simplified", "cpsimplified")
 
     from core.modules.module_registry import get_module_registry
     reg = get_module_registry()
-    basic_pkg = reg.get_package_by_name('edu.utah.sci.vistrails.basic')
-    basic_modules = create_components(reg, basic_pkg)
+    #basic_pkg = reg.get_package_by_name('edu.utah.sci.vistrails.basic')
+    #basic_modules = create_components(reg, basic_pkg)
     # vtk_pkg = reg.get_package_by_name('edu.utah.sci.vistrails.vtk')
     # vtk_modules = create_components(reg, vtk_pkg, {'vtkDataSetReader': \
     #                                                    set(['SetFile']),
@@ -119,17 +120,20 @@ def run():
     #                                                'VTKRenderOffscreen': \
     #                                                    set(['height', 
     #                                                         'width'])})
-    climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
-    climatepipes_modules = create_components(reg, climatepipes_pkg)
+    #climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
+    #climatepipes_modules = create_components(reg, climatepipes_pkg)
+    #cpsimple_pkg = reg.get_package_by_name("com.kitware.climatepipes.simplified")
+    #cpsimple_modules = create_components(reg, cpsimple_pkg)
     esgf_pkg = reg.get_package_by_name("com.kitware.climatepipes.esgf")
     esgf_modules = create_components(reg, esgf_pkg)
-    http_pkg = reg.get_package_by_name("edu.utah.sci.vistrails.http")
-    http_modules = create_components(reg, http_pkg, {"HTTPFile": None})
+    #http_pkg = reg.get_package_by_name("edu.utah.sci.vistrails.http")
+    #http_modules = create_components(reg, http_pkg, {"HTTPFile": None})
     # modules = basic_modules + vtk_modules + climatepipes_modules + \
     #     http_modules + esgf_modules
-    modules = basic_modules + climatepipes_modules + \
-        http_modules + esgf_modules
-    print "var vt_modules =", json.dumps(modules, indent=1) + ';'
+    #modules = basic_modules + climatepipes_modules + \
+    #    http_modules + esgf_modules
+    modules = esgf_modules
+    print "var esgf_modules =", json.dumps(modules, indent=1) + ';'
 
 if __name__ == '__main__':
     run()

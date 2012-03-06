@@ -76,11 +76,58 @@ class ESGFDownloadFile(Module):
 
         outputFile = self.interpreter.filePool.create_file(suffix='.nc')
         result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
-        self.setResult("outputFile", [outputFile, "mrrso", (-90.0,90.0), (-180.0,175.0)])
+        self.setResult("outputFile", outputFile)
 
     _input_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)"),
                     ('url', "(edu.utah.sci.vistrails.basic:String)")]
-    _output_ports = [('output', "(edu.utah.sci.vistrails.basic:List)")]
+    _output_ports = [('outputFile', "(edu.utah.sci.vistrails.basic:File)")]
+
+#-----------------------------------------------------------------------Query
+class Query(Module):
+    '''
+    Finds files on a source and either downloads or lists them based on
+    connected input and output ports
+    '''
+    def compute(self):
+        keyCertFile = self.getInputFromPort("keyCertFile")
+        keywords = self.getInputFromPort("keywords")
+        datefrom = self.getInputFromPort("datefrom")
+        dateto = self.getInputFromPort("dateto")
+        location = self.getInputFromPort("location")
+        numitems = self.forceGetInputFromPort("numitems", 1)
+
+        #TODO: combine parameters to create query
+        query = keywords # + datefrom ...
+        results = esgf.fetchData(esgf.makeESGFSearchURL(query))
+
+        #truncate results
+        results = results[0:numitems]
+
+        self.setResult('filelist', results)
+        
+        if self.outputPorts('datalist'):
+            datalist = []
+            from vcs_util import get_variable
+            for f in results:
+                tmpfile = self.interpreter.filePool.create_file(suffix='.nc')
+                if(esfg_utils.httpDownloadFile(keyCertFilename, f["url"], tmpfile.name)):
+                    cdms = CDMSVariable()
+                    cdms.var = get_variable(tmpfile.name, f["variable"][0]["name"])
+                    datalist[len(datalist):] = [cdms]
+                else:
+                    print "Error downloading file %s" % f["url"]
+            self.setResult('datalist', datalist)
+        
+
+    _input_ports = [('keywords', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('datefrom', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('dateto', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('location', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('numitems', "(edu.utah.sci.vistrails.basic:Integer)"),
+                    ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+
+    _output_ports = [('datalist', "(edu.utah.sci.vistrails.basic:List)"),
+                     ('filelist', "(edu.utah.sci.vistrails.basic:List)")]
 
 # ----------------------------------------------------------------------Modules
-_modules =[ESGFLogin,ESGFSearch,ESGFDownloadFile]
+_modules =[ESGFLogin,ESGFSearch,ESGFDownloadFile,Query]

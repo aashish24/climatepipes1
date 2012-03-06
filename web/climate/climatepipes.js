@@ -1,7 +1,7 @@
 var vt_modules = [];
 
-if(typeof subworkflow_modules == 'object') {
-    vt_modules = vt_modules.concat(simple_modules);
+if(typeof cpsimplified_modules == 'object') {
+    vt_modules = vt_modules.concat(cpsimplified_modules);
 }
 
 if(typeof basic_modules == 'object') {

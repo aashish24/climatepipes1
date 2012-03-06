@@ -337,5 +337,223 @@ var esgf_modules = [
    "icon": "wireit/res/icons/application_edit.png"
   }, 
   "name": "ESGFSearch"
+ }, 
+ {
+  "category": "com-kitware-climatepipes-esgf", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "keywords", 
+      "label": "keywords"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "datefrom", 
+      "label": "datefrom"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "dateto", 
+      "label": "dateto"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "location", 
+      "label": "location"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:Integer", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "numitems", 
+      "label": "numitems"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:File", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "keyCertFile", 
+      "label": "keyCertFile"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "keywords", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 45.714285714285715
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "datefrom", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 91.428571428571431
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "dateto", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 137.14285714285714
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "location", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 182.85714285714286
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "numitems", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 228.57142857142858
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:Integer)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "keyCertFile", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 274.28571428571428
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:File)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:File)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "datalist", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 106.66666666666667
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:List)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:List)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "filelist", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 213.33333333333334
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:List)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:List)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.9.0", 
+    "package": "com.kitware.climatepipes.esgf"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "Query"
  }
 ];

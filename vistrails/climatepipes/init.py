@@ -55,25 +55,6 @@ class WebSink(Module):
 
 ##############################################################################
 
-class ClimateIsoFillParams(Module):
-    _input_ports = [("file", "(edu.utah.sci.vistrails.basic:File)"),
-                    ("var", "(edu.utah.sci.vistrails.basic:String)"),
-                    ("lat", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)"),
-                    ("lon", "(edu.utah.sci.vistrails.basic:Float,edu.utah.sci.vistrails.basic:Float)")]
-
-    _output_ports = [("data", "(edu.utah.sci.vistrails.basic:List)")]
-
-    def compute(self):
-        if self.hasInputFromPort("file"):
-            f = self.getInputFromPort("file")
-            var = self.forceGetInputFromPort("var", None)
-            lat = self.forceGetInputFromPort("lat", None)
-            lon = self.forceGetInputFromPort("lon", None)
-
-            self.setResult("data", [[f, var, lat, lon]])
-
-##############################################################################
-
 class CDMSVariable(Module):
     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
                     ("variable", "(edu.utah.sci.vistrails.basic:String)")]
@@ -84,6 +65,23 @@ class CDMSVariable(Module):
         var_name = self.getInputFromPort("variable")
         self.var = vcs_util.get_variable(data.name, var_name)
         self.setResult("value", self)
+
+class First(Module):
+    '''
+    Outputs the first cdms var from the list, or just passes the var
+    '''
+    _input_ports = [("list", "(edu.utah.sci.vistrails.basic:List)"),
+                    ("var", "(%s:CDMSVariable)" % identifier)]
+
+    _output_ports = [("value", "(%s:CDMSVariable)" % identifier)]
+
+    def compute(self):
+        if self.hasInputFromPort("var"):
+            self.setResult("value", self.getInputFromPort("var"))
+        else:
+            _list = self.getInputFromPort("list")
+            first = _list[0]
+            self.setResult("value", first)
             
 class ListVariables(Module):
     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)")]
@@ -166,7 +164,7 @@ class CropImage(Module):
 
 ##############################################################################
 
-_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage]
+_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage, First]
 # FIXME we should probably use uvcdat's code for this...
 for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
                   'Outline', 'Scatter', 'Taylordiagram', 'Vector', 'XvsY', \
