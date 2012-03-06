@@ -8,11 +8,13 @@ import subprocess
 import time
 import synonyms
 import variable_score
+import os.path
 
 from ndg.httpsclient.utils import open_url, Configuration
 from ndg.httpsclient import ssl_context_util
 
 stashedKeyCertFname = None
+cacheDir = '/tmp'
 
 # -----------------------------------------------------------------------------
 def login(host=None, port=None, user=None, password=None, keyCertFile=None):
@@ -48,12 +50,25 @@ def login(host=None, port=None, user=None, password=None, keyCertFile=None):
     return keyCertFile
 
 # -----------------------------------------------------------------------------
+def extractFileNameFromURL(url):
+    '''
+    Note: This is not a general funciton and only used if the URL is for a valid
+    file to be downloaded.
+    '''
+    return cacheDir+"/"+url.split('/')[-1]
+
+# -----------------------------------------------------------------------------
 def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     '''
     Download the given file from url and save it into fnm. The keyCertFile is
     used for authentication and typically got after some form of login process.
     '''
     # print "DAK GETTING URL:", url
+    
+    # Check if the file has already been downloaded
+    if(os.path.isfile(fnm)):
+        return True
+    
     ssl_context = ssl_context_util.make_ssl_context(keyCertFile, 
                                                     keyCertFile,
                                                     None,

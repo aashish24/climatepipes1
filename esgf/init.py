@@ -74,7 +74,8 @@ class ESGFDownloadFile(Module):
         # outputFile.name = "/tmp/dataTestFile2.nc"
         # outputFile.upToDate = True
 
-        outputFile = self.interpreter.filePool.create_file(suffix='.nc')
+        outputFile = esdf_utils.extractFileNameFromURL(url)
+        # outputFile = self.interpreter.filePool.create_file(suffix='.nc')
         result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
         self.setResult("outputFile", outputFile)
 
