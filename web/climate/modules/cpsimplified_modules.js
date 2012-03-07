@@ -1,6 +1,6 @@
 var cpsimplified_modules = [
  {
-  "category": "com-kitware-climatepipes-simplified", 
+  "category": "org-vistrails-climatepipes-simplified", 
   "container": {
    "fields": [
     {
@@ -54,7 +54,7 @@ var cpsimplified_modules = [
     "cache": 1, 
     "namespace": "", 
     "version": "0.0.1", 
-    "package": "com.kitware.climatepipes.simplified"
+    "package": "org.vistrails.climatepipes.simplified"
    }, 
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"

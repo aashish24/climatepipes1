@@ -1,6 +1,6 @@
 var esgf_modules = [
  {
-  "category": "com-kitware-climatepipes-esgf", 
+  "category": "org.vistrails.climatepipes", 
   "container": {
    "fields": [
     {
@@ -84,7 +84,7 @@ var esgf_modules = [
     "cache": 1, 
     "namespace": "", 
     "version": "0.9.0", 
-    "package": "com.kitware.climatepipes.esgf"
+    "package": "org.vistrails.climatepipes"
    }, 
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"
@@ -92,7 +92,7 @@ var esgf_modules = [
   "name": "ESGFDownloadFile"
  }, 
  {
-  "category": "com-kitware-climatepipes-esgf", 
+  "category": "org.vistrails.climatepipes", 
   "container": {
    "fields": [
     {
@@ -257,7 +257,7 @@ var esgf_modules = [
     "cache": 1, 
     "namespace": "", 
     "version": "0.9.0", 
-    "package": "com.kitware.climatepipes.esgf"
+    "package": "org.vistrails.climatepipes"
    }, 
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"
@@ -265,7 +265,7 @@ var esgf_modules = [
   "name": "ESGFLogin"
  }, 
  {
-  "category": "com-kitware-climatepipes-esgf", 
+  "category": "org.vistrails.climatepipes", 
   "container": {
    "fields": [
     {
@@ -331,7 +331,7 @@ var esgf_modules = [
     "cache": 1, 
     "namespace": "", 
     "version": "0.9.0", 
-    "package": "com.kitware.climatepipes.esgf"
+    "package": "org.vistrails.climatepipes"
    }, 
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"
@@ -339,7 +339,7 @@ var esgf_modules = [
   "name": "ESGFSearch"
  }, 
  {
-  "category": "com-kitware-climatepipes-esgf", 
+  "category": "org.vistrails.climatepipes", 
   "container": {
    "fields": [
     {
@@ -549,7 +549,7 @@ var esgf_modules = [
     "cache": 1, 
     "namespace": "", 
     "version": "0.9.0", 
-    "package": "com.kitware.climatepipes.esgf"
+    "package": "org.vistrails.climatepipes"
    }, 
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"
