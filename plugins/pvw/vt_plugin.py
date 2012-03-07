@@ -48,7 +48,7 @@ def execute(wf_xml):
 
         vt = get_api()
         vt.load_workflow(wf_xml_fname)
-        
+
         # hijack stdout and dump it to a file
         sys.stdout = DupOutput()
         # sys.stdout = open(out_fname, 'w')
