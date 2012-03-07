@@ -1,4 +1,4 @@
-import os
+import os, sys
 import shutil
 import uuid
 
@@ -10,9 +10,14 @@ from identifiers import *
 import vcs_util
 from convert import *
 
+sys.path.append(os.path.dirname(__file__))
+import core.modules.module_registry
+from core.modules.basic_modules import String, Integer, List, File
+import esgf_utils
+
 web_server_path = os.path.join( \
-    os.environ.get("CATALINA_HOME", 
-                   "/vistrails/climatepipes/paraviewweb/apache-tomcat-6.0.35"),
+    os.environ.get("CATALINA_HOME",
+                   "/home/aashish/tools/paraviewweb/tomcat/apache-tomcat-6.0.35"),
     "webapps")
 web_out_dir = 'Climate/tmp'
 
@@ -21,7 +26,7 @@ web_out_dir = 'Climate/tmp'
 class WebSink(Module):
     _input_ports = [("value", "(edu.utah.sci.vistrails.basic:Module)"),
                     ("contentType", "(edu.utah.sci.vistrails.basic:String)")]
-    
+
     def compute(self):
         value = self.getInputFromPort("value")
         contentType = self.forceGetInputFromPort("contentType", None)
@@ -82,11 +87,11 @@ class First(Module):
             _list = self.getInputFromPort("list")
             first = _list[0]
             self.setResult("value", first)
-            
+
 class ListVariables(Module):
     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)")]
     _output_ports = [("variables", "(edu.utah.sci.vistrails.basic:List)")]
-    
+
     def compute(self):
         data = self.getInputFromPort("data")
         suffix = os.path.splitext(data.name)[1][1:]
@@ -100,15 +105,15 @@ class vcsPlot(Module):
     _input_ports = [("variable", "(%s:CDMSVariable)" % identifier),
                     ("variable2", "(%s:CDMSVariable)" % identifier)]
     _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
-    
+
     def compute(self):
         variable = self.getInputFromPort("variable")
         variable2 = self.forceGetInputFromPort("variable2", None)
         if variable2 is not None:
             var2 = variable2.var
         else:
-            var2 = None            
-        output = self.interpreter.filePool.create_file(suffix='.png')   
+            var2 = None
+        output = self.interpreter.filePool.create_file(suffix='.png')
         image = vcs_util.plot(self.plot_type, output.name, variable.var, var2)
         self.setResult("image", output)
 
@@ -125,7 +130,7 @@ class vcsPlot(Module):
 #         elif self.hasInputFromPort("data_list"):
 #             data = self.getInputFromPort("data_list")[0]
 #         else:
-#             raise ModuleError(self, 
+#             raise ModuleError(self,
 #                               'Missing value from both port data and data_list')
 #         var = self.getInputFromPort("variable")
 
@@ -133,8 +138,8 @@ class vcsPlot(Module):
 #             suffix = os.path.splitext(data.name)[1][1:]
 #             if suffix != "nc":
 #                 raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
-            
-#             output = self.interpreter.filePool.create_file(suffix='.png')   
+
+#             output = self.interpreter.filePool.create_file(suffix='.png')
 #             vcsiso = create_vcs_isofill(data.name, variable, output.name)
 #             self.setResult("image", output)
 
@@ -154,7 +159,7 @@ class CropImage(Module):
                 if suffix != "png":
                     print "Error: Invalid file type. Expecting '.png' and got '.%s'" % suffix
                     return
-            
+
                 img = crop_whitespace(image.name)
                 output = self.interpreter.filePool.create_file(suffix='.png')
                 img.save(output.name, "PNG")
@@ -163,7 +168,145 @@ class CropImage(Module):
 
 ##############################################################################
 
-_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage, First]
+# ------------------------------------------------------------------------Login
+class ESGFLogin(Module):
+    '''
+    ESGFLogin is used to login to ESGF
+    '''
+    def compute(self):
+    # host = 'pcmdi3.llnl.gov'
+    # port = 2119
+    # user = 'nix'
+    # password = '2PW4kw'
+    # keyCertFile = '/tmp/keyCert.esgf'
+
+        host = self.forceGetInputFromPort("host", "pcmdi3.llnl.gov")
+        port = self.forceGetInputFromPort("port", 2119)
+        user = self.forceGetInputFromPort("user", "nix")
+        password = self.forceGetInputFromPort("password", "2pw4kw")
+        if self.hasInputFromPort("keyCertFile"):
+            keyCertFile = self.getInputFromPort("keyCertFile")
+            if not os.path.exists(keyCertFile.name):
+                raise ModuleError(self,
+                                  'Key certificate "%s" does not exist' % \
+                                      keyCertFile.name)
+        else:
+            keyCertFile = self.interpreter.filePool.create_file(suffix='.pem')
+
+        result = esgf_utils.login(host, port, user, password, keyCertFile.name)
+        if result != keyCertFile.name:
+            keyCertFile.name = result
+            keyCertFile.upToDate = True
+
+        self.setResult("keyCertFile", keyCertFile)
+
+    _input_ports =[('host', "(edu.utah.sci.vistrails.basic:String)"),
+                   ('port', "(edu.utah.sci.vistrails.basic:Integer)"),
+                   ('user', "(edu.utah.sci.vistrails.basic:String)"),
+                   ('password', "(edu.utah.sci.vistrails.basic:String)"),
+                   ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+    _output_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+
+# -----------------------------------------------------------------------Search
+class ESGFSearch(Module):
+    '''
+    ESGFSearch is a module that downloads metadata form ESGF.
+    '''
+    def compute(self):
+        query = self.forceGetInputFromPort("query", None)
+        url = self.forceGetInputFromPort("url","http://pcmdi9.llnl.gov")
+        project = self.forceGetInputFromPort("project",'CMIP5')
+        result = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query)
+                                      ,query);
+        self.setResult("value", result)
+
+    _input_ports = [('query', "(edu.utah.sci.vistrails.basic:String)", True),
+                    ('url', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('project', "(edu.utah.sci.vistrails.basic:String)")]
+    _output_ports = [('value', "(edu.utah.sci.vistrails.basic:List)")]
+
+# ---------------------------------------------------------------------Download
+class ESGFDownloadFile(Module):
+    '''
+    Downloads specified files from ESGF. Needs ESGF key and fileName.
+    '''
+    def compute(self):
+        keyCertFile = self.getInputFromPort("keyCertFile")
+        url = self.getInputFromPort("url")
+        # fileName = self.getInputFromPort("fileName")
+        # outputFile = File()
+        # outputFile.name = "/tmp/dataTestFile2.nc"
+        # outputFile.upToDate = True
+
+        outputFile = esdf_utils.extractFileNameFromURL(url)
+        # outputFile = self.interpreter.filePool.create_file(suffix='.nc')
+        result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
+        self.setResult("outputFile", [outputFile, "mrrso", (-90.0,90.0), (-180.0,175.0)])
+
+    _input_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)"),
+                    ('url', "(edu.utah.sci.vistrails.basic:String)")]
+    _output_ports = [('output', "(edu.utah.sci.vistrails.basic:List)")]
+
+#-----------------------------------------------------------------------Query
+class Query(Module):
+    '''
+    Finds files on a source and either downloads or lists them based on
+    connected input and output ports
+    '''
+    def compute(self):
+        keyCertFile = self.getInputFromPort("keyCertFile")
+        keywords = self.getInputFromPort("keywords")
+#        datefrom = self.getInputFromPort("datefrom")
+#        dateto = self.getInputFromPort("dateto")
+#        location = self.getInputFromPort("location")
+        numitems = self.forceGetInputFromPort("numitems", 1)
+
+        print >> sys.__stdout__, "Hey I am here"
+
+        #TODO: combine parameters to create query
+        query = keywords
+
+        url = 'http://pcmdi9.llnl.gov'
+        project = 'CMIP5'
+        results = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query) ,query);
+
+        print >> sys.__stdout__, "Hey I am here"
+
+        #truncate results
+        results = results[0:numitems]
+
+        self.setResult('filelist', results)
+
+        print >> sys.__stdout__, "Results"
+        print >> sys.__stdout__, results
+
+        #if self.outputPorts('datalist'):
+        datalist = []
+        from vcs_util import get_variable
+        for f in results:
+            tmpfile = self.interpreter.filePool.create_file(suffix='.nc')
+            if(esgf_utils.httpDownloadFile(keyCertFile, f["url"], tmpfile.name)):
+                cdms = CDMSVariable()
+                cdms.var = get_variable(tmpfile.name, f["variable"][0]["name"])
+                datalist[len(datalist):] = [cdms]
+            else:
+                print "Error downloading file %s" % f["url"]
+        self.setResult('datalist', datalist)
+
+
+    _input_ports = [('keywords', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('datefrom', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('dateto', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('location', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('numitems', "(edu.utah.sci.vistrails.basic:Integer)"),
+                    ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+
+    _output_ports = [('datalist', "(edu.utah.sci.vistrails.basic:List)"),
+                     ('filelist', "(edu.utah.sci.vistrails.basic:List)")]
+
+# ----------------------------------------------------------------------Modules
+_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage, First, ESGFLogin,ESGFSearch,ESGFDownloadFile,Query]
+
 # FIXME we should probably use uvcdat's code for this...
 for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
                   'Outline', 'Scatter', 'Taylordiagram', 'Vector', 'XvsY', \
@@ -174,7 +317,7 @@ for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
 
 def initialize():
     global web_out_dir
-                                        
+
     if configuration.check('web_out_dir'):
         web_out_dir = configuration.web_out_dir
     if configuration.check('web_server_path'):
