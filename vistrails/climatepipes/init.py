@@ -238,7 +238,7 @@ class ESGFDownloadFile(Module):
         # outputFile.name = "/tmp/dataTestFile2.nc"
         # outputFile.upToDate = True
 
-        outputFile = esdf_utils.extractFileNameFromURL(url)
+        outputFile = esgf_utils.extractFileNameFromURL(url)
         # outputFile = self.interpreter.filePool.create_file(suffix='.nc')
         result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
         self.setResult("outputFile", [outputFile, "mrrso", (-90.0,90.0), (-180.0,175.0)])
@@ -261,8 +261,6 @@ class Query(Module):
 #        location = self.getInputFromPort("location")
         numitems = self.forceGetInputFromPort("numitems", 1)
 
-        print >> sys.__stdout__, "Hey I am here"
-
         #TODO: combine parameters to create query
         query = keywords
 
@@ -270,24 +268,22 @@ class Query(Module):
         project = 'CMIP5'
         results = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query) ,query);
 
-        print >> sys.__stdout__, "Hey I am here"
-
         #truncate results
         results = results[0:numitems]
 
         self.setResult('filelist', results)
 
-        print >> sys.__stdout__, "Results"
-        print >> sys.__stdout__, results
-
         #if self.outputPorts('datalist'):
         datalist = []
         from vcs_util import get_variable
         for f in results:
-            tmpfile = self.interpreter.filePool.create_file(suffix='.nc')
-            if(esgf_utils.httpDownloadFile(keyCertFile, f["url"], tmpfile.name)):
+            #tmpfile = self.interpreter.filePool.create_file(suffix='.nc')
+            tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
+            #result = esgf_utils.httpDownloadFile(keyCertFile.name, f["url"], tmpfile.name)
+
+            if(esgf_utils.httpDownloadFile(keyCertFile.name, f["url"], tmpfile)):
                 cdms = CDMSVariable()
-                cdms.var = get_variable(tmpfile.name, f["variable"][0]["name"])
+                cdms.var = get_variable(tmpfile, f["var"][0]["short_name"])
                 datalist[len(datalist):] = [cdms]
             else:
                 print "Error downloading file %s" % f["url"]

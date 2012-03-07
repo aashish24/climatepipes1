@@ -166,7 +166,7 @@ def getURLAndVariables(context,attr):
     context.setContextNode(attr)
     url = context.xpathEval("./@urlPath")[0]
     return {"url":'http://pcmdi9.llnl.gov/thredds/fileServer/'+url.content,
-            "variables":[{"name":i.content,"rank":0} for i in context.xpathEval("./ns:variables/ns:variable[@name]")],
+            "variables":[{"name":i.content,"short_name":i.properties.content,"rank":0} for i in context.xpathEval("./ns:variables/ns:variable[@name]")],
             "rank":0}
 
 # -----------------------------------------------------------------------------
@@ -206,6 +206,7 @@ def variableRank(diction, query):
     '''
     '''
     return {'name': diction['name'],
+            'short_name': diction['short_name'],
             "rank": variable_score.get_rank(diction['name'],query)}
 
 # -----------------------------------------------------------------------------
