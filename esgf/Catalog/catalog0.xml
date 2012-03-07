@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0" xmlns:xlink="http://www.w3.org/1999/xlink" name="TDS configuration file" version="1.0.1">
+  <service name="gridded" serviceType="OPENDAP" base="/thredds/dodsC/">
+    <property name="requires_authorization" value="false" />
+    <property name="application" value="Web Browser" />
+  </service>
+  <service name="LASatPCMDI9" serviceType="LAS" base="http://pcmdi9.llnl.gov/las/getUI.do">
+    <property name="requires_authorization" value="false" />
+    <property name="application" value="Web Browser" />
+  </service>
+  <service name="fileservice" serviceType="Compound" base="">
+    <service name="HTTPServer" serviceType="HTTPServer" base="/thredds/fileServer/">
+      <property name="requires_authorization" value="true" />
+      <property name="application" value="Web Browser" />
+      <property name="application" value="Web Script" />
+    </service>
+    <service name="GRIDFTP" serviceType="GridFTP" base="gsiftp://pcmdi6.llnl.gov:2811/">
+      <property name="requires_authorization" value="true" />
+      <property name="application" value="DataMover-Lite" />
+    </service>
+  </service>
+  <service name="HRMatPCMDI" serviceType="SRM" base="srm://host.sample.gov:6288/srm/v2/server?SFN=/archive.sample.gov/">
+    <property name="requires_authorization" value="false" />
+  </service>
+  <property name="catalog_version" value="2" />
+  <dataset name="project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=ESM historical, time_frequency=fx, modeling realm=atmos, ensemble=r0i0p0, version=20110927" ID="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927" restrictAccess="esg-user">
+    <property name="dataset_id" value="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0" />
+    <property name="dataset_version" value="20110927" />
+    <property name="project" value="cmip5" />
+    <property name="experiment" value="esmHistorical" />
+    <property name="product" value="output1" />
+    <property name="model" value="inmcm4" />
+    <property name="time_frequency" value="fx" />
+    <property name="realm" value="atmos" />
+    <property name="cmor_table" value="fx" />
+    <property name="ensemble" value="r0i0p0" />
+    <property name="institute" value="INM" />
+    <property name="forcing" value="N/A" />
+    <property name="title" value="inmcm4 model output prepared for CMIP5 ESM historical" />
+    <property name="creation_time" value="2011-09-27 14:26:51" />
+    <property name="format" value="netCDF, CF-1.4" />
+    <property name="drs_id" value="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0" />
+    <variables vocabulary="CF-1.0">
+      <variable name="areacella" vocabulary_name="cell_area" units="m2">Atmosphere Grid-Cell Area</variable>
+      <variable name="orog" vocabulary_name="surface_altitude" units="m">Surface Altitude</variable>
+      <variable name="sftlf" vocabulary_name="land_area_fraction" units="%">Land Area Fraction</variable>
+    </variables>
+    <metadata inherited="true">
+      <dataType>GRID</dataType>
+      <dataFormat>NetCDF</dataFormat>
+    </metadata>
+    <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+    <dataset name="areacella_fx_inmcm4_esmHistorical_r0i0p0.nc" ID="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927.areacella_fx_inmcm4_esmHistorical_r0i0p0.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/esmHistorical/fx/atmos/fx/r0i0p0/areacella/1/areacella_fx_inmcm4_esmHistorical_r0i0p0.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Kbytes">100.9</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.areacella_fx_inmcm4_esmHistorical_r0i0p0.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="100984" />
+      <property name="tracking_id" value="04d251da-bf9d-48a9-a085-7cda88f20fd4" />
+      <property name="mod_time" value="2010-12-29 04:43:38" />
+      <property name="checksum" value="c1bafe0a6458730cbd1fe85a99a9a0f3" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="areacella" vocabulary_name="cell_area" units="m2">Atmosphere Grid-Cell Area</variable>
+      </variables>
+    </dataset>
+    <dataset name="orog_fx_inmcm4_esmHistorical_r0i0p0.nc" ID="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927.orog_fx_inmcm4_esmHistorical_r0i0p0.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/esmHistorical/fx/atmos/fx/r0i0p0/orog/1/orog_fx_inmcm4_esmHistorical_r0i0p0.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Kbytes">101.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.orog_fx_inmcm4_esmHistorical_r0i0p0.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="101476" />
+      <property name="tracking_id" value="a26cb967-e8b5-4bb1-b27f-4b156c781f2e" />
+      <property name="mod_time" value="2010-12-29 04:43:38" />
+      <property name="checksum" value="0cb5a9e6e5aff30ee5b92fd6c2ca3bd4" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="orog" vocabulary_name="surface_altitude" units="m">Surface Altitude</variable>
+      </variables>
+    </dataset>
+    <dataset name="sftlf_fx_inmcm4_esmHistorical_r0i0p0.nc" ID="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927.sftlf_fx_inmcm4_esmHistorical_r0i0p0.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/esmHistorical/fx/atmos/fx/r0i0p0/sftlf/1/sftlf_fx_inmcm4_esmHistorical_r0i0p0.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Kbytes">101.0</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.sftlf_fx_inmcm4_esmHistorical_r0i0p0.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="101076" />
+      <property name="tracking_id" value="0cb8f18a-1d3e-4bb3-96aa-40acac6fc688" />
+      <property name="mod_time" value="2010-12-29 04:43:38" />
+      <property name="checksum" value="20c036c3fe66c1dc2460e9a961d9bdaf" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="sftlf" vocabulary_name="land_area_fraction" units="%">Land Area Fraction</variable>
+      </variables>
+    </dataset>
+  </dataset>
+</catalog>
+

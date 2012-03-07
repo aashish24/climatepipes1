@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+  <int name="status">0</int>
+  <int name="QTime">208</int>
+  <lst name="params">
+    <str name="fl">*,score</str>
+    <str name="echoParams">all</str>
+    <str name="tie">0.01</str>
+    <str name="qf">text</str>
+    <str name="q.alt">*:*</str>
+    <str name="rows">10</str>
+    <str name="facet">true</str>
+    <str name="shards">dev.esg.anl.gov:8983/solr/datasets,esg-datanode.jpl.nasa.gov:8983/solr/datasets,esg.ccs.ornl.gov:8983/solr/datasets,esg1-gw.pnl.gov:8983/solr/datasets,pcmdi11.llnl.gov:8983/solr/datasets,pcmdi9.llnl.gov:8983/solr/datasets</str>
+    <str name="indent">true</str>
+    <str name="start">0</str>
+    <str name="q">*</str>
+    <arr name="fq">
+      <str>type:Dataset</str>
+      <str>project:"CMIP5"</str>
+      <str>index_node:"pcmdi9.llnl.gov"</str>
+    </arr>
+    <str name="rows">10</str>
+    <str name="facet">true</str>
+    <str name="facet.mincount">1</str>
+    <str name="facet.sort">lex</str>
+    <str name="facet.limit">-1</str>
+    <str name="facet.method">enum</str>
+  </lst>
+</lst>
+<result name="response" numFound="204" start="0" maxScore="1.0">
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927|pcmdi9.llnl.gov</str>
+    <str name="version">20110927</str>
+    <arr name="cf_standard_name">
+      <str>cell_area</str>
+      <str>surface_altitude</str>
+      <str>land_area_fraction</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>fx</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2011-09-27 14:26:51</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 ESM historical</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r0i0p0</str>
+    </arr>
+    <arr name="experiment">
+      <str>esmHistorical</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>ESM</str>
+      <str>Historical</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0</str>
+    <str name="metadata_format">THREDDS</str>
+    <str name="metadata_url">http://pcmdi9.llnl.gov/thredds/catalog.xml</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>atmos</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">303536</long>
+    <arr name="time_frequency">
+      <str>fx</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=ESM historical, time_frequency=fx, modeling realm=atmos, ensemble=r0i0p0, version=20110927</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog0.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.esmHistorical.fx.atmos.fx.r0i0p0.v20110927|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>areacella</str>
+      <str>orog</str>
+      <str>sftlf</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Atmosphere Grid-Cell Area</str>
+      <str>Surface Altitude</str>
+      <str>Land Area Fraction</str>
+    </arr>
+    <date name="timestamp">2012-01-23T06:49:28.912Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.day.atmos.day.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>specific_humidity</str>
+      <str>precipitation_flux</str>
+      <str>air_pressure_at_sea_level</str>
+      <str>air_temperature</str>
+      <str>air_temperature</str>
+      <str>air_temperature</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>day</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:34:15</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.day.atmos.day.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.day.atmos.day.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>atmos</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">26498882256</long>
+    <arr name="time_frequency">
+      <str>day</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=day, modeling realm=atmos, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog1.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.day.atmos.day.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>huss</str>
+      <str>pr</str>
+      <str>psl</str>
+      <str>tas</str>
+      <str>tasmax</str>
+      <str>tasmin</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Near-Surface Specific Humidity</str>
+      <str>Precipitation</str>
+      <str>Sea Level Pressure</str>
+      <str>Near-Surface Air Temperature</str>
+      <str>Daily Maximum Near-Surface Air Temperature</str>
+      <str>Daily Minimum Near-Surface Air Temperature</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:46:58.837Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.day.ocean.day.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>ocean_mixed_layer_thickness_defined_by_mixing_scheme</str>
+      <str>surface_temperature</str>
+      <str>square_of_sea_surface_temperature</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>day</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:34:27</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.day.ocean.day.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.day.ocean.day.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>ocean</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">75471830560</long>
+    <arr name="time_frequency">
+      <str>day</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=day, modeling realm=ocean, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog2.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.day.ocean.day.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>omldamax</str>
+      <str>tos</str>
+      <str>tossq</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Daily Maximum Ocean Mixed Layer Thickness Defined by Mixing Scheme</str>
+      <str>Sea Surface Temperature</str>
+      <str>Square of Sea Surface Temperature</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:46:59.821Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.atmos.Amon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>fraction_of_time_convection_occurs</str>
+      <str>air_pressure_at_convective_cloud_base</str>
+      <str>air_pressure_at_convective_cloud_top</str>
+      <str>fraction_of_time_shallow_convection_occurs</str>
+      <str>cloud_area_fraction_in_atmosphere_layer</str>
+      <str>mass_fraction_of_cloud_ice_in_air</str>
+      <str>atmosphere_cloud_ice_content</str>
+      <str>cloud_area_fraction</str>
+      <str>mass_fraction_of_cloud_liquid_water_in_air</str>
+      <str>atmosphere_cloud_condensed_water_content</str>
+      <str>water_evaporation_flux</str>
+      <str>surface_upward_latent_heat_flux</str>
+      <str>surface_upward_sensible_heat_flux</str>
+      <str>relative_humidity</str>
+      <str>relative_humidity</str>
+      <str>specific_humidity</str>
+      <str>specific_humidity</str>
+      <str>precipitation_flux</str>
+      <str>convective_precipitation_flux</str>
+      <str>snowfall_flux</str>
+      <str>atmosphere_water_vapor_content</str>
+      <str>surface_air_pressure</str>
+      <str>air_pressure_at_sea_level</str>
+      <str>surface_downwelling_longwave_flux_in_air</str>
+      <str>surface_downwelling_longwave_flux_in_air_assuming_clear_sky</str>
+      <str>surface_upwelling_longwave_flux_in_air</str>
+      <str>toa_outgoing_longwave_flux</str>
+      <str>toa_outgoing_longwave_flux_assuming_clear_sky</str>
+      <str>surface_downwelling_shortwave_flux_in_air</str>
+      <str>surface_downwelling_shortwave_flux_in_air_assuming_clear_sky</str>
+      <str>toa_incoming_shortwave_flux</str>
+      <str>surface_upwelling_shortwave_flux_in_air</str>
+      <str>surface_upwelling_shortwave_flux_in_air_assuming_clear_sky</str>
+      <str>toa_outgoing_shortwave_flux</str>
+      <str>toa_outgoing_shortwave_flux_assuming_clear_sky</str>
+      <str>net_downward_radiative_flux_at_top_of_atmosphere_model</str>
+      <str>water_sublimation_flux</str>
+      <str>air_temperature</str>
+      <str>air_temperature</str>
+      <str>air_temperature</str>
+      <str>air_temperature</str>
+      <str>surface_downward_eastward_stress</str>
+      <str>surface_downward_northward_stress</str>
+      <str>surface_temperature</str>
+      <str>eastward_wind</str>
+      <str>eastward_wind</str>
+      <str>northward_wind</str>
+      <str>northward_wind</str>
+      <str>lagrangian_tendency_of_air_pressure</str>
+      <str>geopotential_height</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>Amon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:34:42</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.atmos.Amon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.atmos.Amon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>atmos</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">32664098904</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=atmos, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog3.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.atmos.Amon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>ci</str>
+      <str>ccb</str>
+      <str>cct</str>
+      <str>sci</str>
+      <str>cl</str>
+      <str>cli</str>
+      <str>clivi</str>
+      <str>clt</str>
+      <str>clw</str>
+      <str>clwvi</str>
+      <str>evspsbl</str>
+      <str>hfls</str>
+      <str>hfss</str>
+      <str>hur</str>
+      <str>hurs</str>
+      <str>hus</str>
+      <str>huss</str>
+      <str>pr</str>
+      <str>prc</str>
+      <str>prsn</str>
+      <str>prw</str>
+      <str>ps</str>
+      <str>psl</str>
+      <str>rlds</str>
+      <str>rldscs</str>
+      <str>rlus</str>
+      <str>rlut</str>
+      <str>rlutcs</str>
+      <str>rsds</str>
+      <str>rsdscs</str>
+      <str>rsdt</str>
+      <str>rsus</str>
+      <str>rsuscs</str>
+      <str>rsut</str>
+      <str>rsutcs</str>
+      <str>rtmt</str>
+      <str>sbl</str>
+      <str>ta</str>
+      <str>tas</str>
+      <str>tasmax</str>
+      <str>tasmin</str>
+      <str>tauu</str>
+      <str>tauv</str>
+      <str>ts</str>
+      <str>ua</str>
+      <str>uas</str>
+      <str>va</str>
+      <str>vas</str>
+      <str>wap</str>
+      <str>zg</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Fraction of Time Convection Occurs</str>
+      <str>Air Pressure at Convective Cloud Base</str>
+      <str>Air Pressure at Convective Cloud Top</str>
+      <str>Fraction of Time Shallow Convection Occurs</str>
+      <str>Cloud Area Fraction</str>
+      <str>Mass Fraction of Cloud Ice</str>
+      <str>Ice Water Path</str>
+      <str>Total Cloud Fraction</str>
+      <str>Mass Fraction of Cloud Liquid Water</str>
+      <str>Condensed Water Path</str>
+      <str>Evaporation</str>
+      <str>Surface Upward Latent Heat Flux</str>
+      <str>Surface Upward Sensible Heat Flux</str>
+      <str>Relative Humidity</str>
+      <str>Near-Surface Relative Humidity</str>
+      <str>Specific Humidity</str>
+      <str>Near-Surface Specific Humidity</str>
+      <str>Precipitation</str>
+      <str>Convective Precipitation</str>
+      <str>Snowfall Flux</str>
+      <str>Water Vapor Path</str>
+      <str>Surface Air Pressure</str>
+      <str>Sea Level Pressure</str>
+      <str>Surface Downwelling Longwave Radiation</str>
+      <str>Surface Downwelling Clear-Sky Longwave Radiation</str>
+      <str>Surface Upwelling Longwave Radiation</str>
+      <str>TOA Outgoing Longwave Radiation</str>
+      <str>TOA Outgoing Clear-Sky Longwave Radiation</str>
+      <str>Surface Downwelling Shortwave Radiation</str>
+      <str>Surface Downwelling Clear-Sky Shortwave Radiation</str>
+      <str>TOA Incident Shortwave Radiation</str>
+      <str>Surface Upwelling Shortwave Radiation</str>
+      <str>Surface Upwelling Clear-Sky Shortwave Radiation</str>
+      <str>TOA Outgoing Shortwave Radiation</str>
+      <str>TOA Outgoing Clear-Sky Shortwave Radiation</str>
+      <str>Net Downward Flux at Top of Model</str>
+      <str>Surface Snow and Ice Sublimation Flux</str>
+      <str>Air Temperature</str>
+      <str>Near-Surface Air Temperature</str>
+      <str>Daily Maximum Near-Surface Air Temperature</str>
+      <str>Daily Minimum Near-Surface Air Temperature</str>
+      <str>Surface Downward Eastward Wind Stress</str>
+      <str>Surface Downward Northward Wind Stress</str>
+      <str>Surface Temperature</str>
+      <str>Eastward Wind</str>
+      <str>Eastward Near-Surface Wind Speed</str>
+      <str>Northward Wind</str>
+      <str>Northward Near-Surface Wind Speed</str>
+      <str>omega (=dp/dt)</str>
+      <str>Geopotential Height</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:00.5Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>carbon_mass_flux_out_of_atmosphere_due_to_net_biospheric_production_on_land</str>
+      <str>water_evaporation_flux_from_soil</str>
+      <str>water_evaporation_flux_from_canopy</str>
+      <str>gross_primary_productivity_of_carbon</str>
+      <str>leaf_area_index</str>
+      <str>moisture_content_of_soil_layer</str>
+      <str>runoff_flux</str>
+      <str>surface_runoff_flux</str>
+      <str>soil_moisture_content</str>
+      <str>moisture_content_of_soil_layer</str>
+      <str>plant_respiration_carbon_flux</str>
+      <str>heterotrophic_respiration_carbon_flux</str>
+      <str>transpiration_flux</str>
+      <str>soil_temperature</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>Lmon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:35:10</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>land</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">8420010372</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=land, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog4.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>nbp</str>
+      <str>evspsblsoi</str>
+      <str>evspsblveg</str>
+      <str>gpp</str>
+      <str>lai</str>
+      <str>mrlsl</str>
+      <str>mrro</str>
+      <str>mrros</str>
+      <str>mrso</str>
+      <str>mrsos</str>
+      <str>ra</str>
+      <str>rh</str>
+      <str>tran</str>
+      <str>tsl</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land</str>
+      <str>Water Evaporation from Soil</str>
+      <str>Evaporation from Canopy</str>
+      <str>Carbon Mass Flux out of Atmosphere due to Gross Primary Production on Land</str>
+      <str>Leaf Area Index</str>
+      <str>Water Content of Soil Layer</str>
+      <str>Total Runoff</str>
+      <str>Surface Runoff</str>
+      <str>Total Soil Moisture Content</str>
+      <str>Moisture in Upper 0.1 m of Soil Column</str>
+      <str>Carbon Mass Flux into Atmosphere due to Autotrophic (Plant) Respiration on Land</str>
+      <str>Carbon Mass Flux into Atmosphere due to Heterotrophic Respiration on Land</str>
+      <str>Transpiration</str>
+      <str>Temperature of Soil</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:01.37Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.landIce.LImon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>downward_heat_flux_into_snow_where_land_over_land</str>
+      <str>surface_snow_and_ice_sublimation_flux</str>
+      <str>surface_snow_area_fraction</str>
+      <str>surface_snow_thickness</str>
+      <str>surface_snow_melt_flux</str>
+      <str>surface_snow_amount</str>
+      <str>snow_temperature</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>LImon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:35:16</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.landIce.LImon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.landIce.LImon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>landIce</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">1016453256</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=landIce, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog5.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.landIce.LImon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>hfdsn</str>
+      <str>sbl</str>
+      <str>snc</str>
+      <str>snd</str>
+      <str>snm</str>
+      <str>snw</str>
+      <str>tsn</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Downward Heat Flux into Snow Where Land over Land</str>
+      <str>Surface Snow and Ice Sublimation Flux</str>
+      <str>Snow Area Fraction</str>
+      <str>Snow Depth</str>
+      <str>Surface Snow Melt</str>
+      <str>Surface Snow Amount</str>
+      <str>Snow Internal Temperature</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:01.699Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.ocean.Omon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>downward_heat_flux_at_sea_water_surface</str>
+      <str>net_downward_shortwave_radiation_at_sea_water_surface</str>
+      <str>northward_ocean_heat_transport</str>
+      <str>surface_downward_latent_heat_flux</str>
+      <str>surface_downward_sensible_heat_flux</str>
+      <str>ocean_mixed_layer_thickness_defined_by_sigma_t</str>
+      <str>ocean_barotropic_mass_streamfunction</str>
+      <str>ocean_meridional_overturning_mass_streamfunction</str>
+      <str>sea_water_pressure_at_sea_floor</str>
+      <str>surface_net_downward_longwave_flux</str>
+      <str>sea_water_salinity</str>
+      <str>sea_water_salinity</str>
+      <str>sea_surface_salinity</str>
+      <str>surface_downward_x_stress</str>
+      <str>surface_downward_y_stress</str>
+      <str>sea_water_potential_temperature</str>
+      <str>sea_water_potential_temperature</str>
+      <str>sea_surface_temperature</str>
+      <str>sea_water_x_velocity</str>
+      <str>sea_water_y_velocity</str>
+      <str>upward_ocean_mass_transport</str>
+      <str>square_of_upward_ocean_mass_transport</str>
+      <str>sea_surface_height_above_geoid</str>
+      <str>global_average_thermosteric_sea_level_change</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>Omon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:35:17</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.ocean.Omon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.ocean.Omon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>ocean</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">214285706016</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=ocean, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog6.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.ocean.Omon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>hfds</str>
+      <str>rsntds</str>
+      <str>hfbasin</str>
+      <str>hfls</str>
+      <str>hfss</str>
+      <str>mlotst</str>
+      <str>msftbarot</str>
+      <str>msftmyz</str>
+      <str>pbo</str>
+      <str>rlds</str>
+      <str>so</str>
+      <str>soga</str>
+      <str>sos</str>
+      <str>tauuo</str>
+      <str>tauvo</str>
+      <str>thetao</str>
+      <str>thetaoga</str>
+      <str>tos</str>
+      <str>uo</str>
+      <str>vo</str>
+      <str>wmo</str>
+      <str>wmosq</str>
+      <str>zos</str>
+      <str>zostoga</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Downward Heat Flux at Sea Water Surface</str>
+      <str>Net Downward Shortwave Radiation at Sea Water Surface</str>
+      <str>Northward Ocean Heat Transport</str>
+      <str>Surface Downward Latent Heat Flux</str>
+      <str>Surface Downward Sensible Heat Flux</str>
+      <str>Ocean Mixed Layer Thickness Defined by Sigma T</str>
+      <str>Ocean Barotropic Mass Streamfunction</str>
+      <str>Ocean Meridional Overturning Mass Streamfunction</str>
+      <str>Sea Water Pressure at Sea floor</str>
+      <str>Surface Net Downward Longwave Radiation</str>
+      <str>Sea Water Salinity</str>
+      <str>Global Mean Sea Water Salinity</str>
+      <str>Sea Surface Salinity</str>
+      <str>Surface Downward X Stress</str>
+      <str>Surface Downward Y Stress</str>
+      <str>Sea Water Potential Temperature</str>
+      <str>Global Average Sea Water Potential Temperature</str>
+      <str>Sea Surface Temperature</str>
+      <str>Sea Water X Velocity</str>
+      <str>Sea Water Y Velocity</str>
+      <str>Upward Ocean Mass Transport</str>
+      <str>Square of Upward Ocean Mass Transport</str>
+      <str>Sea Surface Height Above Geoid</str>
+      <str>Global Average Thermosteric Sea Level Change</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:02.09Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.ocnBgchem.Omon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>surface_downward_co2_flux</str>
+      <str>surface_partial_pressure_of_carbon_dioxide_in_sea_water</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>Omon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:35:59</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.ocnBgchem.Omon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.ocnBgchem.Omon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>ocnBgchem</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">1654957328</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=ocnBgchem, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog7.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.ocnBgchem.Omon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>fgco2</str>
+      <str>spco2</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Surface Downward CO2 Flux</str>
+      <str>Surface Aqueous Partial Pressure of CO2</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:02.707Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.mon.seaIce.OImon.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>rate_of_melt_at_sea_ice_base</str>
+      <str>surface_rainfall_rate_into_the_sea_ice_portion_of_the_grid_cell</str>
+      <str>surface_snowfall_rate_into_the_sea_ice_portion_of_the_grid_cell</str>
+      <str>snow_melt_rate</str>
+      <str>rate_of_melt_at_upper_surface_of_sea_ice</str>
+      <str>eastward_sea_ice_transport</str>
+      <str>northward_sea_ice_transport</str>
+      <str>surface_temperature_of_sea_ice</str>
+      <str>surface_downwelling_shortwave_flux_in_air</str>
+      <str>surface_upwelling_shortwave_flux_in_air</str>
+      <str>sea_ice_area_fraction</str>
+      <str>sea_ice_thickness</str>
+      <str>surface_snow_thickness</str>
+      <str>temperature_at_interface_between_sea_ice_and_snow</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>OImon</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:36:00</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.mon.seaIce.OImon.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.mon.seaIce.OImon.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>seaIce</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">11584702668</long>
+    <arr name="time_frequency">
+      <str>mon</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=seaIce, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog8.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.seaIce.OImon.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>bmelt</str>
+      <str>pr</str>
+      <str>prsn</str>
+      <str>snomelt</str>
+      <str>tmelt</str>
+      <str>transix</str>
+      <str>transiy</str>
+      <str>tsice</str>
+      <str>rsdssi</str>
+      <str>rsussi</str>
+      <str>sic</str>
+      <str>sit</str>
+      <str>snd</str>
+      <str>tsnint</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Rate of Melt at Sea Ice Base</str>
+      <str>Surface Rainfall Rate into the Sea Ice Portion of the Grid Cell</str>
+      <str>Surface Snowfall Rate into the Sea Ice Portion of the Grid Cell</str>
+      <str>Snow Melt Rate</str>
+      <str>Rate of Melt at Upper Surface of Sea Ice</str>
+      <str>Eastward Sea Ice Transport</str>
+      <str>Northward Sea Ice Transport</str>
+      <str>Surface Temperature of Sea Ice</str>
+      <str>Downward Shortwave over Sea Ice</str>
+      <str>Upward Shortwave over Sea Ice</str>
+      <str>Sea Ice Area Fraction</str>
+      <str>Sea Ice Thickness</str>
+      <str>Snow Depth</str>
+      <str>Temperature at Interface Between Sea Ice and Snow</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:02.986Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+  <doc>
+    <str name="id">cmip5.output1.INM.inmcm4.1pctCO2.yr.ocnBgchem.Oyr.r1i1p1.v20110323|pcmdi9.llnl.gov</str>
+    <str name="version">20110323</str>
+    <arr name="cf_standard_name">
+      <str>dissolved_inorganic_carbon_concentration</str>
+    </arr>
+    <arr name="cmor_table">
+      <str>Oyr</str>
+    </arr>
+    <arr name="creation_time">
+      <str>2012-01-12 18:36:03</str>
+    </arr>
+    <str name="data_node">pcmdi9.llnl.gov</str>
+    <arr name="dataset_id_template_">
+      <str>cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s</str>
+    </arr>
+    <arr name="description">
+      <str>inmcm4 model output prepared for CMIP5 1 percent per year CO2</str>
+    </arr>
+    <arr name="drs_id">
+      <str>cmip5.output1.INM.inmcm4.1pctCO2.yr.ocnBgchem.Oyr.r1i1p1</str>
+    </arr>
+    <arr name="ensemble">
+      <str>r1i1p1</str>
+    </arr>
+    <arr name="experiment">
+      <str>1pctCO2</str>
+    </arr>
+    <arr name="experiment_family">
+      <str>All</str>
+      <str>Idealized</str>
+    </arr>
+    <arr name="forcing">
+      <str>N/A</str>
+    </arr>
+    <arr name="format">
+      <str>netCDF, CF-1.4</str>
+    </arr>
+    <str name="index_node">pcmdi9.llnl.gov</str>
+    <arr name="institute">
+      <str>INM</str>
+    </arr>
+    <bool name="latest">true</bool>
+    <str name="master_id">cmip5.output1.INM.inmcm4.1pctCO2.yr.ocnBgchem.Oyr.r1i1p1</str>
+    <str name="metadata_format">THREDDS</str>
+    <arr name="model">
+      <str>INM-CM4</str>
+    </arr>
+    <arr name="product">
+      <str>output1</str>
+    </arr>
+    <arr name="project">
+      <str>CMIP5</str>
+    </arr>
+    <arr name="realm">
+      <str>ocnBgchem</str>
+    </arr>
+    <bool name="replica">false</bool>
+    <long name="size">2885933568</long>
+    <arr name="time_frequency">
+      <str>yr</str>
+    </arr>
+    <str name="title">project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=yr, modeling realm=ocnBgchem, ensemble=r1i1p1, version=20110323</str>
+    <str name="type">Dataset</str>
+    <arr name="url">
+      <str>http://localhost/ClimatePipes/catalog9.xml</str>
+      <str>http://pcmdi9.llnl.gov/las/getUI.do?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.yr.ocnBgchem.Oyr.r1i1p1.v20110323|application/las|LAS</str>
+    </arr>
+    <arr name="variable">
+      <str>dissic</str>
+    </arr>
+    <arr name="variable_long_name">
+      <str>Dissolved Inorganic Carbon Concentration</str>
+    </arr>
+    <date name="timestamp">2012-01-27T01:47:03.359Z</date>
+    <arr name="score"><float name="score">1.0</float></arr>
+  </doc>
+</result>
+<lst name="facet_counts">
+  <lst name="facet_queries"/>
+  <lst name="facet_fields"/>
+  <lst name="facet_dates"/>
+  <lst name="facet_ranges"/>
+</lst>
+</response>

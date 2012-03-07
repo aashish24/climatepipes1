@@ -53,12 +53,15 @@ class ESGFSearch(Module):
     ''' 
     def compute(self):
         query = self.forceGetInputFromPort("query", None)
-        url = self.getInputFromPort("url")
-        result = esgf.fetchData(esgf.makeESGFSearchURL(query));
+        url = self.forceGetInputFromPort("url","http://pcmdi9.llnl.gov")
+        project = self.forceGetInputFromPort("project",'CMIP5')
+        result = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query)
+                                      ,query);
         self.setResult("value", result)
     
     _input_ports = [('query', "(edu.utah.sci.vistrails.basic:String)", True),
-                    ('url', "(edu.utah.sci.vistrails.basic:String)")]
+                    ('url', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('project', "(edu.utah.sci.vistrails.basic:String)")]
     _output_ports = [('value', "(edu.utah.sci.vistrails.basic:List)")]
 
 # ---------------------------------------------------------------------Download
@@ -74,7 +77,8 @@ class ESGFDownloadFile(Module):
         # outputFile.name = "/tmp/dataTestFile2.nc"
         # outputFile.upToDate = True
 
-        outputFile = self.interpreter.filePool.create_file(suffix='.nc')
+        outputFile = esdf_utils.extractFileNameFromURL(url)
+        # outputFile = self.interpreter.filePool.create_file(suffix='.nc')
         result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
         self.setResult("outputFile", [outputFile, "mrrso", (-90.0,90.0), (-180.0,175.0)])
 
