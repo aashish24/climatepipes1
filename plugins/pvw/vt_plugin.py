@@ -7,7 +7,7 @@ def execute(wf_xml):
 
     _vtHome = os.environ.get("VISTRAILS_HOME", "/vistrails/src/git/vistrails")
     _tmpDir = os.environ.get("VT_TMP_DIR", "/tmp")
-    _vtOptions = {'dotVistrails': os.environ.get("DOT_VISTRAILS", '/Users/dakoop/.vistrails.cmdline'}
+    _vtOptions = {'dotVistrails': os.environ.get("DOT_VISTRAILS", '/Users/dakoop/.vistrails.cmdline')}
 
     sys.path.append(_vtHome)
     sys.path.append('/vistrailsinc/paraview_src/ParaView/build/Utilities/VTKPythonWrapping/site-packages/paraview')
