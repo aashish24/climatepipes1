@@ -138,7 +138,6 @@ class vcsPlot(Module):
 #             vcsiso = create_vcs_isofill(data.name, variable, output.name)
 #             self.setResult("image", output)
 
-
 ##############################################################################
 
 class CropImage(Module):

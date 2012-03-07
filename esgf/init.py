@@ -76,11 +76,11 @@ class ESGFDownloadFile(Module):
 
         outputFile = self.interpreter.filePool.create_file(suffix='.nc')
         result = esgf_utils.httpDownloadFile(keyCertFile.name, url, outputFile.name)
-        self.setResult("outputFile", outputFile)
+        self.setResult("outputFile", [outputFile, "mrrso", (-90.0,90.0), (-180.0,175.0)])
 
     _input_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)"),
                     ('url', "(edu.utah.sci.vistrails.basic:String)")]
-    _output_ports = [('outputFile', "(edu.utah.sci.vistrails.basic:File)")]
+    _output_ports = [('output', "(edu.utah.sci.vistrails.basic:List)")]
 
 #-----------------------------------------------------------------------Query
 class Query(Module):
