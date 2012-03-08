@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0" xmlns:xlink="http://www.w3.org/1999/xlink" name="TDS configuration file" version="1.0.1">
+  <service name="gridded" serviceType="OPENDAP" base="/thredds/dodsC/">
+    <property name="requires_authorization" value="false" />
+    <property name="application" value="Web Browser" />
+  </service>
+  <service name="LASatPCMDI9" serviceType="LAS" base="http://pcmdi9.llnl.gov/las/getUI.do">
+    <property name="requires_authorization" value="false" />
+    <property name="application" value="Web Browser" />
+  </service>
+  <service name="fileservice" serviceType="Compound" base="">
+    <service name="HTTPServer" serviceType="HTTPServer" base="/thredds/fileServer/">
+      <property name="requires_authorization" value="true" />
+      <property name="application" value="Web Browser" />
+      <property name="application" value="Web Script" />
+    </service>
+    <service name="GRIDFTP" serviceType="GridFTP" base="gsiftp://pcmdi9.llnl.gov:2811/">
+      <property name="requires_authorization" value="true" />
+      <property name="application" value="DataMover-Lite" />
+    </service>
+  </service>
+  <service name="HRMatPCMDI" serviceType="SRM" base="srm://host.sample.gov:6288/srm/v2/server?SFN=/archive.sample.gov/">
+    <property name="requires_authorization" value="false" />
+  </service>
+  <property name="catalog_version" value="2" />
+  <dataset name="project=CMIP5 / IPCC Fifth Assessment Report, model=Institute for Numerical Mathematics, experiment=1 percent per year CO2, time_frequency=mon, modeling realm=land, ensemble=r1i1p1, version=20110323" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323" restrictAccess="esg-user">
+    <property name="dataset_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1" />
+    <property name="dataset_version" value="20110323" />
+    <property name="dataset_id_template_" value="cmip5.%(product)s.%(valid_institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s" />
+    <property name="project" value="cmip5" />
+    <property name="experiment" value="1pctCO2" />
+    <property name="product" value="output1" />
+    <property name="model" value="inmcm4" />
+    <property name="time_frequency" value="mon" />
+    <property name="realm" value="land" />
+    <property name="cmor_table" value="Lmon" />
+    <property name="ensemble" value="r1i1p1" />
+    <property name="institute" value="INM" />
+    <property name="forcing" value="N/A" />
+    <property name="title" value="inmcm4 model output prepared for CMIP5 1 percent per year CO2" />
+    <property name="creation_time" value="2012-01-12 18:35:10" />
+    <property name="format" value="netCDF, CF-1.4" />
+    <property name="drs_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1" />
+    <variables vocabulary="CF-1.0">
+      <variable name="nbp" vocabulary_name="Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land</variable>
+      <variable name="evspsblsoi" vocabulary_name="water_evaporation_flux_from_soil" units="kg m-2 s-1">Water Evaporation from Soil</variable>
+      <variable name="evspsblveg" vocabulary_name="water_evaporation_flux_from_canopy" units="kg m-2 s-1">Evaporation from Canopy</variable>
+      <variable name="gpp" vocabulary_name="gross_primary_productivity_of_carbon" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Gross Primary Production on Land</variable>
+      <variable name="lai" vocabulary_name="leaf_area_index" units="1">Leaf Area Index</variable>
+      <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      <variable name="mrro" vocabulary_name="runoff_flux" units="kg m-2 s-1">Total Runoff</variable>
+      <variable name="mrros" vocabulary_name="surface_runoff_flux" units="kg m-2 s-1">Surface Runoff</variable>
+      <variable name="mrso" vocabulary_name="soil_moisture_content" units="kg m-2">Total Soil Moisture Content</variable>
+      <variable name="mrsos" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Moisture in Upper 0.1 m of Soil Column</variable>
+      <variable name="ra" vocabulary_name="plant_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Autotrophic (Plant) Respiration on Land</variable>
+      <variable name="rh" vocabulary_name="heterotrophic_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Heterotrophic Respiration on Land</variable>
+      <variable name="tran" vocabulary_name="transpiration_flux" units="kg m-2 s-1">Transpiration</variable>
+      <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+    </variables>
+    <metadata inherited="true">
+      <dataType>GRID</dataType>
+      <dataFormat>NetCDF</dataFormat>
+    </metadata>
+    <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+    <dataset name="nbp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.nbp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/nbp/1/nbp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207672" />
+      <property name="tracking_id" value="cd83b40a-28fc-409b-a61c-cf9b4e1fdde1" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="b8338f728e241871e942ac6474eb867d" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="nbp" vocabulary_name="Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="nbp" vocabulary_name="Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Net Biospheric Production on Land</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.nbp.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="evspsblsoi_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.evspsblsoi_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/evspsblsoi/1/evspsblsoi_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207492" />
+      <property name="tracking_id" value="3ac096f8-273d-40ff-9f08-39b49e047404" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="2d12c7da6b9a5ccbe1da5e0d296a7851" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="evspsblsoi" vocabulary_name="water_evaporation_flux_from_soil" units="kg m-2 s-1">Water Evaporation from Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="evspsblsoi" vocabulary_name="water_evaporation_flux_from_soil" units="kg m-2 s-1">Water Evaporation from Soil</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblsoi.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="evspsblveg_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.evspsblveg_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/evspsblveg/1/evspsblveg_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207532" />
+      <property name="tracking_id" value="940ee9bf-31e9-41f5-86ee-9b5b18e61d15" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="43b5548a706ab7b460877bc90f4cd35b" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="evspsblveg" vocabulary_name="water_evaporation_flux_from_canopy" units="kg m-2 s-1">Evaporation from Canopy</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="evspsblveg" vocabulary_name="water_evaporation_flux_from_canopy" units="kg m-2 s-1">Evaporation from Canopy</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.evspsblveg.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="gpp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.gpp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/gpp/1/gpp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207484" />
+      <property name="tracking_id" value="3a5417d3-8ce0-421c-90a3-0a9f2503c051" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="6248a7061f666246066708542fa89587" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="gpp" vocabulary_name="gross_primary_productivity_of_carbon" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Gross Primary Production on Land</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="gpp" vocabulary_name="gross_primary_productivity_of_carbon" units="kg m-2 s-1">Carbon Mass Flux out of Atmosphere due to Gross Primary Production on Land</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.gpp.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="lai_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.lai_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/lai/1/lai_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207608" />
+      <property name="tracking_id" value="fd7621eb-90da-4ed3-a302-dfa8a790658c" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="76ad82366fc27d0f79ccda543f5e4292" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="lai" vocabulary_name="leaf_area_index" units="1">Leaf Area Index</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="lai" vocabulary_name="leaf_area_index" units="1">Leaf Area Index</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.lai.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="c3cee92f-af8a-4c50-8d30-acd5bc9714e3" />
+      <property name="mod_time" value="2010-06-18 07:36:01" />
+      <property name="checksum" value="8db89cfd4f8f7ea78ef823e4868b396e" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="954bceaf-4d88-48b3-bd76-feaf0fcc5bb4" />
+      <property name="mod_time" value="2010-06-18 07:36:43" />
+      <property name="checksum" value="484f1fad2f83cd844495a1063d190fc9" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="4418a328-6c73-4cfa-a611-37d66a6db46b" />
+      <property name="mod_time" value="2010-06-18 07:37:27" />
+      <property name="checksum" value="6d1a592678a3b9cef26e642358a23b00" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="aef02549-21d3-4bb7-b80e-2ebeff172697" />
+      <property name="mod_time" value="2010-06-18 07:38:10" />
+      <property name="checksum" value="de5c28d832329224c46a2a27f59fac66" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="745e78f5-818d-4b77-85d4-24212d2966ab" />
+      <property name="mod_time" value="2010-06-18 07:38:55" />
+      <property name="checksum" value="b3a5274802b782d5365670e1c31fa8e1" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="6d9607a8-750f-4e40-90ca-e84abbe06894" />
+      <property name="mod_time" value="2010-06-18 07:39:47" />
+      <property name="checksum" value="3035283db1993906833d675e2d5e67ce" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="979131f4-cdec-419c-825a-2f6d6caaa666" />
+      <property name="mod_time" value="2010-06-18 07:40:30" />
+      <property name="checksum" value="3368e0fd90e1e776dd44ce6325791684" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="9ea3f28c-691c-4120-975b-92c459ab5331" />
+      <property name="mod_time" value="2010-06-18 07:41:25" />
+      <property name="checksum" value="c767fccadbcd6a2fee839d8f739d6ae8" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="88b0d086-9b42-49ae-833b-5e7368b5529d" />
+      <property name="mod_time" value="2010-06-18 07:42:13" />
+      <property name="checksum" value="afcbd68152be429a2c7fce4eecc95bf7" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="dd9ea441-04de-4589-87b0-bc52b854f380" />
+      <property name="mod_time" value="2010-06-18 07:42:59" />
+      <property name="checksum" value="a6158e7a88a82724bee23802a6097966" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="7ab77cd5-9214-47eb-acd2-38a0dc20a364" />
+      <property name="mod_time" value="2010-06-18 07:43:44" />
+      <property name="checksum" value="764be00a9e1a8d579c5fdb3acc176051" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="e5d97b64-95f8-4671-b8ed-6d30366ef128" />
+      <property name="mod_time" value="2010-06-18 07:44:32" />
+      <property name="checksum" value="38608d3033f9b04c9a9524e5c920a0ec" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="0b10685c-4166-45f9-b63f-20a0c6186dc6" />
+      <property name="mod_time" value="2010-06-18 07:45:18" />
+      <property name="checksum" value="b7fcf372c995a5bd949639c51a071345" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrlsl/1/mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482864" />
+      <property name="tracking_id" value="2b142038-1bc0-4ab6-9469-23f407f8ccce" />
+      <property name="mod_time" value="2010-06-18 07:46:03" />
+      <property name="checksum" value="4ec09176555b241be74389a44ae3c5cb" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrlsl" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Water Content of Soil Layer</variable>
+      </variables>
+      <metadata inherited="true">
+        <property name="z_values" value="  9.99999978e-03   1.99999996e-02   3.99999991e-02   7.99999982e-02   1.50000006e-01   2.50000000e-01   3.49999994e-01   4.49999988e-01   5.50000012e-01   6.49999976e-01   7.50000000e-01   8.50000024e-01   9.49999988e-01   1.04999995e+00   1.14999998e+00   1.25000000e+00   1.35000002e+00   1.45000005e+00   1.54999995e+00   2.00000000e+00   3.00000000e+00   5.00000000e+00   1.00000000e+01" />
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+          <updown>
+            <start>0.01</start>
+            <size>9.99</size>
+            <units>m</units>
+          </updown>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrlsl.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="mrro_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrro_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrro/1/mrro_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207500" />
+      <property name="tracking_id" value="59665bb8-b197-4f4a-804b-4f96646d0244" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="e7df3d1c5e137e3712032928ffe072c3" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrro" vocabulary_name="runoff_flux" units="kg m-2 s-1">Total Runoff</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrro" vocabulary_name="runoff_flux" units="kg m-2 s-1">Total Runoff</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrro.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="mrros_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrros_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrros/1/mrros_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207456" />
+      <property name="tracking_id" value="9e8d77ee-d470-47dd-93d8-c64bc20a4e00" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="440e49efed2aca12557f737cfb4706f2" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrros" vocabulary_name="surface_runoff_flux" units="kg m-2 s-1">Surface Runoff</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrros" vocabulary_name="surface_runoff_flux" units="kg m-2 s-1">Surface Runoff</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrros.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="mrso_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrso_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrso/1/mrso_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207476" />
+      <property name="tracking_id" value="fb925aa1-d0e8-48af-b818-ffc29ed1f9e1" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="6aa44994408197cb42dc29107b3ebd75" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrso" vocabulary_name="soil_moisture_content" units="kg m-2">Total Soil Moisture Content</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrso" vocabulary_name="soil_moisture_content" units="kg m-2">Total Soil Moisture Content</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrso.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="mrsos_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.mrsos_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/mrsos/1/mrsos_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207868" />
+      <property name="tracking_id" value="1008129c-f8cf-4dd3-b79f-97f10790537c" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="e40ef53834d2ca2ab55b548d3910940d" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrsos" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Moisture in Upper 0.1 m of Soil Column</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="mrsos" vocabulary_name="moisture_content_of_soil_layer" units="kg m-2">Moisture in Upper 0.1 m of Soil Column</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.mrsos.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="ra_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.ra_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/ra/1/ra_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207480" />
+      <property name="tracking_id" value="c99cdece-e9d0-4a06-979c-248101ca7d62" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="b53a3a6849705fdd8a546aea67e24dab" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="ra" vocabulary_name="plant_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Autotrophic (Plant) Respiration on Land</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="ra" vocabulary_name="plant_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Autotrophic (Plant) Respiration on Land</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.ra.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="rh_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.rh_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/rh/1/rh_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207484" />
+      <property name="tracking_id" value="28a5b53b-1b9c-4ad1-bf1f-76a3490f6c90" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="6c34d38dd91853a81801edde135e5b8a" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="rh" vocabulary_name="heterotrophic_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Heterotrophic Respiration on Land</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="rh" vocabulary_name="heterotrophic_respiration_carbon_flux" units="kg m-2 s-1">Carbon Mass Flux into Atmosphere due to Heterotrophic Respiration on Land</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.rh.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="tran_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tran_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tran/1/tran_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">145.2</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran_Lmon_inmcm4_1pctCO2_r1i1p1_209001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="145207408" />
+      <property name="tracking_id" value="032f9ebd-fd2e-440a-923a-1d60423997c4" />
+      <property name="mod_time" value="2010-06-20 23:07:29" />
+      <property name="checksum" value="76a9a83138da72e595913d2b5f58926b" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tran" vocabulary_name="transpiration_flux" units="kg m-2 s-1">Transpiration</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tran" vocabulary_name="transpiration_flux" units="kg m-2 s-1">Transpiration</variable>
+      </variables>
+      <metadata inherited="true">
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tran.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_220001-220912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="b8d4cfc2-da5b-4091-8ca2-cbf99fdb2ec9" />
+      <property name="mod_time" value="2010-06-18 07:44:32" />
+      <property name="checksum" value="a1edaf3811563d3d410c7ba737322cd7" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_209001-209912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="2932ad89-fef4-4505-9fd7-7f11ca72dc6c" />
+      <property name="mod_time" value="2010-06-18 07:36:01" />
+      <property name="checksum" value="401737ebced357422782b63bca7bc821" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_210001-210912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="ef968e73-e4da-45c0-94bb-3bf62f5c08a5" />
+      <property name="mod_time" value="2010-06-18 07:36:43" />
+      <property name="checksum" value="d9d8a23ce19302708879c2b9ef6f614a" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_211001-211912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="e0e0b4b4-a6a4-49e7-9b47-31824c85976b" />
+      <property name="mod_time" value="2010-06-18 07:37:27" />
+      <property name="checksum" value="8dcba27c91919ef9657ba8c7e791632c" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_212001-212912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="c2caf9aa-d7da-4798-b0bf-51725070e845" />
+      <property name="mod_time" value="2010-06-18 07:38:10" />
+      <property name="checksum" value="8408b3d9d66d8efd7db3c9967d518e6d" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_213001-213912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="41cdf5d5-0e59-4532-b6ae-db463c8a8309" />
+      <property name="mod_time" value="2010-06-18 07:38:55" />
+      <property name="checksum" value="b8621ad5f4ce22320118ff3af93dad4a" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_214001-214912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="89906bc2-85ba-44e1-9a9b-1fbf5b194694" />
+      <property name="mod_time" value="2010-06-18 07:39:47" />
+      <property name="checksum" value="72bbd5ef379715c360bd6793717a4670" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_215001-215912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="5d10c1c4-f452-4ab7-bbe1-a0bab0c0965b" />
+      <property name="mod_time" value="2010-06-18 07:40:30" />
+      <property name="checksum" value="671fa1c0c1685c26e763e74f9b2660ae" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_216001-216912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="57a2cf38-8880-44a1-9916-926f91358f8e" />
+      <property name="mod_time" value="2010-06-18 07:41:25" />
+      <property name="checksum" value="4fc9fa617d2d31160ac2edc1a5c9a103" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_217001-217912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="4dbf4117-ebfd-4969-b58e-cb494f3e9a19" />
+      <property name="mod_time" value="2010-06-18 07:42:13" />
+      <property name="checksum" value="6b5c84a5d1f80043a83cf9fe48704167" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_218001-218912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="a68de0f8-b83e-4f60-8bb8-057d9a41ca2c" />
+      <property name="mod_time" value="2010-06-18 07:42:59" />
+      <property name="checksum" value="a8ec6d6094e87193e85a50e4f78eac26" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_219001-219912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="171223e5-c50b-4e32-bc0c-71fd9d3a6d8f" />
+      <property name="mod_time" value="2010-06-18 07:43:44" />
+      <property name="checksum" value="584919975bfd71f3408eee7857dbd34d" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_221001-221912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="df163800-ea8e-4f7b-bd24-81c9ef39c6b0" />
+      <property name="mod_time" value="2010-06-18 07:45:18" />
+      <property name="checksum" value="c397c1087134adc5fdb6ac7776aa69ea" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="tsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.v20110323.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" urlPath="cmip5_data/cmip5/output1/INM/inmcm4/1pctCO2/mon/land/Lmon/r1i1p1/tsl/1/tsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" restrictAccess="esg-user">
+      <serviceName>HTTPServer</serviceName>
+      <dataSize units="Mbytes">238.4</dataSize>
+      <property name="file_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl_Lmon_inmcm4_1pctCO2_r1i1p1_222001-222912.nc" />
+      <property name="file_version" value="1" />
+      <property name="size" value="238482844" />
+      <property name="tracking_id" value="330755c0-8238-4b57-a597-ecba917341a8" />
+      <property name="mod_time" value="2010-06-18 07:46:03" />
+      <property name="checksum" value="7db0a044db84bdec65a26d4034a59209" />
+      <property name="checksum_type" value="MD5" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+    </dataset>
+    <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation" restrictAccess="esg-user">
+      <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation" />
+      <variables vocabulary="CF-1.0">
+        <variable name="tsl" vocabulary_name="soil_temperature" units="K">Temperature of Soil</variable>
+      </variables>
+      <metadata inherited="true">
+        <property name="z_values" value="  9.99999978e-03   1.99999996e-02   3.99999991e-02   7.99999982e-02   1.50000006e-01   2.50000000e-01   3.49999994e-01   4.49999988e-01   5.50000012e-01   6.49999976e-01   7.50000000e-01   8.50000024e-01   9.49999988e-01   1.04999995e+00   1.14999998e+00   1.25000000e+00   1.35000002e+00   1.45000005e+00   1.54999995e+00   2.00000000e+00   3.00000000e+00   5.00000000e+00   1.00000000e+01" />
+        <geospatialCoverage>
+          <northsouth>
+            <start>-89.25</start>
+            <size>178.5</size>
+            <units>degrees_north</units>
+          </northsouth>
+          <eastwest>
+            <start>0.0</start>
+            <size>358.0</size>
+            <units>degrees_east</units>
+          </eastwest>
+          <updown>
+            <start>0.01</start>
+            <size>9.99</size>
+            <units>m</units>
+          </updown>
+        </geospatialCoverage>
+        <timeCoverage>
+          <start>2090-01-16T12:00:00</start>
+          <end>2229-12-16T12:00:00</end>
+        </timeCoverage>
+      </metadata>
+      <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      <dataset name="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation - Subset 1" ID="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation.1" urlPath="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation.1" restrictAccess="esg-user">
+        <serviceName>gridded</serviceName>
+        <property name="aggregation_id" value="cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation.1" />
+        <property name="time_delta" value="1 month" />
+        <property name="calendar" value="365_day" />
+        <property name="start" value="2090-1-1 0:0:0.0" />
+        <property name="time_length" value="1680" />
+        <access urlPath="?catid=D9C519D5A310E197819B7197215FD574_ns_cmip5.output1.INM.inmcm4.1pctCO2.mon.land.Lmon.r1i1p1.tsl.20110323.aggregation.1" serviceName="LASatPCMDI9" dataFormat="NetCDF" />
+      </dataset>
+    </dataset>
+  </dataset>
+</catalog>
+

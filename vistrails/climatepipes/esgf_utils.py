@@ -2,17 +2,20 @@ import myproxy_logon
 import httplib
 import os
 import urllib2
+import libxml2
 import urlparse
 import string
 import subprocess
 import time
 import synonyms
 import variable_score
+import os.path
 
 from ndg.httpsclient.utils import open_url, Configuration
 from ndg.httpsclient import ssl_context_util
 
 stashedKeyCertFname = None
+cacheDir = '/tmp'
 
 # -----------------------------------------------------------------------------
 def login(host=None, port=None, user=None, password=None, keyCertFile=None):
@@ -48,12 +51,25 @@ def login(host=None, port=None, user=None, password=None, keyCertFile=None):
     return keyCertFile
 
 # -----------------------------------------------------------------------------
+def extractFileNameFromURL(url):
+    '''
+    Note: This is not a general funciton and only used if the URL is for a valid
+    file to be downloaded.
+    '''
+    return cacheDir+"/"+url.split('/')[-1]
+
+# -----------------------------------------------------------------------------
 def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     '''
     Download the given file from url and save it into fnm. The keyCertFile is
     used for authentication and typically got after some form of login process.
     '''
     # print "DAK GETTING URL:", url
+    
+    # Check if the file has already been downloaded
+    if(os.path.isfile(fnm)):
+        return True
+    
     ssl_context = ssl_context_util.make_ssl_context(keyCertFile, 
                                                     keyCertFile,
                                                     None,
@@ -87,6 +103,38 @@ def httpDownloadFile(keyCertFile, url, fnm): #url,fnm):
     return False
 
 # -----------------------------------------------------------------------------
+def prependQuery(str):
+    '''
+    Given an example string 'text' return  &query="text"
+    '''
+    return '&query="'+str+'"'
+
+# -----------------------------------------------------------------------------
+def getIndexNode(url):
+    '''
+    Given a URL returns the the index node 
+    Example: getIndexNode('http://pcmdi9.llnl.gov/something/somethings')
+    -> returns pcmdi9.llnl.gov
+    '''
+    return url.split('/')[2]
+
+# -----------------------------------------------------------------------------
+def makeESGFSearchURL(url,project,searchString):
+    '''
+    Takes a base url and searchString and returns a url to be used with ESGF
+    '''
+    if(searchString):
+        q = "".join(map(prependQuery, synonyms.get_synonyms_strict(searchString)))
+    else:
+        q = ""
+
+    indexNode = getIndexNode(url)
+    if(indexNode == "localhost" or indexNode== "kitware.com"):
+        return "http://localhost/ClimatePipes/index.xml"
+    else:
+        return url+'/esg-search/search?project='+project+'&index_node='+indexNode+q
+
+# -----------------------------------------------------------------------------
 def fetchXML(url):
     '''
     Fetches data from the url. Cleanes all the "\n" characters and returns the
@@ -107,7 +155,6 @@ def getCatalog(stringDoc):
     '''
     Gets all the catelogs from a string document
     '''
-    import libxml2
     doc = libxml2.parseDoc(stringDoc)
     return [attr.content for attr in doc.xpathEval("/response/result//arr[@name='url']/str[1]")]
 
@@ -119,7 +166,7 @@ def getURLAndVariables(context,attr):
     context.setContextNode(attr)
     url = context.xpathEval("./@urlPath")[0]
     return {"url":'http://pcmdi9.llnl.gov/thredds/fileServer/'+url.content,
-            "variables":[{"name":i.content,"rank":0} for i in context.xpathEval("./ns:variables/ns:variable[@name]")],
+            "variables":[{"name":i.content,"short_name":i.properties.content,"rank":0} for i in context.xpathEval("./ns:variables/ns:variable[@name]")],
             "rank":0}
 
 # -----------------------------------------------------------------------------
@@ -159,6 +206,7 @@ def variableRank(diction, query):
     '''
     '''
     return {'name': diction['name'],
+            'short_name': diction['short_name'],
             "rank": variable_score.get_rank(diction['name'],query)}
 
 # -----------------------------------------------------------------------------
@@ -191,8 +239,13 @@ def fetchData(url,query):
     '''
     Fetches all relevand info from the given url
     '''
-    return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
-                            query)
+    if(query):
+        return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
+                                query)
+    else:
+        return filesRankAndSort(merge(map(getCatalogData, getCatalog(fetchXML(url)))),
+                                "")
+
 
 if __name__ == '__main__':
     httpDownloadFile(login(), 'http://pcmdi9.llnl.gov/thredds/fileServer/cmip5_data/cmip5/output2/INM/inmcm4/rcp85/mon/landIce/LImon/r1i1p1/mrfso/1/mrfso_LImon_inmcm4_rcp85_r1i1p1_200601-210012.nc', '/tmp/dataTestFile2.nc')

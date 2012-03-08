@@ -2,7 +2,6 @@ from PIL import Image
 
 # Get rid of the extra useless space
 def crop_whitespace(filename):
-  print filename
   img = Image.open(filename)
   pixdata = img.load()
   newData = list()

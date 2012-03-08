@@ -1,0 +1,641 @@
+<vistrail id="" name="" version="1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vistrails.org/vistrail.xsd">
+  <action date="2012-03-06 11:58:13" id="1" prevId="0" session="0" user="benbu">
+    <annotation id="0" key="__description__" value="Copied from pipeline" />
+    <add id="0" objectId="0" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="0" name="TopCDMSVariable" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="1" objectId="0" parentObjId="0" parentObjType="module" what="location">
+      <location id="0" x="-29.8082191781" y="106.764079148" />
+    </add>
+    <add id="2" objectId="1" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="1" name="vcsIsofill" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="3" objectId="1" parentObjId="1" parentObjType="module" what="location">
+      <location id="1" x="68.3835616438" y="24.9375951294" />
+    </add>
+    <add id="4" objectId="2" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="2" name="WebSink" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="5" objectId="2" parentObjId="2" parentObjType="module" what="location">
+      <location id="2" x="105.01065449" y="-93.5159817352" />
+    </add>
+    <add id="6" objectId="3" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="3" name="CropImage" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="7" objectId="3" parentObjId="3" parentObjType="module" what="location">
+      <location id="3" x="-143.585996956" y="-38.1856925419" />
+    </add>
+    <add id="8" objectId="4" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="4" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="9" objectId="0" parentObjId="4" parentObjType="module" what="function">
+      <function id="0" name="name" pos="0" />
+    </add>
+    <add id="10" objectId="0" parentObjId="0" parentObjType="function" what="parameter">
+      <parameter alias="" id="0" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="list" />
+    </add>
+    <add id="11" objectId="4" parentObjId="4" parentObjType="module" what="location">
+      <location id="4" x="-147.482496195" y="182.356164384" />
+    </add>
+    <add id="12" objectId="0" parentObjId="" parentObjType="" what="connection">
+      <connection id="0" />
+    </add>
+    <add id="13" objectId="1" parentObjId="0" parentObjType="connection" what="port">
+      <port id="1" moduleId="4" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="14" objectId="0" parentObjId="0" parentObjType="connection" what="port">
+      <port id="0" moduleId="0" moduleName="TopCDMSVariable" name="list" signature="(edu.utah.sci.vistrails.basic:List)" type="destination" />
+    </add>
+    <add id="15" objectId="1" parentObjId="" parentObjType="" what="connection">
+      <connection id="1" />
+    </add>
+    <add id="16" objectId="3" parentObjId="1" parentObjType="connection" what="port">
+      <port id="3" moduleId="1" moduleName="vcsIsofill" name="variable" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+    <add id="17" objectId="2" parentObjId="1" parentObjType="connection" what="port">
+      <port id="2" moduleId="0" moduleName="TopCDMSVariable" name="value" signature="(org.vistrails.climatepipes:CDMSVariable)" type="source" />
+    </add>
+    <add id="18" objectId="2" parentObjId="" parentObjType="" what="connection">
+      <connection id="2" />
+    </add>
+    <add id="19" objectId="5" parentObjId="2" parentObjType="connection" what="port">
+      <port id="5" moduleId="3" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+    <add id="20" objectId="4" parentObjId="2" parentObjType="connection" what="port">
+      <port id="4" moduleId="1" moduleName="vcsIsofill" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="21" objectId="3" parentObjId="" parentObjType="" what="connection">
+      <connection id="3" />
+    </add>
+    <add id="22" objectId="7" parentObjId="3" parentObjType="connection" what="port">
+      <port id="7" moduleId="2" moduleName="WebSink" name="value" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+    <add id="23" objectId="6" parentObjId="3" parentObjType="connection" what="port">
+      <port id="6" moduleId="3" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:34:03" id="2" prevId="1" session="3" user="benbu">
+    <delete id="24" objectId="1" parentObjId="0" parentObjType="connection" what="port" />
+    <delete id="25" objectId="0" parentObjId="0" parentObjType="connection" what="port" />
+    <delete id="26" objectId="0" parentObjId="" parentObjType="" what="connection" />
+    <delete id="27" objectId="3" parentObjId="1" parentObjType="connection" what="port" />
+    <delete id="28" objectId="2" parentObjId="1" parentObjType="connection" what="port" />
+    <delete id="29" objectId="1" parentObjId="" parentObjType="" what="connection" />
+    <delete id="30" objectId="0" parentObjId="0" parentObjType="module" what="location" />
+    <delete id="31" objectId="0" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 12:34:05" id="3" prevId="2" session="3" user="benbu">
+    <delete id="32" objectId="4" parentObjId="4" parentObjType="module" what="location" />
+    <delete id="33" objectId="0" parentObjId="0" parentObjType="function" what="parameter" />
+    <delete id="34" objectId="0" parentObjId="4" parentObjType="module" what="function" />
+    <delete id="35" objectId="4" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 12:35:10" id="4" prevId="3" session="3" user="benbu">
+    <add id="36" objectId="5" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="5" name="First" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="37" objectId="5" parentObjId="5" parentObjType="module" what="location">
+      <location id="5" x="-228.334855403" y="207.293759513" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:35:23" id="5" prevId="4" session="3" user="benbu">
+    <change id="38" newObjId="7" oldObjId="5" parentObjId="5" parentObjType="module" what="location">
+      <location id="7" x="-151.96347032" y="216.645357686" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:35:23" id="6" prevId="5" session="3" user="benbu">
+    <add id="39" objectId="6" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="6" name="ESGFDownloadFile" namespace="" package="com.kitware.climatepipes.esgf" version="0.9.0" />
+    </add>
+    <add id="40" objectId="6" parentObjId="6" parentObjType="module" what="location">
+      <location id="6" x="-108.322678843" y="139.494672755" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:35:27" id="7" prevId="6" session="3" user="benbu">
+    <change id="41" newObjId="9" oldObjId="6" parentObjId="6" parentObjType="module" what="location">
+      <location id="9" x="-60.0060882801" y="114.557077626" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:35:27" id="8" prevId="7" session="3" user="benbu">
+    <add id="42" objectId="7" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="7" name="ESGFLogin" namespace="" package="com.kitware.climatepipes.esgf" version="0.9.0" />
+    </add>
+    <add id="43" objectId="8" parentObjId="7" parentObjType="module" what="location">
+      <location id="8" x="10.1308980213" y="250.155251142" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:35:32" id="9" prevId="8" session="3" user="benbu">
+    <change id="44" newObjId="10" oldObjId="8" parentObjId="7" parentObjType="module" what="location">
+      <location id="10" x="41.302891933" y="242.362252664" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:35:32" id="10" prevId="9" session="3" user="benbu">
+    <add id="45" objectId="4" parentObjId="" parentObjType="" what="connection">
+      <connection id="4" />
+    </add>
+    <add id="46" objectId="8" parentObjId="4" parentObjType="connection" what="port">
+      <port id="8" moduleId="7" moduleName="ESGFLogin" name="keyCertFile" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="47" objectId="9" parentObjId="4" parentObjType="connection" what="port">
+      <port id="9" moduleId="6" moduleName="ESGFDownloadFile" name="keyCertFile" signature="(edu.utah.sci.vistrails.basic:File)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:35:46" id="11" prevId="10" session="3" user="benbu">
+    <change id="48" newObjId="11" oldObjId="9" parentObjId="6" parentObjType="module" what="location">
+      <location id="11" x="-3.89649923896" y="124.687975647" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:35:46" id="12" prevId="11" session="3" user="benbu">
+    <add id="49" objectId="5" parentObjId="" parentObjType="" what="connection">
+      <connection id="5" />
+    </add>
+    <add id="50" objectId="10" parentObjId="5" parentObjType="connection" what="port">
+      <port id="10" moduleId="5" moduleName="First" name="url" signature="(edu.utah.sci.vistrails.basic:String)" type="source" />
+    </add>
+    <add id="51" objectId="11" parentObjId="5" parentObjType="connection" what="port">
+      <port id="11" moduleId="6" moduleName="ESGFDownloadFile" name="url" signature="(edu.utah.sci.vistrails.basic:String)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:36:09" id="13" prevId="12" session="3" user="benbu">
+    <change id="52" newObjId="13" oldObjId="1" parentObjId="1" parentObjType="module" what="location">
+      <location id="13" x="50.4596651446" y="-6.23439878232" />
+    </change>
+    <change id="53" newObjId="14" oldObjId="2" parentObjId="2" parentObjType="module" what="location">
+      <location id="14" x="100.334855403" y="-143.391171994" />
+    </change>
+    <change id="54" newObjId="15" oldObjId="3" parentObjId="3" parentObjType="module" what="location">
+      <location id="15" x="-61.7595129377" y="-89.6194824962" />
+    </change>
+    <change id="55" newObjId="16" oldObjId="7" parentObjId="5" parentObjType="module" what="location">
+      <location id="16" x="-37.4063926941" y="211.190258752" />
+    </change>
+    <change id="56" newObjId="17" oldObjId="10" parentObjId="7" parentObjType="module" what="location">
+      <location id="17" x="-192.487062405" y="196.383561644" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:36:09" id="14" prevId="13" session="3" user="benbu">
+    <add id="57" objectId="8" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="8" name="CDMSVariable" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="58" objectId="12" parentObjId="8" parentObjType="module" what="location">
+      <location id="12" x="-86.502283105" y="57.6681887367" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:36:48" id="15" prevId="14" session="3" user="benbu">
+    <change id="59" newObjId="18" oldObjId="12" parentObjId="8" parentObjType="module" what="location">
+      <location id="18" x="10.1308980213" y="46.7579908676" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:36:48" id="16" prevId="15" session="3" user="benbu">
+    <delete id="60" objectId="5" parentObjId="2" parentObjType="connection" what="port" />
+    <delete id="61" objectId="4" parentObjId="2" parentObjType="connection" what="port" />
+    <delete id="62" objectId="2" parentObjId="" parentObjType="" what="connection" />
+    <delete id="63" objectId="7" parentObjId="3" parentObjType="connection" what="port" />
+    <delete id="64" objectId="6" parentObjId="3" parentObjType="connection" what="port" />
+    <delete id="65" objectId="3" parentObjId="" parentObjType="" what="connection" />
+    <delete id="66" objectId="13" parentObjId="1" parentObjType="module" what="location" />
+    <delete id="67" objectId="1" parentObjId="" parentObjType="" what="module" />
+    <delete id="68" objectId="14" parentObjId="2" parentObjType="module" what="location" />
+    <delete id="69" objectId="2" parentObjId="" parentObjType="" what="module" />
+    <delete id="70" objectId="15" parentObjId="3" parentObjType="module" what="location" />
+    <delete id="71" objectId="3" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 12:36:52" id="17" prevId="16" session="3" user="benbu">
+    <add id="72" objectId="9" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="9" name="vcsIsofill" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="73" objectId="19" parentObjId="9" parentObjType="module" what="location">
+      <location id="19" x="-17.1445966514" y="-27.2754946728" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:36:54" id="18" prevId="17" session="3" user="benbu">
+    <add id="74" objectId="6" parentObjId="" parentObjType="" what="connection">
+      <connection id="6" />
+    </add>
+    <add id="75" objectId="12" parentObjId="6" parentObjType="connection" what="port">
+      <port id="12" moduleId="8" moduleName="CDMSVariable" name="value" signature="(org.vistrails.climatepipes:CDMSVariable)" type="source" />
+    </add>
+    <add id="76" objectId="13" parentObjId="6" parentObjType="connection" what="port">
+      <port id="13" moduleId="9" moduleName="vcsIsofill" name="variable" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:37:00" id="19" prevId="18" session="3" user="benbu">
+    <change id="77" newObjId="21" oldObjId="19" parentObjId="9" parentObjType="module" what="location">
+      <location id="21" x="78.7092846271" y="-43.6407914764" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:37:00" id="20" prevId="19" session="3" user="benbu">
+    <add id="78" objectId="10" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="10" name="CropImage" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="79" objectId="20" parentObjId="10" parentObjType="module" what="location">
+      <location id="20" x="-14.0273972603" y="-96.6331811263" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:37:04" id="21" prevId="20" session="3" user="benbu">
+    <add id="80" objectId="11" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="11" name="WebSink" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="81" objectId="22" parentObjId="11" parentObjType="module" what="location">
+      <location id="22" x="48.3165905632" y="-150.404870624" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:37:06" id="22" prevId="21" session="3" user="benbu">
+    <change id="82" newObjId="23" oldObjId="21" parentObjId="9" parentObjType="module" what="location">
+      <location id="23" x="81.8264840183" y="-23.3789954338" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:37:06" id="23" prevId="22" session="3" user="benbu">
+    <add id="83" objectId="7" parentObjId="" parentObjType="" what="connection">
+      <connection id="7" />
+    </add>
+    <add id="84" objectId="14" parentObjId="7" parentObjType="connection" what="port">
+      <port id="14" moduleId="9" moduleName="vcsIsofill" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="85" objectId="15" parentObjId="7" parentObjType="connection" what="port">
+      <port id="15" moduleId="10" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:37:09" id="24" prevId="23" session="3" user="benbu">
+    <change id="86" newObjId="24" oldObjId="20" parentObjId="10" parentObjType="module" what="location">
+      <location id="24" x="11.6894977169" y="-90.398782344" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:37:09" id="25" prevId="24" session="3" user="benbu">
+    <add id="87" objectId="8" parentObjId="" parentObjType="" what="connection">
+      <connection id="8" />
+    </add>
+    <add id="88" objectId="16" parentObjId="8" parentObjType="connection" what="port">
+      <port id="16" moduleId="10" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="89" objectId="17" parentObjId="8" parentObjType="connection" what="port">
+      <port id="17" moduleId="11" moduleName="WebSink" name="value" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:37:15" id="26" prevId="25" session="3" user="benbu">
+    <change id="90" newObjId="25" oldObjId="24" parentObjId="10" parentObjType="module" what="location">
+      <location id="25" x="15.5859969559" y="-100.529680365" />
+    </change>
+    <change id="91" newObjId="26" oldObjId="22" parentObjId="11" parentObjType="module" what="location">
+      <location id="26" x="60.0060882801" y="-169.108066971" />
+    </change>
+  </action>
+  <action date="2012-03-06 12:37:15" id="27" prevId="26" session="3" user="benbu">
+    <add id="92" objectId="9" parentObjId="" parentObjType="" what="connection">
+      <connection id="9" />
+    </add>
+    <add id="93" objectId="18" parentObjId="9" parentObjType="connection" what="port">
+      <port id="18" moduleId="6" moduleName="ESGFDownloadFile" name="outputFile" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="94" objectId="19" parentObjId="9" parentObjType="connection" what="port">
+      <port id="19" moduleId="8" moduleName="CDMSVariable" name="data" signature="(edu.utah.sci.vistrails.basic:File)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:42:07" id="28" prevId="27" session="3" user="benbu">
+    <add id="95" objectId="12" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="12" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="96" objectId="27" parentObjId="12" parentObjType="module" what="location">
+      <location id="27" x="-152.742770167" y="364.712328767" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:42:10" id="29" prevId="28" session="3" user="benbu">
+    <add id="97" objectId="10" parentObjId="" parentObjType="" what="connection">
+      <connection id="10" />
+    </add>
+    <add id="98" objectId="20" parentObjId="10" parentObjType="connection" what="port">
+      <port id="20" moduleId="12" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="99" objectId="21" parentObjId="10" parentObjType="connection" what="port">
+      <port id="21" moduleId="5" moduleName="First" name="list" signature="(edu.utah.sci.vistrails.basic:List)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 12:42:11" id="30" prevId="29" session="3" user="benbu">
+    <add id="100" objectId="1" parentObjId="12" parentObjType="module" what="function">
+      <function id="1" name="name" pos="0" />
+    </add>
+    <add id="101" objectId="1" parentObjId="1" parentObjType="function" what="parameter">
+      <parameter alias="" id="1" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="list" />
+    </add>
+  </action>
+  <action date="2012-03-06 14:10:40" id="31" prevId="30" session="6" user="benbu">
+    <delete id="102" objectId="8" parentObjId="4" parentObjType="connection" what="port" />
+    <delete id="103" objectId="9" parentObjId="4" parentObjType="connection" what="port" />
+    <delete id="104" objectId="4" parentObjId="" parentObjType="" what="connection" />
+    <delete id="105" objectId="10" parentObjId="5" parentObjType="connection" what="port" />
+    <delete id="106" objectId="11" parentObjId="5" parentObjType="connection" what="port" />
+    <delete id="107" objectId="5" parentObjId="" parentObjType="" what="connection" />
+    <delete id="108" objectId="12" parentObjId="6" parentObjType="connection" what="port" />
+    <delete id="109" objectId="13" parentObjId="6" parentObjType="connection" what="port" />
+    <delete id="110" objectId="6" parentObjId="" parentObjType="" what="connection" />
+    <delete id="111" objectId="14" parentObjId="7" parentObjType="connection" what="port" />
+    <delete id="112" objectId="15" parentObjId="7" parentObjType="connection" what="port" />
+    <delete id="113" objectId="7" parentObjId="" parentObjType="" what="connection" />
+    <delete id="114" objectId="16" parentObjId="8" parentObjType="connection" what="port" />
+    <delete id="115" objectId="17" parentObjId="8" parentObjType="connection" what="port" />
+    <delete id="116" objectId="8" parentObjId="" parentObjType="" what="connection" />
+    <delete id="117" objectId="18" parentObjId="9" parentObjType="connection" what="port" />
+    <delete id="118" objectId="19" parentObjId="9" parentObjType="connection" what="port" />
+    <delete id="119" objectId="9" parentObjId="" parentObjType="" what="connection" />
+    <delete id="120" objectId="20" parentObjId="10" parentObjType="connection" what="port" />
+    <delete id="121" objectId="21" parentObjId="10" parentObjType="connection" what="port" />
+    <delete id="122" objectId="10" parentObjId="" parentObjType="" what="connection" />
+    <delete id="123" objectId="23" parentObjId="9" parentObjType="module" what="location" />
+    <delete id="124" objectId="9" parentObjId="" parentObjType="" what="module" />
+    <delete id="125" objectId="27" parentObjId="12" parentObjType="module" what="location" />
+    <delete id="126" objectId="1" parentObjId="1" parentObjType="function" what="parameter" />
+    <delete id="127" objectId="1" parentObjId="12" parentObjType="module" what="function" />
+    <delete id="128" objectId="12" parentObjId="" parentObjType="" what="module" />
+    <delete id="129" objectId="17" parentObjId="7" parentObjType="module" what="location" />
+    <delete id="130" objectId="7" parentObjId="" parentObjType="" what="module" />
+    <delete id="131" objectId="16" parentObjId="5" parentObjType="module" what="location" />
+    <delete id="132" objectId="5" parentObjId="" parentObjType="" what="module" />
+    <delete id="133" objectId="25" parentObjId="10" parentObjType="module" what="location" />
+    <delete id="134" objectId="10" parentObjId="" parentObjType="" what="module" />
+    <delete id="135" objectId="18" parentObjId="8" parentObjType="module" what="location" />
+    <delete id="136" objectId="8" parentObjId="" parentObjType="" what="module" />
+    <delete id="137" objectId="26" parentObjId="11" parentObjType="module" what="location" />
+    <delete id="138" objectId="11" parentObjId="" parentObjType="" what="module" />
+    <delete id="139" objectId="11" parentObjId="6" parentObjType="module" what="location" />
+    <delete id="140" objectId="6" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 16:16:53" id="32" prevId="31" session="9" user="benbu">
+    <add id="141" objectId="13" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="13" name="First" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="142" objectId="28" parentObjId="13" parentObjType="module" what="location">
+      <location id="28" x="-120.791476408" y="174.563165906" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:03" id="33" prevId="32" session="9" user="benbu">
+    <change id="143" newObjId="30" oldObjId="28" parentObjId="13" parentObjType="module" what="location">
+      <location id="30" x="-93.5159817352" y="91.9573820396" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:17:03" id="34" prevId="33" session="9" user="benbu">
+    <add id="144" objectId="14" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="14" name="vcsIsofill" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="145" objectId="29" parentObjId="14" parentObjType="module" what="location">
+      <location id="29" x="-82.6057838661" y="11.6894977169" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:06" id="35" prevId="34" session="9" user="benbu">
+    <add id="146" objectId="15" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="15" name="CropImage" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="147" objectId="31" parentObjId="15" parentObjType="module" what="location">
+      <location id="31" x="-94.295281583" y="-49.095890411" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:10" id="36" prevId="35" session="9" user="benbu">
+    <add id="148" objectId="16" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="16" name="WebSink" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="149" objectId="32" parentObjId="16" parentObjType="module" what="location">
+      <location id="32" x="-66.2404870624" y="-112.219178082" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:35" id="37" prevId="36" session="9" user="benbu">
+    <change id="150" newObjId="33" oldObjId="32" parentObjId="16" parentObjType="module" what="location">
+      <location id="33" x="111.439878234" y="-153.522070015" />
+    </change>
+    <change id="151" newObjId="34" oldObjId="30" parentObjId="13" parentObjType="module" what="location">
+      <location id="34" x="-108.322678843" y="125.467275495" />
+    </change>
+    <change id="152" newObjId="35" oldObjId="29" parentObjId="14" parentObjType="module" what="location">
+      <location id="35" x="-52.9923896499" y="38.1856925419" />
+    </change>
+    <change id="153" newObjId="36" oldObjId="31" parentObjId="15" parentObjType="module" what="location">
+      <location id="36" x="17.9238964992" y="-66.2404870624" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:17:35" id="38" prevId="37" session="9" user="benbu">
+    <add id="154" objectId="11" parentObjId="" parentObjType="" what="connection">
+      <connection id="11" />
+    </add>
+    <add id="155" objectId="22" parentObjId="11" parentObjType="connection" what="port">
+      <port id="22" moduleId="13" moduleName="First" name="value" signature="(org.vistrails.climatepipes:CDMSVariable)" type="source" />
+    </add>
+    <add id="156" objectId="23" parentObjId="11" parentObjType="connection" what="port">
+      <port id="23" moduleId="14" moduleName="vcsIsofill" name="variable" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:38" id="39" prevId="38" session="9" user="benbu">
+    <change id="157" newObjId="37" oldObjId="34" parentObjId="13" parentObjType="module" what="location">
+      <location id="37" x="-128.584474886" y="109.101978691" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:17:38" id="40" prevId="39" session="9" user="benbu">
+    <add id="158" objectId="12" parentObjId="" parentObjType="" what="connection">
+      <connection id="12" />
+    </add>
+    <add id="159" objectId="24" parentObjId="12" parentObjType="connection" what="port">
+      <port id="24" moduleId="14" moduleName="vcsIsofill" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="160" objectId="25" parentObjId="12" parentObjType="connection" what="port">
+      <port id="25" moduleId="15" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:40" id="41" prevId="40" session="9" user="benbu">
+    <add id="161" objectId="13" parentObjId="" parentObjType="" what="connection">
+      <connection id="13" />
+    </add>
+    <add id="162" objectId="26" parentObjId="13" parentObjType="connection" what="port">
+      <port id="26" moduleId="15" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="163" objectId="27" parentObjId="13" parentObjType="connection" what="port">
+      <port id="27" moduleId="16" moduleName="WebSink" name="value" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:46" id="42" prevId="41" session="9" user="benbu">
+    <add id="164" objectId="17" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="17" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="165" objectId="38" parentObjId="17" parentObjType="module" what="location">
+      <location id="38" x="-201.059360731" y="213.528158295" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:17:49" id="43" prevId="42" session="9" user="benbu">
+    <change id="166" newObjId="39" oldObjId="38" parentObjId="17" parentObjType="module" what="location">
+      <location id="39" x="-169.108066971" y="204.176560122" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:17:50" id="44" prevId="43" session="9" user="benbu">
+    <add id="167" objectId="14" parentObjId="" parentObjType="" what="connection">
+      <connection id="14" />
+    </add>
+    <add id="168" objectId="28" parentObjId="14" parentObjType="connection" what="port">
+      <port id="28" moduleId="17" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="169" objectId="29" parentObjId="14" parentObjType="connection" what="port">
+      <port id="29" moduleId="13" moduleName="First" name="var" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:18:28" id="45" prevId="44" session="9" user="benbu">
+    <delete id="170" objectId="22" parentObjId="11" parentObjType="connection" what="port" />
+    <delete id="171" objectId="23" parentObjId="11" parentObjType="connection" what="port" />
+    <delete id="172" objectId="11" parentObjId="" parentObjType="" what="connection" />
+    <delete id="173" objectId="28" parentObjId="14" parentObjType="connection" what="port" />
+    <delete id="174" objectId="29" parentObjId="14" parentObjType="connection" what="port" />
+    <delete id="175" objectId="14" parentObjId="" parentObjType="" what="connection" />
+    <delete id="176" objectId="37" parentObjId="13" parentObjType="module" what="location" />
+    <delete id="177" objectId="13" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 16:18:50" id="46" prevId="45" session="9" user="benbu">
+    <add id="178" objectId="18" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="18" name="First" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="179" objectId="40" parentObjId="18" parentObjType="module" what="location">
+      <location id="40" x="-155.080669711" y="126.246575342" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:06" id="47" prevId="46" session="9" user="benbu">
+    <change id="180" newObjId="41" oldObjId="39" parentObjId="17" parentObjType="module" what="location">
+      <location id="41" x="-190.928462709" y="207.293759513" />
+    </change>
+    <change id="181" newObjId="42" oldObjId="40" parentObjId="18" parentObjType="module" what="location">
+      <location id="42" x="-127.02587519" y="124.687975647" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:19:06" id="48" prevId="47" session="9" user="benbu">
+    <delete id="182" objectId="24" parentObjId="12" parentObjType="connection" what="port" />
+    <delete id="183" objectId="25" parentObjId="12" parentObjType="connection" what="port" />
+    <delete id="184" objectId="12" parentObjId="" parentObjType="" what="connection" />
+    <delete id="185" objectId="26" parentObjId="13" parentObjType="connection" what="port" />
+    <delete id="186" objectId="27" parentObjId="13" parentObjType="connection" what="port" />
+    <delete id="187" objectId="13" parentObjId="" parentObjType="" what="connection" />
+    <delete id="188" objectId="36" parentObjId="15" parentObjType="module" what="location" />
+    <delete id="189" objectId="15" parentObjId="" parentObjType="" what="module" />
+    <delete id="190" objectId="35" parentObjId="14" parentObjType="module" what="location" />
+    <delete id="191" objectId="14" parentObjId="" parentObjType="" what="module" />
+    <delete id="192" objectId="33" parentObjId="16" parentObjType="module" what="location" />
+    <delete id="193" objectId="16" parentObjId="" parentObjType="" what="module" />
+  </action>
+  <action date="2012-03-06 16:19:09" id="49" prevId="48" session="9" user="benbu">
+    <add id="194" objectId="19" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="19" name="CropImage" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="195" objectId="43" parentObjId="19" parentObjType="module" what="location">
+      <location id="43" x="-37.4063926941" y="-124.687975647" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:11" id="50" prevId="49" session="9" user="benbu">
+    <add id="196" objectId="20" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="20" name="vcsIsofill" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="197" objectId="44" parentObjId="20" parentObjType="module" what="location">
+      <location id="44" x="51.4337899543" y="-198.721461187" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:20" id="51" prevId="50" session="9" user="benbu">
+    <change id="198" newObjId="46" oldObjId="43" parentObjId="19" parentObjType="module" what="location">
+      <location id="46" x="43.6407914764" y="-56.1095890411" />
+    </change>
+    <change id="199" newObjId="47" oldObjId="44" parentObjId="20" parentObjType="module" what="location">
+      <location id="47" x="-53.7716894977" y="31.1719939117" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:19:21" id="52" prevId="51" session="9" user="benbu">
+    <add id="200" objectId="21" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="21" name="WebSink" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="201" objectId="45" parentObjId="21" parentObjType="module" what="location">
+      <location id="45" x="70.1369863014" y="-153.522070015" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:26" id="53" prevId="52" session="9" user="benbu">
+    <change id="202" newObjId="48" oldObjId="45" parentObjId="21" parentObjType="module" what="location">
+      <location id="48" x="99.7503805175" y="-139.494672755" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:19:26" id="54" prevId="53" session="9" user="benbu">
+    <add id="203" objectId="15" parentObjId="" parentObjType="" what="connection">
+      <connection id="15" />
+    </add>
+    <add id="204" objectId="30" parentObjId="15" parentObjType="connection" what="port">
+      <port id="30" moduleId="17" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="205" objectId="31" parentObjId="15" parentObjType="connection" what="port">
+      <port id="31" moduleId="18" moduleName="First" name="list" signature="(edu.utah.sci.vistrails.basic:List)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:31" id="55" prevId="54" session="9" user="benbu">
+    <add id="206" objectId="22" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="22" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="207" objectId="49" parentObjId="22" parentObjType="module" what="location">
+      <location id="49" x="-49.8751902588" y="219.762557078" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:35" id="56" prevId="55" session="9" user="benbu">
+    <change id="208" newObjId="50" oldObjId="49" parentObjId="22" parentObjType="module" what="location">
+      <location id="50" x="-45.199391172" y="204.95585997" />
+    </change>
+  </action>
+  <action date="2012-03-06 16:19:35" id="57" prevId="56" session="9" user="benbu">
+    <add id="209" objectId="16" parentObjId="" parentObjType="" what="connection">
+      <connection id="16" />
+    </add>
+    <add id="210" objectId="32" parentObjId="16" parentObjType="connection" what="port">
+      <port id="32" moduleId="22" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="211" objectId="33" parentObjId="16" parentObjType="connection" what="port">
+      <port id="33" moduleId="18" moduleName="First" name="var" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:38" id="58" prevId="57" session="9" user="benbu">
+    <add id="212" objectId="17" parentObjId="" parentObjType="" what="connection">
+      <connection id="17" />
+    </add>
+    <add id="213" objectId="34" parentObjId="17" parentObjType="connection" what="port">
+      <port id="34" moduleId="18" moduleName="First" name="value" signature="(org.vistrails.climatepipes:CDMSVariable)" type="source" />
+    </add>
+    <add id="214" objectId="35" parentObjId="17" parentObjType="connection" what="port">
+      <port id="35" moduleId="20" moduleName="vcsIsofill" name="variable" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:39" id="59" prevId="58" session="9" user="benbu">
+    <add id="215" objectId="18" parentObjId="" parentObjType="" what="connection">
+      <connection id="18" />
+    </add>
+    <add id="216" objectId="36" parentObjId="18" parentObjType="connection" what="port">
+      <port id="36" moduleId="20" moduleName="vcsIsofill" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="217" objectId="37" parentObjId="18" parentObjType="connection" what="port">
+      <port id="37" moduleId="19" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:42" id="60" prevId="59" session="9" user="benbu">
+    <add id="218" objectId="19" parentObjId="" parentObjType="" what="connection">
+      <connection id="19" />
+    </add>
+    <add id="219" objectId="38" parentObjId="19" parentObjType="connection" what="port">
+      <port id="38" moduleId="19" moduleName="CropImage" name="image" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="220" objectId="39" parentObjId="19" parentObjType="connection" what="port">
+      <port id="39" moduleId="21" moduleName="WebSink" name="value" signature="(edu.utah.sci.vistrails.basic:Module)" type="destination" />
+    </add>
+  </action>
+  <action date="2012-03-06 16:19:47" id="61" prevId="60" session="9" user="benbu">
+    <add id="221" objectId="2" parentObjId="17" parentObjType="module" what="function">
+      <function id="2" name="name" pos="0" />
+    </add>
+    <add id="222" objectId="2" parentObjId="2" parentObjType="function" what="parameter">
+      <parameter alias="" id="2" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="list" />
+    </add>
+    <add id="223" objectId="3" parentObjId="22" parentObjType="module" what="function">
+      <function id="3" name="name" pos="0" />
+    </add>
+    <add id="224" objectId="3" parentObjId="3" parentObjType="function" what="parameter">
+      <parameter alias="" id="3" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="var" />
+    </add>
+  </action>
+  <annotation id="1" key="__abstraction_origin_uuid__" value="535a4252-67be-11e1-aef6-4061860bd70d" />
+  <annotation id="2" key="__abstraction_uuid__" value="535a4252-67be-11e1-aef6-4061860bd70d" />
+  <annotation id="3" key="__abstraction_uuid_2__" value="596037ce-67c3-11e1-a1ca-4061860bd70d" />
+  <annotation id="4" key="__abstraction_uuid_3__" value="62e8cbde-67c4-11e1-a1ca-4061860bd70d" />
+  <annotation id="5" key="__abstraction_uuid_4__" value="777d7914-67c4-11e1-a1ca-4061860bd70d" />
+  <annotation id="6" key="__abstraction_uuid_5__" value="2d55aaa0-67e2-11e1-b6e7-4061860bd70d" />
+  <annotation id="7" key="__abstraction_uuid_6__" value="dd8b5e2e-67e2-11e1-a910-4061860bd70d" />
+</vistrail>

@@ -1,2 +1,4 @@
 *.pyc
 *.*~
+*.*#
+web/climate/tmp

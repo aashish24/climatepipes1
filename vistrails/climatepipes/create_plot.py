@@ -1,16 +1,30 @@
 import cdms2
 import vcs
+import os
 
 #fnm = '/home/aashish/tools/cdat/install/sample_data/clt.nc'
-def create_vcs_isofill(filename, out_fname):
+def create_vcs_isofill(filename, varname, lat, lon,  out_fname):
     f = cdms2.open(filename)
     # print f.listvariables()
 
-    # We are interested in variable mrro
-    s=f("mrfso")
+    if varname is None:
+        # Guess varname by searching through avaiable vars and seeing if the 
+        # filename contains it. Defaults to "clt".
+        base = os.path.basename(filename)
+        for var in f.listvariables():
+            if base.find(var) > -1:
+                varname = var
+        if varname is None:
+            varname = "clt"
+            
+    s=f(varname)
 
     # Define the axis
-    s=s(latitude=(-90.0, 90.0),squeeze=1,longitude=(-180.0, 175.0),)
+    if lat is None:
+        lat = (-90.0, 90.0)
+    if lon is None:
+        lon = (-180.0, 175.0)
+    s=s(latitude=lat,squeeze=1,longitude=lon,)
 
     # Create the plot
     x=vcs.init()

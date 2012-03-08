@@ -15,13 +15,12 @@ def plot(plot_type, out_fname, var1, var2=None):
     var1 = var1(latitude=(-90.0, 90.0),squeeze=1,longitude=(-180.0, 175.0),)
     if var2 is not None:
         var2 = var2(latitude=(-90.0, 90.0),squeeze=1,longitude=(-180.0, 175.0),)
-        
+
     # Create the plot
     v = vcs.init()
     create_method = getattr(v, 'create%s' % plot_type.lower())
-    print "GOT create_method", create_method
     p = create_method()
-    
+
     # Turn off everything, we are interested only in the data
     t = v.createtemplate()
     t.file.priority=0
@@ -76,7 +75,7 @@ def plot(plot_type, out_fname, var1, var2=None):
     t.data.x2=0.999
     t.data.y1=0.001
     t.data.y2=0.999
-    
+
     # We need euclidean projection
     proj = v.createprojection()
     proj.type="linear"
@@ -85,7 +84,7 @@ def plot(plot_type, out_fname, var1, var2=None):
     # you're doing here.
     # proj.list()
     p.projection = proj
-    
+
     # Set plot dimensions
     v.setbgoutputdimensions(width=2000,units="pixel")
     if var2 is None:
@@ -100,7 +99,8 @@ if __name__ == '__main__':
     if sys.platform == 'darwin':
         from PyQt4 import QtGui
         app = QtGui.QApplication([])
-    clt_fname = '/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc'
+    #clt_fname = '/vistrails/uvcdat/src/cdat/install/sample_data/clt.nc'
+    clt_fname = '/cp/cdat/install/sample_data/clt.nc'
     print get_variable_list(clt_fname)
     clt = get_variable(clt_fname, 'clt')
     u = get_variable(clt_fname, 'u')
