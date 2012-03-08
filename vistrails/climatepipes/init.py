@@ -3,16 +3,14 @@ import shutil
 import uuid
 
 from core.modules.vistrails_module import Module, ModuleError
-from core.modules.basic_modules import Constant, File
+from core.modules.basic_modules import Constant, File, String, Integer, List
+import core.modules.module_registry
 
 from identifiers import *
-
 import vcs_util
 from convert import *
 
 sys.path.append(os.path.dirname(__file__))
-import core.modules.module_registry
-from core.modules.basic_modules import String, Integer, List, File
 import esgf_utils
 
 web_server_path = os.path.join( \
@@ -117,32 +115,6 @@ class vcsPlot(Module):
         image = vcs_util.plot(self.plot_type, output.name, variable.var, var2)
         self.setResult("image", output)
 
-# class ClimateIsoFill(Module):
-#     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)"),
-#                     ("variable", "(edu.utah.sci.vistrails.basic:String)"),
-#                     ("data_list", "(edu.utah.sci.vistrails.basic:List)")]
-
-#     _output_ports = [("image", "(edu.utah.sci.vistrails.basic:File)")]
-
-#     def compute(self):
-#         if self.hasInputFromPort("data"):
-#             data = self.getInputFromPort("data")
-#         elif self.hasInputFromPort("data_list"):
-#             data = self.getInputFromPort("data_list")[0]
-#         else:
-#             raise ModuleError(self,
-#                               'Missing value from both port data and data_list')
-#         var = self.getInputFromPort("variable")
-
-#         if isinstance(data, File):
-#             suffix = os.path.splitext(data.name)[1][1:]
-#             if suffix != "nc":
-#                 raise ModuleError(self, "Error: Invalid file type. Expecting '.nc' and got '.%s'" % suffix)
-
-#             output = self.interpreter.filePool.create_file(suffix='.png')
-#             vcsiso = create_vcs_isofill(data.name, variable, output.name)
-#             self.setResult("image", output)
-
 ##############################################################################
 
 class CropImage(Module):
@@ -168,10 +140,31 @@ class CropImage(Module):
 
 ##############################################################################
 
-# ------------------------------------------------------------------------Login
-class ESGFLogin(Module):
+#-------------------------------------------------------------------------Source
+class cpSource(Module):
     '''
-    ESGFLogin is used to login to ESGF
+    Base class for source modules. 
+    Subclasses should implement query and download.
+    '''
+
+    '''
+    @query: string used to query files from the source
+    returns: dictionary of data urls along with their variables and rank
+    '''
+    def queryFiles(self, query):
+        raise NotImplementedError("query method not implemented")
+
+    '''
+    @files: dictionary returned from query
+    returns: list of CDMSVariable objects after downloading the files
+    '''
+    def download(self, files):
+        raise NotImplementedError("download method not implemented")
+
+# ------------------------------------------------------------------------Login
+class ESGFSource(cpSource):
+    '''
+    ESGFSource is used to login to ESGF and to download files
     '''
     def compute(self):
     # host = 'pcmdi3.llnl.gov'
@@ -198,14 +191,35 @@ class ESGFLogin(Module):
             keyCertFile.name = result
             keyCertFile.upToDate = True
 
-        self.setResult("keyCertFile", keyCertFile)
+        self._keyCertFile = keyCertFile
+        self.setResult("source", self)
+
+    def queryFiles(self, query):
+        url = 'http://pcmdi9.llnl.gov'
+        project = 'CMIP5'
+        results = esgf_utils.fetchData(
+            esgf_utils.makeESGFSearchURL(url, project, query) ,query);
+        return results
+
+    def download(self, files):
+        datalist = []
+        for f in files:
+            tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
+            if(esgf_utils.httpDownloadFile(self._keyCertFile.name, f["url"], tmpfile)):
+                cdms = CDMSVariable()
+                cdms.var = vcs_util.get_variable(tmpfile, f["var"][0]["short_name"])
+                datalist[len(datalist):] = [cdms]
+            else:
+                print "Error downloading file %s" % f["url"]
+        return datalist        
 
     _input_ports =[('host', "(edu.utah.sci.vistrails.basic:String)"),
                    ('port', "(edu.utah.sci.vistrails.basic:Integer)"),
                    ('user', "(edu.utah.sci.vistrails.basic:String)"),
                    ('password', "(edu.utah.sci.vistrails.basic:String)"),
                    ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
-    _output_ports = [('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+
+    _output_ports = [("source", "(%s:cpSource)" % identifier)]
 
 # -----------------------------------------------------------------------Search
 class ESGFSearch(Module):
@@ -254,7 +268,7 @@ class Query(Module):
     connected input and output ports
     '''
     def compute(self):
-        keyCertFile = self.getInputFromPort("keyCertFile")
+        source = self.getInputFromPort("source")
         keywords = self.getInputFromPort("keywords")
 #        datefrom = self.getInputFromPort("datefrom")
 #        dateto = self.getInputFromPort("dateto")
@@ -263,45 +277,39 @@ class Query(Module):
 
         #TODO: combine parameters to create query
         query = keywords
+        
+        results = source.queryFiles(query)
+        results = results[0:numitems] #truncate results
 
-        url = 'http://pcmdi9.llnl.gov'
-        project = 'CMIP5'
-        results = esgf_utils.fetchData(esgf_utils.makeESGFSearchURL(url, project, query) ,query);
-
-        #truncate results
-        results = results[0:numitems]
-
-        self.setResult('filelist', results)
+        self.setResult('files', results)
 
         #if self.outputPorts('datalist'):
-        datalist = []
-        from vcs_util import get_variable
-        for f in results:
-            #tmpfile = self.interpreter.filePool.create_file(suffix='.nc')
-            tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
-            #result = esgf_utils.httpDownloadFile(keyCertFile.name, f["url"], tmpfile.name)
-
-            if(esgf_utils.httpDownloadFile(keyCertFile.name, f["url"], tmpfile)):
-                cdms = CDMSVariable()
-                cdms.var = get_variable(tmpfile, f["var"][0]["short_name"])
-                datalist[len(datalist):] = [cdms]
-            else:
-                print "Error downloading file %s" % f["url"]
-        self.setResult('datalist', datalist)
+        datalist = source.download(results)
+        self.setResult('data', datalist)
 
 
-    _input_ports = [('keywords', "(edu.utah.sci.vistrails.basic:String)"),
-                    ('datefrom', "(edu.utah.sci.vistrails.basic:String)"),
-                    ('dateto', "(edu.utah.sci.vistrails.basic:String)"),
-                    ('location', "(edu.utah.sci.vistrails.basic:String)"),
-                    ('numitems', "(edu.utah.sci.vistrails.basic:Integer)"),
-                    ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+    _input_ports = [('source', "(%s:cpSource)" % identifier),
+                    ('keywords', "(edu.utah.sci.vistrails.basic:String)"),
+                    # ('datefrom', "(edu.utah.sci.vistrails.basic:String)"),
+                    # ('dateto', "(edu.utah.sci.vistrails.basic:String)"),
+                    # ('location', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('numitems', "(edu.utah.sci.vistrails.basic:Integer)")]
+                   
 
-    _output_ports = [('datalist', "(edu.utah.sci.vistrails.basic:List)"),
-                     ('filelist', "(edu.utah.sci.vistrails.basic:List)")]
+    _output_ports = [('data', "(edu.utah.sci.vistrails.basic:List)"),
+                     ('files', "(edu.utah.sci.vistrails.basic:List)")]
 
 # ----------------------------------------------------------------------Modules
-_modules = [WebSink, CDMSVariable, (vcsPlot, {'abstract': True}), CropImage, First, ESGFLogin,ESGFSearch,ESGFDownloadFile,Query]
+_modules = [WebSink, 
+            CDMSVariable, 
+            (vcsPlot, {'abstract': True}), 
+            CropImage, 
+            First,
+            (cpSource, {'abstract': True}),
+            ESGFSource,
+            ESGFSearch,
+            ESGFDownloadFile,
+            Query]
 
 # FIXME we should probably use uvcdat's code for this...
 for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \

@@ -102,7 +102,7 @@ def run():
     # vt.load_package("edu.utah.sci.vistrails.vtk", "vtk")
     vt.load_package("org.vistrails.climatepipes", "climatepipes")
     #vt.load_package("edu.utah.sci.vistrails.http", "HTTP")
-    vt.load_package("com.kitware.climatepipes.esgf", "esgf")    
+    #vt.load_package("com.kitware.climatepipes.esgf", "esgf")    
     #vt.load_package("com.kitware.climatepipes.simplified", "cpsimplified")
 
     from core.modules.module_registry import get_module_registry
@@ -120,20 +120,20 @@ def run():
     #                                                'VTKRenderOffscreen': \
     #                                                    set(['height', 
     #                                                         'width'])})
-    #climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
-    #climatepipes_modules = create_components(reg, climatepipes_pkg)
+    climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
+    climatepipes_modules = create_components(reg, climatepipes_pkg)
     #cpsimple_pkg = reg.get_package_by_name("com.kitware.climatepipes.simplified")
     #cpsimple_modules = create_components(reg, cpsimple_pkg)
-    esgf_pkg = reg.get_package_by_name("com.kitware.climatepipes.esgf")
-    esgf_modules = create_components(reg, esgf_pkg)
+    #esgf_pkg = reg.get_package_by_name("com.kitware.climatepipes.esgf")
+    #esgf_modules = create_components(reg, esgf_pkg)
     #http_pkg = reg.get_package_by_name("edu.utah.sci.vistrails.http")
     #http_modules = create_components(reg, http_pkg, {"HTTPFile": None})
     # modules = basic_modules + vtk_modules + climatepipes_modules + \
     #     http_modules + esgf_modules
     #modules = basic_modules + climatepipes_modules + \
     #    http_modules + esgf_modules
-    modules = esgf_modules
-    print "var esgf_modules =", json.dumps(modules, indent=1) + ';'
+    modules = climatepipes_modules
+    print "var climatepipes_modules =", json.dumps(modules, indent=1) + ';'
 
 if __name__ == '__main__':
     run()
