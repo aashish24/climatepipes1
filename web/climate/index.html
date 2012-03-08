@@ -178,8 +178,6 @@
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="jquery-1_7_1.js"></script>
     <script>
-      alert('hello')
-
       var map;
       var dragging = false;
       var rect;
@@ -241,7 +239,6 @@
               var lng2 = latlng2.lng();
               var minLng = lng1<lng2?lng1:lng2;
               var maxLng = lng1<lng2?lng2:lng1;
-              alert('Datbase query for the following bounds:\n\nlat: ' + minLat + ' to ' + maxLat+ '\n\nlng: ' + minLng + ' to ' + maxLng);
               boundsElement = document.getElementById('bounds');
               boundsElement.value = minLat + ',' + maxLat + ',' + minLng + ',' + maxLng;
           });
