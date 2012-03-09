@@ -59,7 +59,7 @@ var climatePipes = {
         { position: 'left', width: 200, resize: true, body: 'left-all', gutter: '5px', collapse: true,
           collapseSize: 25, header: 'Modules', scroll: true, animate: true },
         { position: 'center', body: 'center-all', gutter: '5px' },
-        { header:'Results', position: 'right', width: 500, resize: true, body: 'right', gutter: '5px', collapse: true,
+        { header:'Results', position: 'right', width: 600, resize: true, body: 'right-all', gutter: '5px', collapse: true,
           collapseSize: 25, /*header: 'Properties', scroll: true,*/ animate: true }
       ]
     },
@@ -364,3 +364,47 @@ YAHOO.extend(climatePipes.Container, WireIt.FormContainer, {
       return obj;
     }
 });
+
+var resultMap;
+
+function initResultMap()
+{
+  var latlng = new google.maps.LatLng(43, -89);
+  var settings = {
+      zoom: 4,
+      center: latlng,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+      },
+      navigationControl: true,
+      navigationControlOptions: {
+          style: google.maps.NavigationControlStyle.SMALL
+      },
+      mapTypeId: google.maps.MapTypeId.SATELLITE
+  }
+
+  var resultMapElem = $("#result-map");
+  resultMap = new google.maps.Map(resultMapElem[0], settings);
+}
+
+
+function overlayImage( filename )
+{
+  alert(window.location.pathname.split( '/' ));
+
+  initResultMap();
+
+  // \NOTE Hard coded bounds for now
+  var imageBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(-89.9999,-179.9999),
+      new google.maps.LatLng(-89.9999,-179.9999));
+
+  // \NOTE Hard coded base URL for now
+  var imageUrl =  'http://localhost:8080' + '/' + filename;
+  // \TODO Remove later
+  alert( imageUrl );
+  var myOverlay = new google.maps.GroundOverlay( filename, imageBounds );
+  myOverlay.setMap( resultMap );
+}
+
