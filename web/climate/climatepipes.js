@@ -34,6 +34,8 @@ var locationList = ["World", "Asia", "Africa", "North America", "South America",
                     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
                     "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
+var listView = {};
+
 var climatePipes = {
 
   language: {
@@ -85,7 +87,6 @@ var climatePipes = {
    * @static
    */
   run: function() {
-    //TODO: generate layout xml and run paraview plugin
       var jsonObject = this.editor.getValue();
       var workflowxml = json2workflowxml(jsonObject.working).replace(/END_OF_LINE/g,'\n');
 
@@ -115,7 +116,18 @@ var climatePipes = {
       	  } else if (resultArr[0] == "Content-Type: image/png" || 
       		     resultArr[0] == "Content-Type: image/jpg") {
       	      resultsPanel.innerHTML = "<img src=\"" + resultArr[1] + "\">";
-      	  }
+      	  } 
+      	  if (resultArr[0] == "Content-Type: application/json") {
+	      files = YAHOO.lang.JSON.parse(resultArr[1]);
+	      for(var i = 0; i < files.length; ++i) {
+		  files[i].Variable = files[i].var[i].short_name;
+		  files[i].Id = i;
+		  files[i].Visualize = "Visualize"; //placeholder for the button
+	      }
+	      resultsPanel.innerHTML='<div id="listViewTable"></div>';
+	      listView.Data = files;
+	      listView.BuildDataTable();
+	  }
       	  paraview.disconnect();
       }, workflowxml);
   },
@@ -165,6 +177,62 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      xmlButton.on("click", climatePipes.xml, climatePipes, true);
    }
 });
+
+// YUI DataTable definition
+listView.BuildDataTable = new function() {
+        // Define a custom formatter for the cdms variable column
+        this.variableDropdown = function(elLiner, oRecord, oColumn, oData) {
+	    var idx = oRecord.getData("Id");
+	    var opts = [];
+
+	    // create dropdown options from cdms variables
+	    for(var j=0; j<listView.Data[idx].var.length; j++) {
+		opts[j].value = listView.Data[idx].var[j].short_name;
+		opts[j].label = listView.Data[idx].var[j].name;
+	    }
+	    
+	    if(opts.length > 0) {
+		oColumn.dropdownOptions = opts;
+		YAHOO.widget.DataTable.formatDropdown(elLiner, oRecord, oColumn, oData);
+	    } else {
+		elLiner.innerHTML = 'unknown'; //only get here if file had no variables
+	    }	    
+        };
+        
+        // Add the custom formatter to the shortcuts
+        YAHOO.widget.DataTable.Formatter.variableDD = this.variableDropdown;
+
+        // Override the built-in link formatter to just show the filename
+        YAHOO.widget.DataTable.formatLink = function(elLiner, oRecord, oColumn, oData) {
+            elLiner.innerHTML = '<a href="' + oData + '">' + oData.replace(/^.*[\\\/]/, '') + '</a>';
+        };
+
+
+        var myColumnDefs = 
+	    [{key:"Id", formatter:"number"},
+	     {key:"url", label: "Filename" formatter:YAHOO.widget.DataTable.formatLink},
+	     {key:"Variable", formatter:"variableDD"},
+	     {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton}];
+
+        this.myDataSource = new YAHOO.util.DataSource(listView.Data);
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        this.myDataSource.responseSchema = {
+            fields: ['Id', 'url', 'Variable', 'Visualize'];
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("listViewTable", myColumnDefs, this.myDataSource);
+	
+        this.myDataTable.subscribe("buttonClickEvent", function(oArgs) {
+		var idx = this.getRecord(oArgs.target).getData("Id");
+		climatePipes.visualizeFromList(listView.Data[idx]);
+	    });
+
+        this.myDataTable.subscribe("dropdownChangeEvent", function(oArgs){
+		var elDropdown = oArgs.target;
+		var oRecord = this.getRecord(elDropdown);
+		oRecord.setData("Variable",elDropdown.options[elDropdown.selectedIndex].value);
+	    });
+    };
 
 function json2workflowxml(json) {
     var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"

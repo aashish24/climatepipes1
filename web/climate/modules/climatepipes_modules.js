@@ -378,16 +378,6 @@ var climatepipes_modules = [
       "name": "password", 
       "label": "password"
      }
-    }, 
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:File", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "keyCertFile", 
-      "label": "keyCertFile"
-     }
     }
    ], 
    "terminals": [
@@ -399,7 +389,7 @@ var climatepipes_modules = [
      "name": "host", 
      "offsetPosition": {
       "top": -15, 
-      "left": 53.333333333333336
+      "left": 64.0
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:String)", 
@@ -416,7 +406,7 @@ var climatepipes_modules = [
      "name": "port", 
      "offsetPosition": {
       "top": -15, 
-      "left": 106.66666666666667
+      "left": 128.0
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
@@ -433,7 +423,7 @@ var climatepipes_modules = [
      "name": "user", 
      "offsetPosition": {
       "top": -15, 
-      "left": 160.0
+      "left": 192.0
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:String)", 
@@ -450,29 +440,12 @@ var climatepipes_modules = [
      "name": "password", 
      "offsetPosition": {
       "top": -15, 
-      "left": 213.33333333333334
+      "left": 256.0
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:String)", 
       "allowedTypes": [
        "o(edu.utah.sci.vistrails.basic:String)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "keyCertFile", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 266.66666666666669
-     }, 
-     "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:File)", 
-      "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:File)"
       ]
      }
     }, 
@@ -509,50 +482,22 @@ var climatepipes_modules = [
  {
   "category": "org-vistrails-climatepipes", 
   "container": {
-   "fields": [
-    {
-     "alias": "", 
-     "vtype": "edu.utah.sci.vistrails.basic:List", 
-     "type": "string", 
-     "inputParams": {
-      "required": true, 
-      "name": "list", 
-      "label": "list"
-     }
-    }
-   ], 
+   "fields": [], 
    "terminals": [
     {
      "direction": [
       0, 
       -1
      ], 
-     "name": "list", 
+     "name": "query", 
      "offsetPosition": {
       "top": -15, 
-      "left": 106.66666666666667
+      "left": 160.0
      }, 
      "ddConfig": {
-      "type": "i(edu.utah.sci.vistrails.basic:List)", 
+      "type": "i(org.vistrails.climatepipes:cpQuery)", 
       "allowedTypes": [
-       "o(edu.utah.sci.vistrails.basic:List)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      -1
-     ], 
-     "name": "var", 
-     "offsetPosition": {
-      "top": -15, 
-      "left": 213.33333333333334
-     }, 
-     "ddConfig": {
-      "type": "i(org.vistrails.climatepipes:CDMSVariable)", 
-      "allowedTypes": [
-       "o(org.vistrails.climatepipes:CDMSVariable)"
+       "o(org.vistrails.climatepipes:cpQuery)"
       ]
      }
     }, 
@@ -584,7 +529,7 @@ var climatepipes_modules = [
    "xtype": "climatePipes.Container", 
    "icon": "wireit/res/icons/application_edit.png"
   }, 
-  "name": "First"
+  "name": "GetFirstQueryData"
  }, 
  {
   "category": "org-vistrails-climatepipes", 
@@ -596,8 +541,38 @@ var climatepipes_modules = [
      "type": "string", 
      "inputParams": {
       "required": true, 
-      "name": "keywords", 
-      "label": "keywords"
+      "name": "Keywords", 
+      "label": "Keywords"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "From", 
+      "label": "From"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "To", 
+      "label": "To"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "Location", 
+      "label": "Location"
      }
     }, 
     {
@@ -620,7 +595,7 @@ var climatepipes_modules = [
      "name": "source", 
      "offsetPosition": {
       "top": -15, 
-      "left": 80.0
+      "left": 45.714285714285715
      }, 
      "ddConfig": {
       "type": "i(org.vistrails.climatepipes:cpSource)", 
@@ -634,10 +609,61 @@ var climatepipes_modules = [
       0, 
       -1
      ], 
-     "name": "keywords", 
+     "name": "Keywords", 
      "offsetPosition": {
       "top": -15, 
-      "left": 160.0
+      "left": 91.428571428571431
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "From", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 137.14285714285714
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "To", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 182.85714285714286
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "Location", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 228.57142857142858
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:String)", 
@@ -654,7 +680,7 @@ var climatepipes_modules = [
      "name": "numitems", 
      "offsetPosition": {
       "top": -15, 
-      "left": 240.0
+      "left": 274.28571428571428
      }, 
      "ddConfig": {
       "type": "i(edu.utah.sci.vistrails.basic:Integer)", 
@@ -668,35 +694,15 @@ var climatepipes_modules = [
       0, 
       1
      ], 
-     "name": "data", 
+     "name": "query", 
      "offsetPosition": {
       "bottom": -15, 
-      "left": 106.66666666666667
+      "left": 160.0
      }, 
      "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.basic:List)", 
+      "type": "o(org.vistrails.climatepipes:cpQuery)", 
       "allowedTypes": [
-       "i(edu.utah.sci.vistrails.basic:List)", 
-       "i(edu.utah.sci.vistrails.basic:Constant)", 
-       "i(edu.utah.sci.vistrails.basic:Module)"
-      ]
-     }
-    }, 
-    {
-     "direction": [
-      0, 
-      1
-     ], 
-     "name": "files", 
-     "offsetPosition": {
-      "bottom": -15, 
-      "left": 213.33333333333334
-     }, 
-     "ddConfig": {
-      "type": "o(edu.utah.sci.vistrails.basic:List)", 
-      "allowedTypes": [
-       "i(edu.utah.sci.vistrails.basic:List)", 
-       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(org.vistrails.climatepipes:cpQuery)", 
        "i(edu.utah.sci.vistrails.basic:Module)"
       ]
      }
@@ -712,6 +718,59 @@ var climatepipes_modules = [
    "icon": "wireit/res/icons/application_edit.png"
   }, 
   "name": "Query"
+ }, 
+ {
+  "category": "org-vistrails-climatepipes", 
+  "container": {
+   "fields": [], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "query", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "i(org.vistrails.climatepipes:cpQuery)", 
+      "allowedTypes": [
+       "o(org.vistrails.climatepipes:cpQuery)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "json", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "i(edu.utah.sci.vistrails.basic:String)", 
+       "i(edu.utah.sci.vistrails.basic:Constant)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.0.1", 
+    "package": "org.vistrails.climatepipes"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "QueryToJSON"
  }, 
  {
   "category": "org-vistrails-climatepipes", 
@@ -774,6 +833,22 @@ var climatepipes_modules = [
    "icon": "wireit/res/icons/application_edit.png"
   }, 
   "name": "WebSink"
+ }, 
+ {
+  "category": "org-vistrails-climatepipes", 
+  "container": {
+   "fields": [], 
+   "terminals": [], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.0.1", 
+    "package": "org.vistrails.climatepipes"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "cpQuery"
  }, 
  {
   "category": "org-vistrails-climatepipes", 
