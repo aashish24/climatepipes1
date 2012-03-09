@@ -118,18 +118,23 @@ var climatePipes = {
       	      resultsPanel.innerHTML = "<img src=\"" + resultArr[1] + "\">";
       	  } 
       	  if (resultArr[0] == "Content-Type: application/json") {
+	      resultsPanel.style.height='100%';
+	      document.getElementById("result-map").style.height='0%';
 	      files = YAHOO.lang.JSON.parse(resultArr[1]);
 	      for(var i = 0; i < files.length; ++i) {
-		  files[i].Variable = files[i].var[i].short_name;
+		  if(files[i].var.length > 0)
+		      files[i].Variable = files[i].var[0].short_name;
+		  else
+		      files[i].Variable = 'unknown';
 		  files[i].Id = i;
 		  files[i].Visualize = "Visualize"; //placeholder for the button
 	      }
 	      resultsPanel.innerHTML='<div id="listViewTable"></div>';
 	      listView.Data = files;
-	      listView.BuildDataTable();
+	      BuildDataTable();
 	  }
       	  paraview.disconnect();
-      }, workflowxml);
+	  }, workflowxml);
   },
 
   xml: function() {
@@ -151,7 +156,30 @@ var climatePipes = {
     myPanel.setFooter( "<div style='overflow:auto;'>" + jsonString  + "</div>" );
     myPanel.render(document.body);
     myPanel.show();
-  }
+    },
+
+  createVisualizePipeline: function(url, vari) {
+	alert(url + '\n' + vari);
+    },
+
+
+  testing: function() {
+	var resultsPanel = document.getElementById("right");
+	resultsPanel.innerHTML='<div id="listViewTable"></div>';
+	listView.Data = [
+           {'url':'http://www.google.com/somereallylongfilenamefile.nc', 
+	    	    'var':[{'rank':1.0,'name':'North Atlantic Draft','short_name':'nad'}, 
+	         {'rank':1.2,'name':'South Atlantic Draft','short_name':'sad'}],
+	    'rank': 1.5, 
+	    'Variable':'nad', 
+	    'Id':0,
+	    'Visualize':'Visualize',
+	    'randomotherthing':'withval'}];
+	listView.varOptions = [[{label:'Lable1', value:'val1'},
+            {label:'Lable2', value:'val2'},
+            {label:'Lable3', value:'val3'}]];
+	BuildDataTable();
+    },	
 };
 
 /**
@@ -175,64 +203,11 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      runButton.on("click", climatePipes.run, climatePipes, true);
      var xmlButton = new YAHOO.widget.Button({ label:"XML", id:"WiringEditor-xmlButton", container: toolbar });
      xmlButton.on("click", climatePipes.xml, climatePipes, true);
+     var tstButton = new YAHOO.widget.Button({ label:"TestListView", id:"WiringEditor-tstButton", container: toolbar });
+     tstButton.on("click", climatePipes.testing, climatePipes, true);
    }
 });
 
-// YUI DataTable definition
-listView.BuildDataTable = new function() {
-        // Define a custom formatter for the cdms variable column
-        this.variableDropdown = function(elLiner, oRecord, oColumn, oData) {
-	    var idx = oRecord.getData("Id");
-	    var opts = [];
-
-	    // create dropdown options from cdms variables
-	    for(var j=0; j<listView.Data[idx].var.length; j++) {
-		opts[j].value = listView.Data[idx].var[j].short_name;
-		opts[j].label = listView.Data[idx].var[j].name;
-	    }
-	    
-	    if(opts.length > 0) {
-		oColumn.dropdownOptions = opts;
-		YAHOO.widget.DataTable.formatDropdown(elLiner, oRecord, oColumn, oData);
-	    } else {
-		elLiner.innerHTML = 'unknown'; //only get here if file had no variables
-	    }	    
-        };
-        
-        // Add the custom formatter to the shortcuts
-        YAHOO.widget.DataTable.Formatter.variableDD = this.variableDropdown;
-
-        // Override the built-in link formatter to just show the filename
-        YAHOO.widget.DataTable.formatLink = function(elLiner, oRecord, oColumn, oData) {
-            elLiner.innerHTML = '<a href="' + oData + '">' + oData.replace(/^.*[\\\/]/, '') + '</a>';
-        };
-
-
-        var myColumnDefs = 
-	    [{key:"Id", formatter:"number"},
-	     {key:"url", label: "Filename" formatter:YAHOO.widget.DataTable.formatLink},
-	     {key:"Variable", formatter:"variableDD"},
-	     {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton}];
-
-        this.myDataSource = new YAHOO.util.DataSource(listView.Data);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-        this.myDataSource.responseSchema = {
-            fields: ['Id', 'url', 'Variable', 'Visualize'];
-        };
-
-        this.myDataTable = new YAHOO.widget.DataTable("listViewTable", myColumnDefs, this.myDataSource);
-	
-        this.myDataTable.subscribe("buttonClickEvent", function(oArgs) {
-		var idx = this.getRecord(oArgs.target).getData("Id");
-		climatePipes.visualizeFromList(listView.Data[idx]);
-	    });
-
-        this.myDataTable.subscribe("dropdownChangeEvent", function(oArgs){
-		var elDropdown = oArgs.target;
-		var oRecord = this.getRecord(elDropdown);
-		oRecord.setData("Variable",elDropdown.options[elDropdown.selectedIndex].value);
-	    });
-    };
 
 function json2workflowxml(json) {
     var result = "<workflow id=\"0\" name=\"ClimatePipes\" version=\"1.0.2"
@@ -408,3 +383,63 @@ function overlayImage( filename )
   myOverlay.setMap( resultMap );
 }
 
+// YUI DataTable definition
+function BuildDataTable() {
+    // Define a custom formatter for the cdms variable column
+    listView.variableDropdown = function(elLiner, oRecord, oColumn, oData) {
+	var idx = oRecord.getData("Id");
+	var opts = [];
+	
+	// create dropdown options from cdms variables
+	for(var j=0; j<listView.Data[idx].var.length; j++) {
+	    var option ={"value":listView.Data[idx].var[j].short_name,
+			 "label":listView.Data[idx].var[j].name}; 
+	    opts.push(option);
+	}
+	
+	if(opts.length > 0) {
+	    oColumn.dropdownOptions = opts;
+	    YAHOO.widget.DataTable.formatDropdown(elLiner, oRecord, oColumn, oData);
+	} else {
+	    elLiner.innerHTML = 'unknown'; //only get here if file had no variables
+	}
+    };
+        
+    // Add the custom formatter to the shortcuts
+    YAHOO.widget.DataTable.Formatter.variableDD = listView.variableDropdown;
+
+    // Override the built-in link formatter to just show the filename
+    YAHOO.widget.DataTable.formatLink = function(elLiner, oRecord, oColumn, oData) {
+	elLiner.innerHTML = '<a href="' + oData + '">' + oData.replace(/^.*[\\\/]/, '') + '</a>';
+    };
+
+    var columnDefs = 
+	[{key:"Id", formatter:"number"},
+	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink},
+	 {key:"Variable", formatter:"variableDD"},
+	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton}];
+
+    listView.dataSource = new YAHOO.util.DataSource(listView.Data);
+    listView.dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+    listView.dataSource.responseSchema = {
+	fields: ['Id', 'url', 'Variable', 'Visualize']
+    };
+
+    listView.dataTable = new YAHOO.widget.DataTable("listViewTable", columnDefs, listView.dataSource);
+	
+    listView.dataTable.subscribe("buttonClickEvent", function(oArgs) {
+	    var oRec = this.getRecord(oArgs.target);
+	    var url = oRec.getData("url");
+	    var vari = oRec.getData("Variable");
+	    climatePipes.createVisualizePipeline(url, vari);
+	});
+
+    var variableDropDownChanged = function(evt) {
+	var tar = YAHOO.util.Event.getTarget(evt);
+	var oRec = listView.dataTable.getRecord(tar);
+	oRec.setData("Variable", tar.value);
+    };
+
+    // add a listener to drop down changed on table
+    YAHOO.util.Event.delegate(listView.dataTable.getTbodyEl(), "change", variableDropDownChanged, "select");
+};
