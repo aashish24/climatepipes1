@@ -330,7 +330,114 @@ var cpsimplified_modules = [
    "icon": "wireit/res/icons/application_edit.png"
   }, 
   "name": "Query"
- }, 
+ },
+ {
+  "category": "org-vistrails-climatepipes", 
+  "container": {
+   "fields": [
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "url", 
+      "label": "url"
+     }
+    }, 
+    {
+     "alias": "", 
+     "vtype": "edu.utah.sci.vistrails.basic:String", 
+     "type": "string", 
+     "inputParams": {
+      "required": true, 
+      "name": "variable", 
+      "label": "variable"
+     }
+    }
+   ], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "source", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 80.0
+     }, 
+     "ddConfig": {
+      "type": "i(org.vistrails.climatepipes:cpSource)", 
+      "allowedTypes": [
+       "o(org.vistrails.climatepipes:cpSource)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "url", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      -1
+     ], 
+     "name": "variable", 
+     "offsetPosition": {
+      "top": -15, 
+      "left": 240.0
+     }, 
+     "ddConfig": {
+      "type": "i(edu.utah.sci.vistrails.basic:String)", 
+      "allowedTypes": [
+       "o(edu.utah.sci.vistrails.basic:String)"
+      ]
+     }
+    }, 
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "query", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(org.vistrails.climatepipes:cpQuery)", 
+      "allowedTypes": [
+       "i(org.vistrails.climatepipes:cpQuery)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.0.1", 
+    "package": "org.vistrails.climatepipes"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "DataFile"
+ },
  {
   "category": "org-vistrails-climatepipes-simplified", 
   "container": {

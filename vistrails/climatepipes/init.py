@@ -112,7 +112,7 @@ class CropImage(Module):
             if isinstance(image, File):
                 suffix = os.path.splitext(image.name)[1][1:]
                 if suffix != "png":
-                    print "Error: Invalid file type. Expecting '.png' and got '.%s'" % suffix
+                    print "Error: \nInvalid file type. Expecting '.png' and got '.%s'" % suffix
                     return
 
                 img = crop_whitespace(image.name)
@@ -120,6 +120,7 @@ class CropImage(Module):
                 img.save(output.name, "PNG")
 
                 self.setResult("image", output)
+
 
 ##############################################################################
 
@@ -292,6 +293,35 @@ class Query(cpQuery):
 
     _output_ports = [('query', "(%s:cpQuery)" % identifier)]
 
+'''
+Allows user to specify the file URL
+'''
+class DataFile(cpQuery):
+
+    def compute(self):
+        self._source = self.getInputFromPort("source");
+        url = self.getInputFromPort("url");
+        var = self.getInputFromPort("variable");
+
+        self._files = [{"url":url,"var":[{"name":"","short_name":var,"rank":1.0}],"rank":1.0}]
+        self.setResult("query",self);
+
+    '''
+    Downloads data from source
+    '''
+    def getData(self):
+        return self._source.download(self._files)
+
+    def getFiles(self):
+        return self._files
+
+    _input_ports = [('source', "(%s:cpSource)" % identifier),
+                    ('url', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('variable', "(edu.utah.sci.vistrails.basic:String)")]
+                   
+
+    _output_ports = [('query', "(%s:cpQuery)" % identifier)]
+        
 class GetFirstQueryData(Module):
     '''
     Outputs the first CDMSVariable from the query data
@@ -328,6 +358,7 @@ _modules = [WebSink,
             CropImage, 
             (cpQuery, {'abstract': True}),
             Query,
+            DataFile,
             GetFirstQueryData,
             QueryToJSON,
             (cpSource, {'abstract': True}),

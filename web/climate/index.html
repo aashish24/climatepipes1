@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/datatable/assets/skins/sam/datatable.css" />
 
+    <!-- YUI Progress Bar -->
+    <!--link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css" /-->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/container/assets/skins/sam/container.css" />
+
     <!-- InputEx CSS -->
     <link type='text/css' rel='stylesheet' href='wireit/lib/inputex/css/inputEx.css' />
 
@@ -74,11 +78,16 @@
   top: -3px;
       }
 
+  #wheel {
+    background:url(res/wheel.gif) no-repeat center center;
+    height:100%;
+    width:100%;
+  }
+
     </style>
 
-
     <!-- YUI -->
-    <!--
+    <!-- OLD YUI
        <script type="text/javascript" src="wireit/lib/yui/utilities/utilities.js"></script>
        <script type="text/javascript" src="wireit/lib/yui/resize/resize-min.js"></script>
        <script type="text/javascript" src="wireit/lib/yui/layout/layout-min.js"></script>
@@ -102,6 +111,13 @@
     <script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/datasource/datasource-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/event-delegate/event-delegate-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/datatable/datatable-min.js"></script>
+
+    <!-- YUI Progress Bar -->
+    <!--script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script-->
+    <!--script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/connection/connection-min.js"></script-->
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/animation/animation-min.js"></script>
+    <!--script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/dragdrop/dragdrop-min.js"></script-->
+    <!--script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/container/container-min.js"></script-->
 
 
     <!-- InputEx with wirable options (WirableField-beta) -->
@@ -365,18 +381,23 @@
         </div>
         <br>
         <form name="query" style="width:80%; margin-left:auto; margin-right: auto;">
+	  <select id="selectSource">
+	    <option>ESGFSource</option>
+	    <option>KitwareSource</option>
+	  </select>
           <input type="text" name="date1" id="date1" value="From (mm-dd-yy)" style="width:15%" class="hintTextbox" />
           <input type="text" name="date2" id="date2" value="To (mm-dd-yy)" style="width:15%" class="hintTextbox" />
           <input type="text" name="bounds" id="bounds" value="Region (minLat,maxLat,minLng,maxLng)"
            style="width:29.5%" class="hintTextbox" />
           <button type="button" name="clear" id="clearButton" onclick='clearForm()'>Clear</button>
           <br><br>
-          <select>
-            <option>List</option>
+          <select id="selectView">
+            <option>ListData</option>
             <option>Visualize</option>
           </select>
-          <input type="text" id="search_text_input" name="search_text" style="width:60%" class="hintTextbox" value="Query"/>
-          <input type="submit" value="Submit" />
+          <input type="text" id="search_text_input" name="search_text" style="width:50%" class="hintTextbox" value="Keywords"/>
+	  <input type="text" id="numitems" name="numitems" style="width:10%" class="hintTextbox" value="# of Items"/>
+          <button type="button" name="submit" id="submitButton" onclick="climatePipes.googleMapSubmit()">Submit</button>
         </form>
       </div>
     </div>

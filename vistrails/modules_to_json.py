@@ -103,7 +103,7 @@ def run():
     vt.load_package("org.vistrails.climatepipes", "climatepipes")
     #vt.load_package("edu.utah.sci.vistrails.http", "HTTP")
     #vt.load_package("com.kitware.climatepipes.esgf", "esgf")    
-    vt.load_package("org.vistrails.climatepipes.simplified", "cpsimplified")
+    #vt.load_package("org.vistrails.climatepipes.simplified", "cpsimplified")
 
     from core.modules.module_registry import get_module_registry
     reg = get_module_registry()
@@ -121,8 +121,7 @@ def run():
     #                                                    set(['height', 
     #                                                         'width'])})
     climatepipes_pkg = reg.get_package_by_name("org.vistrails.climatepipes")
-    climatepipes_modules = create_components(reg, climatepipes_pkg,
-                                             {'Query': set(), 'ESGFSource': set()})
+    climatepipes_modules = create_components(reg, climatepipes_pkg)
     #cpsimple_pkg = reg.get_package_by_name("org.vistrails.climatepipes.simplified")
     #cpsimple_modules = create_components(reg, cpsimple_pkg)
     #esgf_pkg = reg.get_package_by_name("com.kitware.climatepipes.esgf")
@@ -134,7 +133,7 @@ def run():
     #modules = basic_modules + climatepipes_modules + \
     #    http_modules + esgf_modules
     modules = climatepipes_modules
-    print "var cpsimplified_modules =", json.dumps(modules, indent=1) + ';'
+    print "var climatepipes_modules =", json.dumps(modules, indent=1) + ';'
 
 if __name__ == '__main__':
     run()
