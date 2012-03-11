@@ -69,23 +69,6 @@ class CDMSVariable(Module):
         self.var = vcs_util.get_variable(data.name, var_name)
         self.setResult("value", self)
 
-class First(Module):
-    '''
-    Outputs the first cdms var from the list, or just passes the var
-    '''
-    _input_ports = [("list", "(edu.utah.sci.vistrails.basic:List)"),
-                    ("var", "(%s:CDMSVariable)" % identifier)]
-
-    _output_ports = [("value", "(%s:CDMSVariable)" % identifier)]
-
-    def compute(self):
-        if self.hasInputFromPort("var"):
-            self.setResult("value", self.getInputFromPort("var"))
-        else:
-            _list = self.getInputFromPort("list")
-            first = _list[0]
-            self.setResult("value", first)
-
 class ListVariables(Module):
     _input_ports = [("data", "(edu.utah.sci.vistrails.basic:File)")]
     _output_ports = [("variables", "(edu.utah.sci.vistrails.basic:List)")]
@@ -129,7 +112,7 @@ class CropImage(Module):
             if isinstance(image, File):
                 suffix = os.path.splitext(image.name)[1][1:]
                 if suffix != "png":
-                    print "Error: Invalid file type. Expecting '.png' and got '.%s'" % suffix
+                    print "Error: \nInvalid file type. Expecting '.png' and got '.%s'" % suffix
                     return
 
                 img = crop_whitespace(image.name)
@@ -138,15 +121,15 @@ class CropImage(Module):
 
                 self.setResult("image", output)
 
+
 ##############################################################################
 
 #-------------------------------------------------------------------------Source
+'''
+Base class for source modules. 
+Subclasses should implement query and download.
+'''
 class cpSource(Module):
-    '''
-    Base class for source modules. 
-    Subclasses should implement query and download.
-    '''
-
     '''
     @query: string used to query files from the source
     returns: dictionary of data urls along with their variables and rank
@@ -177,14 +160,7 @@ class ESGFSource(cpSource):
         port = self.forceGetInputFromPort("port", 2119)
         user = self.forceGetInputFromPort("user", "nix")
         password = self.forceGetInputFromPort("password", "2pw4kw")
-        if self.hasInputFromPort("keyCertFile"):
-            keyCertFile = self.getInputFromPort("keyCertFile")
-            if not os.path.exists(keyCertFile.name):
-                raise ModuleError(self,
-                                  'Key certificate "%s" does not exist' % \
-                                      keyCertFile.name)
-        else:
-            keyCertFile = self.interpreter.filePool.create_file(suffix='.pem')
+        keyCertFile = self.interpreter.filePool.create_file(suffix='.pem')
 
         result = esgf_utils.login(host, port, user, password, keyCertFile.name)
         if result != keyCertFile.name:
@@ -216,8 +192,7 @@ class ESGFSource(cpSource):
     _input_ports =[('host', "(edu.utah.sci.vistrails.basic:String)"),
                    ('port', "(edu.utah.sci.vistrails.basic:Integer)"),
                    ('user', "(edu.utah.sci.vistrails.basic:String)"),
-                   ('password', "(edu.utah.sci.vistrails.basic:String)"),
-                   ('keyCertFile', "(edu.utah.sci.vistrails.basic:File)")]
+                   ('password', "(edu.utah.sci.vistrails.basic:String)")]
 
     _output_ports = [("source", "(%s:cpSource)" % identifier)]
 
@@ -262,14 +237,27 @@ class ESGFDownloadFile(Module):
     _output_ports = [('output', "(edu.utah.sci.vistrails.basic:List)")]
 
 #-----------------------------------------------------------------------Query
-class Query(Module):
+'''
+Abstract module to hide how the file is retrieved (downloaded, 
+cached, from disk, etc.)
+'''
+class cpQuery(Module):
+
+    ''' returns list of CDMSVariable for each queried file '''
+    def getData(self):
+        raise NotImplementedError("getData method not implemented")
+
+    ''' returns list of dictionary objects describing the files '''
+    def getFiles(self):
+        raise NotImplementedError("getFiles method not implemented")
+
+class Query(cpQuery):
     '''
-    Finds files on a source and either downloads or lists them based on
-    connected input and output ports
+    Finds files on a source based on query parameters
     '''
     def compute(self):
         source = self.getInputFromPort("source")
-        keywords = self.getInputFromPort("keywords")
+        keywords = self.forceGetInputFromPort("keywords", 'temperature')
 #        datefrom = self.getInputFromPort("datefrom")
 #        dateto = self.getInputFromPort("dateto")
 #        location = self.getInputFromPort("location")
@@ -281,35 +269,103 @@ class Query(Module):
         results = source.queryFiles(query)
         results = results[0:numitems] #truncate results
 
-        self.setResult('files', results)
+        self._source = source
+        self._files = results
 
-        #if self.outputPorts('datalist'):
-        datalist = source.download(results)
-        self.setResult('data', datalist)
+        self.setResult('query', self)
 
+    '''
+    Downloads data from source
+    '''
+    def getData(self):
+        return self._source.download(self._files)
+
+    def getFiles(self):
+        return self._files
 
     _input_ports = [('source', "(%s:cpSource)" % identifier),
-                    ('keywords', "(edu.utah.sci.vistrails.basic:String)"),
-                    # ('datefrom', "(edu.utah.sci.vistrails.basic:String)"),
-                    # ('dateto', "(edu.utah.sci.vistrails.basic:String)"),
-                    # ('location', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('Keywords', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('From', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('To', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('Location', "(edu.utah.sci.vistrails.basic:String)"),
                     ('numitems', "(edu.utah.sci.vistrails.basic:Integer)")]
                    
 
-    _output_ports = [('data', "(edu.utah.sci.vistrails.basic:List)"),
-                     ('files', "(edu.utah.sci.vistrails.basic:List)")]
+    _output_ports = [('query', "(%s:cpQuery)" % identifier)]
+
+'''
+Allows user to specify the file URL
+'''
+class DataFile(cpQuery):
+
+    def compute(self):
+        self._source = self.getInputFromPort("source");
+        url = self.getInputFromPort("url");
+        var = self.getInputFromPort("variable");
+
+        self._files = [{"url":url,"var":[{"name":"","short_name":var,"rank":1.0}],"rank":1.0}]
+        self.setResult("query",self);
+
+    '''
+    Downloads data from source
+    '''
+    def getData(self):
+        return self._source.download(self._files)
+
+    def getFiles(self):
+        return self._files
+
+    _input_ports = [('source', "(%s:cpSource)" % identifier),
+                    ('url', "(edu.utah.sci.vistrails.basic:String)"),
+                    ('variable', "(edu.utah.sci.vistrails.basic:String)")]
+                   
+
+    _output_ports = [('query', "(%s:cpQuery)" % identifier)]
+        
+class GetFirstQueryData(Module):
+    '''
+    Outputs the first CDMSVariable from the query data
+    '''
+    def compute(self):
+        query = self.getInputFromPort('query')
+        data = query.getData()
+        first = data[0]
+        self.setResult("value", first)
+
+    _input_ports = [("query", "(%s:cpQuery)" % identifier)]
+
+    _output_ports = [("value", "(%s:CDMSVariable)" % identifier)]
+
+class QueryToJSON(Module):
+    '''
+    Converts the list of file dictionary objects to json string
+    '''
+
+    def compute(self):
+        from json import dumps
+        query = self.getInputFromPort('query')
+        files = query.getFiles()
+        jsonstr = dumps(files, separators=(',',':'))
+        self.setResult('json', jsonstr)
+
+    _input_ports = [('query', "(%s:cpQuery)" % identifier)]
+    
+    _output_ports = [('json', "(edu.utah.sci.vistrails.basic:String)")]
 
 # ----------------------------------------------------------------------Modules
 _modules = [WebSink, 
             CDMSVariable, 
-            (vcsPlot, {'abstract': True}), 
             CropImage, 
-            First,
+            (cpQuery, {'abstract': True}),
+            Query,
+            DataFile,
+            GetFirstQueryData,
+            QueryToJSON,
             (cpSource, {'abstract': True}),
             ESGFSource,
             ESGFSearch,
             ESGFDownloadFile,
-            Query]
+            (vcsPlot, {'abstract': True})]
 
 # FIXME we should probably use uvcdat's code for this...
 for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
