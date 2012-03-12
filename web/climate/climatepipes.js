@@ -109,9 +109,10 @@ var climatePipes = {
 
       vtPlugin.Asyncexecute(function(result){
       	  alert("FINISHED!");
-       	  var resultArr = result.split("\n", 2);
-      	  if (resultArr[0] == "Content-Type: text/plain") {
-      	      resultsPanel.innerHTML = resultArr[1];
+       	  var resultArr = result.split("\n");
+      	  if (resultArr[0] == "Content-Type: text/plain" ||
+	      resultArr[0] == "Content-Type: text/html") {
+      	      resultsPanel.innerHTML = resultArr.slice(1).join("\n");
       	  } else if (resultArr[0] == "Content-Type: image/png" || 
       		     resultArr[0] == "Content-Type: image/jpg") {
       	      resultsPanel.innerHTML = "<img src=\"" + resultArr[1] + "\">";
