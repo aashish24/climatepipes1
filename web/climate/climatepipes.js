@@ -363,7 +363,7 @@ function overlayImage( filename )
   // \NOTE Hard coded bounds for now
   var imageBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(-89.9999,-179.9999),
-      new google.maps.LatLng(-89.9999,-179.9999));
+      new google.maps.LatLng( 89.9999, 179.9999));
 
   // \NOTE Hard coded base URL for now
   var imageUrl =  'http://localhost:8080' + '/' + filename;
