@@ -348,6 +348,8 @@ function initResultMap()
   }
 
   var resultMapElem = $("#result-map");
+  document.getElementById("result-map").style.height='100%';
+  document.getElementById("result-map").style.width='100%';
   resultMap = new google.maps.Map(resultMapElem[0], settings);
 }
 
