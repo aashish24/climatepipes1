@@ -69,7 +69,7 @@ class WebConfigSink(PythonSource):
         output_fname = os.path.join(web_out_dir,
                                     'vt_%s%s' % (uuid.uuid4().hex, suffix))
         shutil.copyfile(fname, os.path.join(web_server_path, output_fname))
-        return output_fname
+        return "/" + output_fname
 
     def compute(self):
         contentType = self.forceGetInputFromPort("contentType", None)
