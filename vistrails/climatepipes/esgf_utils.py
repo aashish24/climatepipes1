@@ -10,6 +10,7 @@ import time
 import synonyms
 import variable_score
 import os.path
+import sys
 
 from ndg.httpsclient.utils import open_url, Configuration
 from ndg.httpsclient import ssl_context_util
@@ -130,7 +131,7 @@ def makeESGFSearchURL(url,project,searchString):
 
     indexNode = getIndexNode(url)
     if(indexNode == "localhost" or indexNode== "kitware.com"):
-        return "http://localhost/ClimatePipes/index.xml"
+        return "http://localhost:8080/Climate/index.xml"
     else:
         return url+'/esg-search/search?project='+project+'&index_node='+indexNode+q
 
