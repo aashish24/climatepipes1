@@ -230,7 +230,7 @@
       function initMap() {
           var latlng = new google.maps.LatLng(43, -89);
           var settings = {
-              zoom: 4,
+              zoom: 5,
               center: latlng,
               mapTypeControl: true,
               mapTypeControlOptions: {
@@ -258,7 +258,6 @@
 
           google.maps.event.addListener(map, 'mousemove', function(mEvent) {
               latlng2 = mEvent.latLng;
-              console.log(mEvent);
               showRect();
           });
 
@@ -279,6 +278,7 @@
               var lng2 = latlng2.lng();
               var minLng = lng1<lng2?lng1:lng2;
               var maxLng = lng1<lng2?lng2:lng1;
+
               boundsElement = document.getElementById('bounds');
               boundsElement.value = minLat + ',' + maxLat + ',' + minLng + ',' + maxLng;
           });
@@ -291,9 +291,27 @@
                       map: map
                   });
               }
-              var latLngBounds = new google.maps.LatLngBounds(latlng1, latlng2);
+              // \NOTE Code duplication
+              var lat1 = latlng1.lat();
+              var lat2 = latlng2.lat();
+              var minLat = lat1<lat2?lat1:lat2;
+              var maxLat = lat1<lat2?lat2:lat1;
+              var lng1 = latlng1.lng();
+              var lng2 = latlng2.lng();
+              var minLng = lng1<lng2?lng1:lng2;
+              var maxLng = lng1<lng2?lng2:lng1;
+
+              var minlatlng = new google.maps.LatLng(minLat,minLng);
+              var maxlatlng = new google.maps.LatLng(maxLat,maxLng);
+
+              var latLngBounds = new google.maps.LatLngBounds(minlatlng, maxlatlng);
               rect.setBounds(latLngBounds);
           }
+      }
+
+      function clearRect() {
+        rect.setBounds(new google.maps.LatLngBounds(new google.maps.LatLng(0,0),
+          new google.maps.LatLng(0,0)));
       }
 
       function clearForm() {
@@ -303,6 +321,7 @@
         date2.value = 'To (mm-dd-yy)';
         bounds = document.getElementById('bounds');
         bounds.value = 'Region (minLat,maxLat,minLng,maxLng)';
+        clearRect();
       }
     </script>
 
