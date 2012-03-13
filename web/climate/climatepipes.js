@@ -79,8 +79,28 @@ var climatePipes = {
     
     this.editor = new climatePipes.WiringEditor(this.language);
 
+    // add listener for right panel resizing to manually resize maps and data table
+    this.editor.layout.getUnitByPosition("right").subscribe("widthChange",  this.resizeMapAndTable);
+
     // Open the infos panel
     editor.accordionView.openPanel(2);
+  },
+
+  resizeMapAndTable: function(event) {
+    if(listView.hasOwnProperty('dataTable') && typeof listView.dataTable != "undefined") {
+      var diff = event.newValue - listView.dataTable.getTableEl().offsetWidth;
+
+      var urlCol = listView.dataTable.getColumn("url");
+
+      if(listView.defaultUrlWidth == 0)
+	listView.defualtUrlWidth = urlCol.getThEl().offsetWidth;
+
+      if(urlCol.getThEl().offsetWidth + diff < listView.defaultUrlWidth)
+	urlCol.getThEl().style.width = listView.defaultUrlWidth;
+      else
+	urlCol.getThEl().style.width = urlCol.getThEl().offsetWidth + diff + "px";
+    }
+
   },
   
   /**
@@ -127,6 +147,7 @@ var climatePipes = {
 	      resultlist.innerHTML='<div id="listViewTable"></div>';
 	      listView.Data = files;
 	      BuildDataTable();
+	      this.resizeMapAndTable({newValue: this.editor.layout.getUnitByPosition("right").getSizes().body.w});
 	  }
       	  paraview.disconnect();
 	  }, workflowxml);
@@ -227,34 +248,40 @@ var climatePipes = {
     },
 
   testing: function() {
-	/* Testing module and wire creation */
-	var modules = VisualizePipelineConfig.containers;
-	modules[1].fields[0].inputParams.value = 'someurl';
-	modules[1].fields[1].inputParams.value = 'somevarname';
-	var wires = VisualizePipelineConfig.wires;
-	for(var i in modules)
-	    this.editor.layer.addContainer(modules[i]);
-	for(var j in wires)
-	    this.editor.layer.addWire(wires[j]);
+    /* Testing module and wire creation */
+    // var modules = VisualizePipelineConfig.containers;
+    // modules[1].fields[0].inputParams.value = 'someurl';
+    // modules[1].fields[1].inputParams.value = 'somevarname';
+    // var wires = VisualizePipelineConfig.wires;
+    // for(var i in modules)
+    //     this.editor.layer.addContainer(modules[i]);
+    // for(var j in wires)
+    //     this.editor.layer.addWire(wires[j]);
 
 
-	/* Testing List View */
-	// var resultsPanel = document.getElementById("result-list");
-	// resultsPanel.innerHTML='<div id="listViewTable"></div>';
-	// listView.Data = [
-        //    {'url':'http://www.google.com/somereallylongfilenamefile.nc', 
-	//     	    'var':[{'rank':1.0,'name':'North Atlantic Draft','short_name':'nad'}, 
-	//          {'rank':1.2,'name':'South Atlantic Draft','short_name':'sad'}],
-	//     'rank': 1.5, 
-	//     'Variable':'nad', 
-	//     'Id':0,
-	//     'Visualize':'Visualize',
-	//     'randomotherthing':'withval'}];
-	// listView.varOptions = [[{label:'Lable1', value:'val1'},
-        //     {label:'Lable2', value:'val2'},
-        //     {label:'Lable3', value:'val3'}]];
-	// BuildDataTable();
-    }
+    /* Testing List View */
+    var resultsPanel = document.getElementById("result-list");
+    resultsPanel.innerHTML='<div id="listViewTable"></div>';
+    var testData =
+      {'url':'http://www.google.com/somereallylongfilenamefile.nc', 
+       'var':[{'rank':1.0,'name':'North Atlantic Draft','short_name':'nad'}, 
+	      {'rank':1.2,'name':'South Atlantic Draft','short_name':'sad'}],
+       'rank': 1.5, 
+       'Variable':'nad', 
+       'Id':0,
+       'Visualize':'Visualize',
+       'randomotherthing':'withval'};
+
+    listView.Data = [];
+    for(var i = 0; i < 25; i++)
+      listView.Data.push(testData);
+
+    listView.varOptions = [[{label:'Lable1', value:'val1'},
+			    {label:'Lable2', value:'val2'},
+			    {label:'Lable3', value:'val3'}]];
+    BuildDataTable();	      
+    this.resizeMapAndTable({newValue: this.editor.layout.getUnitByPosition("right").getSizes().body.w});
+  }
 };
 
 /**
@@ -280,8 +307,8 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      xmlButton.on("click", climatePipes.xml, climatePipes, true);
      var clrButton = new YAHOO.widget.Button({ label:"Clear", id:"WiringEditor-clrButton", container: toolbar });
      clrButton.on("click", climatePipes.clear, climatePipes, true);
-     //var tstButton = new YAHOO.widget.Button({ label:"TestPipelineCreation", id:"WiringEditor-tstButton", container: toolbar });
-     //tstButton.on("click", climatePipes.testing, climatePipes, true);
+     // var tstButton = new YAHOO.widget.Button({ label:"TestPipelineCreation", id:"WiringEditor-tstButton", container: toolbar });
+     // tstButton.on("click", climatePipes.testing, climatePipes, true);
    }
 });
 
@@ -406,10 +433,10 @@ function BuildDataTable() {
     };
 
     var columnDefs = 
-	[{key:"Id", formatter:"number"},
-	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink},
-	 {key:"Variable", formatter:"variableDD"},
-	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton}];
+	[{key:"Id", formatter:"number", resizeable:true},
+	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink, resizeable:true},
+	 {key:"Variable", formatter:"variableDD", resizeable:true},
+	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true}];
 
     listView.dataSource = new YAHOO.util.DataSource(listView.Data);
     listView.dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
@@ -417,8 +444,7 @@ function BuildDataTable() {
 	fields: ['Id', 'url', 'Variable', 'Visualize']
     };
 
-    listView.dataTable = new YAHOO.widget.ScrollingDataTable("listViewTable", columnDefs, listView.dataSource, {
-							       width: "640px",height:"490px"});
+    listView.dataTable = new YAHOO.widget.DataTable("listViewTable", columnDefs, listView.dataSource);
 	
     listView.dataTable.subscribe("buttonClickEvent", function(oArgs) {
 	    var oRec = this.getRecord(oArgs.target);
@@ -435,6 +461,8 @@ function BuildDataTable() {
 
     // add a listener to drop down changed on table
     YAHOO.util.Event.delegate(listView.dataTable.getTbodyEl(), "change", variableDropDownChanged, "select");
+
+  listView.defaultUrlWidth = 0;
 };
 
 var ESGFSourceConfig = {"fields":[{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"host","label":"host"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:Integer","type":"string","inputParams":{"required":true,"name":"port","label":"port"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"user","label":"user"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"password","label":"password"}}],"terminals":[{"direction":[0,-1],"name":"host","offsetPosition":{"top":-15,"left":64},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"port","offsetPosition":{"top":-15,"left":128},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:Integer)","allowedTypes":["o(edu.utah.sci.vistrails.basic:Integer)"]}},{"direction":[0,-1],"name":"user","offsetPosition":{"top":-15,"left":192},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"password","offsetPosition":{"top":-15,"left":256},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,1],"name":"source","offsetPosition":{"bottom":-15,"left":160},"ddConfig":{"type":"o(org.vistrails.climatepipes:cpSource)","allowedTypes":["i(org.vistrails.climatepipes:cpSource)","i(edu.utah.sci.vistrails.basic:Module)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[20,20],"title":"ESGFSource"};
