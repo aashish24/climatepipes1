@@ -22,6 +22,7 @@ if(typeof http_modules == 'object') {
 
 function manageError(error) {
     // Some message 
+    resultmap.innerHTML = '';
     alert(error);
     return true; // Propagate the error
 }
@@ -64,7 +65,7 @@ var climatePipes = {
       ]
     },
     // List of node types definition
-    modules: vt_modules,
+    modules: vt_modules
   },
   /**
    * @method init
@@ -91,10 +92,11 @@ var climatePipes = {
       var jsonObject = this.editor.getValue();
       var workflowxml = json2workflowxml(jsonObject.working);
 
-      var resultsPanel = document.getElementById("right");
+      var resultmap = document.getElementById("result-map");
+      var resultlist = document.getElementById("result-list");
 
       // show progress wheel gif
-      resultsPanel.innerHTML = '<div id="wheel"></div>';
+      resultmap.innerHTML = '<div class="busy-wait"></div>';
 
       var serverUrl = "/PWService";
       var paraview = new Paraview(serverUrl);
@@ -102,18 +104,18 @@ var climatePipes = {
       paraview.createSession("ClimatePipes", "Executing Vistrails Workflow...", "default");
       var vtPlugin = paraview.getPlugin("vt_plugin");
       vtPlugin.Asyncexecute(function(result){
+	  resultmap.innerHTML = '';
        	  var resultArr = result.split("\n", 2);
       	  if (resultArr[0] == "Content-Type: text/plain") {
-      	      resultsPanel.innerHTML = resultArr[1];
+      	      restulmap.innerHTML = resultArr[1];
       	  } else if (resultArr[0] == "Content-Type: image/png" || 
       		     resultArr[0] == "Content-Type: image/jpg") {
-      	      resultsPanel.innerHTML = "<img src=\"" + resultArr[1] + "\">";
+	      overlayImage(resultArr[1]);
+      	      //resultmap.innerHTML = "<img src=\"" + resultArr[1] + "\">";
       	  } 
 
       	  if (resultArr[0] == "Content-Type: application/json") {
-	      resultsPanel.style.height='100%';
-	      document.getElementById("result-map").style.height='0%';
-	      files = YAHOO.lang.JSON.parse(resultArr[1]);
+	      var files = YAHOO.lang.JSON.parse(resultArr[1]);
 	      for(var i = 0; i < files.length; ++i) {
 		  if(files[i].var.length > 0)
 		      files[i].Variable = files[i].var[0].short_name;
@@ -122,7 +124,7 @@ var climatePipes = {
 		  files[i].Id = i;
 		  files[i].Visualize = "Visualize"; //placeholder for the button
 	      }
-	      resultsPanel.innerHTML='<div id="listViewTable"></div>';
+	      resultlist.innerHTML='<div id="listViewTable"></div>';
 	      listView.Data = files;
 	      BuildDataTable();
 	  }
@@ -164,7 +166,7 @@ var climatePipes = {
 	this.editor.layer.addWire(wire0_1_source_source);
 	this.editor.layer.addWire(wire1_2_query_query);
 
-	this.run()
+	this.run();
     },
 
   googleMapSubmit: function() {
@@ -217,7 +219,7 @@ var climatePipes = {
 	this.editor.layer.addWire(wire0_1_source_source);
 	this.editor.layer.addWire(wire1_2_query_query);
 
-	this.run()
+	this.run();
     },
 
   clear: function() {
@@ -232,12 +234,12 @@ var climatePipes = {
 	var wires = VisualizePipelineConfig.wires;
 	for(var i in modules)
 	    this.editor.layer.addContainer(modules[i]);
-	for(var i in wires)
-	    this.editor.layer.addWire(wires[i]);
+	for(var j in wires)
+	    this.editor.layer.addWire(wires[j]);
 
 
 	/* Testing List View */
-	// var resultsPanel = document.getElementById("right");
+	// var resultsPanel = document.getElementById("result-list");
 	// resultsPanel.innerHTML='<div id="listViewTable"></div>';
 	// listView.Data = [
         //    {'url':'http://www.google.com/somereallylongfilenamefile.nc', 
@@ -252,7 +254,7 @@ var climatePipes = {
         //     {label:'Lable2', value:'val2'},
         //     {label:'Lable3', value:'val3'}]];
 	// BuildDataTable();
-    },	
+    }
 };
 
 /**
@@ -345,9 +347,11 @@ function initResultMap()
           style: google.maps.NavigationControlStyle.SMALL
       },
       mapTypeId: google.maps.MapTypeId.SATELLITE
-  }
+  };
 
   var resultMapElem = $("#result-map");
+  //document.getElementById("result-map").style.height='100%';
+  //document.getElementById("result-map").style.width='100%';
   resultMap = new google.maps.Map(resultMapElem[0], settings);
 }
 
@@ -361,7 +365,7 @@ function overlayImage( filename )
   // \NOTE Hard coded bounds for now
   var imageBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(-89.9999,-179.9999),
-      new google.maps.LatLng(-89.9999,-179.9999));
+      new google.maps.LatLng( 89.9999, 179.9999));
 
   // \NOTE Hard coded base URL for now
   var imageUrl =  'http://localhost:8080' + '/' + filename;
@@ -413,7 +417,8 @@ function BuildDataTable() {
 	fields: ['Id', 'url', 'Variable', 'Visualize']
     };
 
-    listView.dataTable = new YAHOO.widget.DataTable("listViewTable", columnDefs, listView.dataSource);
+    listView.dataTable = new YAHOO.widget.ScrollingDataTable("listViewTable", columnDefs, listView.dataSource, {
+							       width: "640px",height:"490px"});
 	
     listView.dataTable.subscribe("buttonClickEvent", function(oArgs) {
 	    var oRec = this.getRecord(oArgs.target);

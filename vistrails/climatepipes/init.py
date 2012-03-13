@@ -349,8 +349,53 @@ class QueryToJSON(Module):
         self.setResult('json', jsonstr)
 
     _input_ports = [('query', "(%s:cpQuery)" % identifier)]
-    
     _output_ports = [('json', "(edu.utah.sci.vistrails.basic:String)")]
+
+class KitwareSource(cpSource):
+    '''
+    KitwareSource is used to login to ESGF and to download files
+    '''
+    def compute(self):
+        host = self.forceGetInputFromPort("host", "pcmdi3.llnl.gov")
+        port = self.forceGetInputFromPort("port", 2119)
+        user = self.forceGetInputFromPort("user", "nix")
+        password = self.forceGetInputFromPort("password", "2pw4kw")
+
+        # NOTE: On server just create one and use that all the time
+        keyCertFile = self.interpreter.filePool.create_file(suffix='.pem')
+
+        result = esgf_utils.login(host, port, user, password, keyCertFile.name)
+        if result != keyCertFile.name:
+            keyCertFile.name = result
+            keyCertFile.upToDate = True
+
+        self._keyCertFile = keyCertFile
+
+        self.setResult("source", self)
+
+    def queryFiles(self, query):
+        url = 'http://localhost'
+        project = 'CMIP5'
+        results = esgf_utils.fetchData(
+            esgf_utils.makeESGFSearchURL(url, project, query) ,query);
+        return results
+
+    def download(self, files):
+        datalist = []
+        for f in files:
+            tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
+            if(esgf_utils.httpDownloadFile(self._keyCertFile.name, f["url"], tmpfile)):
+                cdms = CDMSVariable()
+                cdms.var = vcs_util.get_variable(tmpfile, f["var"][0]["short_name"])
+                datalist[len(datalist):] = [cdms]
+            else:
+                print "Error downloading file %s" % f["url"]
+        return datalist 
+
+    _output_ports = [("source", "(%s:cpSource)" % identifier)]
+
+_modules = [KitwareSource,
+            (cpSource, {'abstract': True})]
 
 # ----------------------------------------------------------------------Modules
 _modules = [WebSink, 
@@ -363,6 +408,7 @@ _modules = [WebSink,
             QueryToJSON,
             (cpSource, {'abstract': True}),
             ESGFSource,
+            KitwareSource,
             ESGFSearch,
             ESGFDownloadFile,
             (vcsPlot, {'abstract': True})]

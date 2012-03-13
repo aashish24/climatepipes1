@@ -146,6 +146,41 @@ var cpsimplified_modules = [
  {
   "category": "org-vistrails-climatepipes", 
   "container": {
+   "fields": [], 
+   "terminals": [
+    {
+     "direction": [
+      0, 
+      1
+     ], 
+     "name": "source", 
+     "offsetPosition": {
+      "bottom": -15, 
+      "left": 160.0
+     }, 
+     "ddConfig": {
+      "type": "o(org.vistrails.climatepipes:cpSource)", 
+      "allowedTypes": [
+       "i(org.vistrails.climatepipes:cpSource)", 
+       "i(edu.utah.sci.vistrails.basic:Module)"
+      ]
+     }
+    }
+   ], 
+   "vt": {
+    "cache": 1, 
+    "namespace": "", 
+    "version": "0.0.1", 
+    "package": "org.vistrails.climatepipes"
+   }, 
+   "xtype": "climatePipes.Container", 
+   "icon": "wireit/res/icons/application_edit.png"
+  }, 
+  "name": "KitwareSource"
+ }, 	
+ {
+  "category": "org-vistrails-climatepipes", 
+  "container": {
    "fields": [
     {
      "alias": "", 
