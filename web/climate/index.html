@@ -309,6 +309,11 @@
           }
       }
 
+      function clearRect() {
+        rect.setBounds(new google.maps.LatLngBounds(new google.maps.LatLng(0,0),
+          new google.maps.LatLng(0,0)));
+      }
+
       function clearForm() {
         date1 = document.getElementById('date1');
         date1.value = 'From (mm-dd-yy)';
@@ -316,6 +321,7 @@
         date2.value = 'To (mm-dd-yy)';
         bounds = document.getElementById('bounds');
         bounds.value = 'Region (minLat,maxLat,minLng,maxLng)';
+        clearRect();
       }
     </script>
 
