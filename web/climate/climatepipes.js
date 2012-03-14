@@ -22,7 +22,7 @@ if(typeof http_modules == 'object') {
 
 function manageError(error) {
     // Some message 
-    resultmap.innerHTML = '';
+    climatePipes.busy.hide();
     alert(error);
     return true; // Propagate the error
 }
@@ -83,7 +83,11 @@ var climatePipes = {
     this.editor.layout.getUnitByPosition("right").subscribe("widthChange",  this.resizeMapAndTable);
 
     // Open the infos panel
-    editor.accordionView.openPanel(2);
+    this.editor.accordionView.openPanel(2);
+
+    // init busy modal
+    this.busy = busyWait();
+
   },
 
   resizeMapAndTable: function(event) {
@@ -91,7 +95,10 @@ var climatePipes = {
       google.maps.event.trigger(resultMap, "resize");
 
     if(listView.hasOwnProperty('dataTable') && typeof listView.dataTable != "undefined") {
-      var diff = event.newValue - listView.dataTable.getTableEl().offsetWidth;
+      var newVal = event.newValue;
+      if (newVal == 0)
+	newVal = this.editor.layout.getUnitByPosition("right").getSizes().body.w;
+      var diff = newVal - listView.dataTable.getTableEl().offsetWidth;
 
       var urlCol = listView.dataTable.getColumn("url");
 
@@ -111,16 +118,17 @@ var climatePipes = {
    * @method run
    * @static
    */
-  run: function() {
+  run: function(message) {
+      message = typeof message !== 'undefined' ? message : "Executing Pipeline...";
+      this.busy.setFooter(message);
+      this.busy.show();
+
       var jsonObject = this.editor.getValue();
       var workflowxml = json2workflowxml(jsonObject.working);
 
       var resultmap = document.getElementById("result-map");
       var resultlist = document.getElementById("result-list");
-
-      // show progress wheel gif
-      resultmap.innerHTML = '<div class="busy-wait"></div>';
-
+      
       var serverUrl = "/PWService";
       var paraview = new Paraview(serverUrl);
       paraview.errorListener = window;
@@ -136,24 +144,26 @@ var climatePipes = {
       		     resultArr[0] == "Content-Type: image/jpg") {
 	      overlayImage(resultArr[1]);
       	      //resultmap.innerHTML = "<img src=\"" + resultArr[1] + "\">";
-      	  } 
-
-      	  if (resultArr[0] == "Content-Type: application/json") {
-	      var files = YAHOO.lang.JSON.parse(resultArr[1]);
-	      for(var i = 0; i < files.length; ++i) {
-		  if(files[i].var.length > 0)
-		      files[i].Variable = files[i].var[0].short_name;
-		  else
-		      files[i].Variable = 'unknown';
-		  files[i].Id = i;
-		  files[i].Visualize = "Visualize"; //placeholder for the button
-	      }
-	      resultlist.innerHTML='<div id="listViewTable"></div>';
-	      listView.Data = files;
-	      BuildDataTable();
-	      this.resizeMapAndTable({newValue: this.editor.layout.getUnitByPosition("right").getSizes().body.w});
+      	  } else if (resultArr[0] == "Content-Type: application/json") {
+	    var files = YAHOO.lang.JSON.parse(resultArr[1]);
+	    for(var i = 0; i < files.length; ++i) {
+	      if(files[i].var.length > 0)
+		files[i].Variable = files[i].var[0].short_name;
+	      else
+		files[i].Variable = 'unknown';
+	      files[i].Id = i;
+	      files[i].Visualize = "Visualize"; //placeholder for the button
+	      files[i].DownloadCSV = "DownloadCSV"; //placeholder for the button
+	    }
+	    resultlist.innerHTML='<div id="listViewTable"></div>';
+	    listView.Data = files;
+	    BuildDataTable();
+	    climatePipes.resizeMapAndTable({newValue:0});
+	  } else if (resultArr[0] == "Content-Type: text/csv") {
+	    startCSVDownload(resultArr[1]);
 	  }
       	  paraview.disconnect();
+	  climatePipes.busy.hide();
 	  }, workflowxml);
   },
 
@@ -217,6 +227,30 @@ var climatePipes = {
     this.run();
   },
 
+  createDownloadCSVPipeline: function(url, vari) {
+    this.clear();
+
+    var dataFile = this.getModuleConfig("DataFile"),
+    esgfSource = this.getModuleConfig("ESGFSource"),
+    download = this.getModuleConfig("DownloadCSV");
+
+    esgfSource.position = [20, 20];
+    dataFile.position = [40, 160];
+    download.position = [60, 260];
+
+    dataFile.fields[0].inputParams.value = url;
+    dataFile.fields[1].inputParams.value = vari;
+    
+    this.editor.layer.addContainer(esgfSource);
+    this.editor.layer.addContainer(dataFile);
+    this.editor.layer.addContainer(download);
+    
+    this.editor.layer.addWire(this.wire0_1_source_source);
+    this.editor.layer.addWire(this.wire1_2_query_query);
+
+    this.run();
+  },
+
   googleMapSubmit: function() {
     //determine which source to use
     var elSource = document.getElementById("selectSource");
@@ -273,6 +307,9 @@ var climatePipes = {
     },
 
   testing: function() {
+    /* Test busy modal  */
+    // this.busy.show();
+
     /* Testing module and wire creation */
     this.clear();
 
@@ -308,6 +345,7 @@ var climatePipes = {
        'Variable':'nad', 
        'Id':0,
        'Visualize':'Visualize',
+       'DownloadCSV':'DownloadCSV',
        'randomotherthing':'withval'};
 
     listView.Data = [];
@@ -330,16 +368,6 @@ var climatePipes = {
     iframe.src = 'tmp/test.csv';
     iframe.style.display = "none";
     document.body.appendChild(iframe);
-
-    /*
-    var callback = {
-      success: function(o) {alert("success");},
-      failure: function(o) {alert("failure");},
-      argument: args
-    };
-
-    YAHOO.util.Connect.asyncRequest('GET','tmp/vt_cff77b203877472aa85c86d5987ccc07.png', callback);
-     */
   }
 };
 
@@ -366,10 +394,10 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      xmlButton.on("click", climatePipes.xml, climatePipes, true);
      var clrButton = new YAHOO.widget.Button({ label:"Clear", id:"WiringEditor-clrButton", container: toolbar });
      clrButton.on("click", climatePipes.clear, climatePipes, true);
-     var tstButton = new YAHOO.widget.Button({ label:"TestDataTableMap", id:"WiringEditor-tstButton", container: toolbar });
-     tstButton.on("click", climatePipes.testing, climatePipes, true);
-     var tstDownload = new YAHOO.widget.Button({ label:"TestDownload", id:"WiringEditor-dnlButton", container: toolbar });
-     tstDownload.on("click", climatePipes.testDownload, climatePipes, true);
+     // var tstButton = new YAHOO.widget.Button({ label:"TestDataTableMap", id:"WiringEditor-tstButton", container: toolbar });
+     // tstButton.on("click", climatePipes.testing, climatePipes, true);
+     // var tstDownload = new YAHOO.widget.Button({ label:"TestDownload", id:"WiringEditor-dnlButton", container: toolbar });
+     // tstDownload.on("click", climatePipes.testDownload, climatePipes, true);
    }
 });
 
@@ -497,12 +525,13 @@ function BuildDataTable() {
 	[{key:"Id", formatter:"number", resizeable:true},
 	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink, resizeable:true},
 	 {key:"Variable", formatter:"variableDD", resizeable:true},
-	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true}];
+	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true},
+	 {key:"DownloadCSV", label: "DownloadCSV", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true}];
 
     listView.dataSource = new YAHOO.util.DataSource(listView.Data);
     listView.dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
     listView.dataSource.responseSchema = {
-	fields: ['Id', 'url', 'Variable', 'Visualize']
+	fields: ['Id', 'url', 'Variable', 'Visualize', 'DownloadCSV']
     };
 
     listView.dataTable = new YAHOO.widget.DataTable("listViewTable", columnDefs, listView.dataSource);
@@ -511,7 +540,11 @@ function BuildDataTable() {
 	    var oRec = this.getRecord(oArgs.target);
 	    var url = oRec.getData("url");
 	    var vari = oRec.getData("Variable");
-	    climatePipes.createVisualizePipeline(url, vari);
+	    if (oArgs.target.innerText == "Visualize")
+	      climatePipes.createVisualizePipeline(url, vari);
+	    if (oArgs.target.innerText == "DownloadCSV")
+	      climatePipes.createDownloadCSVPipeline(url, vari);
+
 	});
 
     var variableDropDownChanged = function(evt) {
@@ -619,4 +652,32 @@ function json2workflowxml(json, newLine, indent) {
     }
     result+="</workflow>" + newLine;
     return result;
+}
+
+function startCSVDownload(url) {
+  //generate a hidden iframe and make it download the returned URL
+  var iframe = document.createElement("iframe");
+  iframe.src = url;
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+}
+
+function busyWait() {
+  modalDialog = new YAHOO.widget.SimpleDialog(
+    "Please wait...",
+    {  width: "300px",
+       fixedcenter: true,
+       modal:true,
+       visible: false,
+       draggable: true,
+       close: false,
+       icon: null,
+       constraintoviewport: true,
+       buttons: []
+    }
+  );
+  modalDialog.setHeader("Please wait...");
+  modalDialog.setBody('<div class="busy-wait"></div>');
+  modalDialog.render(document.body);
+  return modalDialog;
 }
