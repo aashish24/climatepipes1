@@ -128,9 +128,10 @@ var climatePipes = {
       var vtPlugin = paraview.getPlugin("vt_plugin");
       vtPlugin.Asyncexecute(function(result){
 	  resultmap.innerHTML = '';
-       	  var resultArr = result.split("\n", 2);
-      	  if (resultArr[0] == "Content-Type: text/plain") {
-      	      restulmap.innerHTML = resultArr[1];
+       	  var resultArr = result.split("\n");
+      	  if (resultArr[0] == "Content-Type: text/plain" ||
+	      resultArr[0] == "Content-Type: text/html") {
+      	      resultmap.innerHTML = resultArr.slice(1).join("\n");
       	  } else if (resultArr[0] == "Content-Type: image/png" || 
       		     resultArr[0] == "Content-Type: image/jpg") {
 	      overlayImage(resultArr[1]);

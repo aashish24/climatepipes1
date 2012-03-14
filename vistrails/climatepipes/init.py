@@ -1,9 +1,11 @@
 import os, sys
 import shutil
+import urllib
 import uuid
 
 from core.modules.vistrails_module import Module, ModuleError
-from core.modules.basic_modules import Constant, File, String, Integer, List
+from core.modules.basic_modules import Constant, File, String, Integer, List, \
+    PythonSource
 import core.modules.module_registry
 
 from identifiers import *
@@ -55,6 +57,27 @@ class WebSink(Module):
             print 'Content-Type: %s' % contentType
             print strValue,
 
+class WebConfigSink(PythonSource):
+    _input_ports = [("contentType", "(edu.utah.sci.vistrails.basic:String)")]
+    def push_to_web(self, fname):
+        if isinstance(fname, File):
+            fname = fname.name
+        if not os.path.exists(fname):
+            raise ModuleError(self, "Cannot push file '%s' to the web because "
+                              "it does not exist" % fname)
+        suffix = os.path.splitext(fname)[1]
+        output_fname = os.path.join(web_out_dir,
+                                    'vt_%s%s' % (uuid.uuid4().hex, suffix))
+        shutil.copyfile(fname, os.path.join(web_server_path, output_fname))
+        return "/" + output_fname
+
+    def compute(self):
+        contentType = self.forceGetInputFromPort("contentType", None)
+        if contentType is None:
+            contentType = 'text/plain'
+        print "Content-Type: %s" % contentType
+        s = urllib.unquote(str(self.forceGetInputFromPort('source', '')))
+        self.run_code(s, use_input=True, use_output=False)
 
 ##############################################################################
 
@@ -399,6 +422,9 @@ _modules = [KitwareSource,
 
 # ----------------------------------------------------------------------Modules
 _modules = [WebSink, 
+            (WebConfigSink, {'configureWidgetType': 
+                             ('userpackages.climatepipes.widgets', 
+                              'WebConfigSinkWidget')}),
             CDMSVariable, 
             CropImage, 
             (cpQuery, {'abstract': True}),
@@ -422,7 +448,7 @@ for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
     _modules.append(klass)
 
 def initialize():
-    global web_out_dir
+    global web_out_dir, web_server_path
 
     if configuration.check('web_out_dir'):
         web_out_dir = configuration.web_out_dir
