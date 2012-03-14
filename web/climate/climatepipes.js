@@ -320,6 +320,25 @@ var climatePipes = {
     this.resizeMapAndTable({newValue: this.editor.layout.getUnitByPosition("right").getSizes().body.w});
 
     overlayImage('tmp/vt_cff77b203877472aa85c86d5987ccc07.png');
+  },
+
+  testDownload: function() {
+
+    //generate a hidden iframe and make it download the returned URL
+    var iframe = document.createElement("iframe");
+    iframe.src = 'tmp/test.csv';
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    /*
+    var callback = {
+      success: function(o) {alert("success");},
+      failure: function(o) {alert("failure");},
+      argument: args
+    };
+
+    YAHOO.util.Connect.asyncRequest('GET','tmp/vt_cff77b203877472aa85c86d5987ccc07.png', callback);
+     */
   }
 };
 
@@ -348,6 +367,8 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      clrButton.on("click", climatePipes.clear, climatePipes, true);
      var tstButton = new YAHOO.widget.Button({ label:"TestDataTableMap", id:"WiringEditor-tstButton", container: toolbar });
      tstButton.on("click", climatePipes.testing, climatePipes, true);
+     var tstDownload = new YAHOO.widget.Button({ label:"TestDownload", id:"WiringEditor-dnlButton", container: toolbar });
+     tstDownload.on("click", climatePipes.testDownload, climatePipes, true);
    }
 });
 
