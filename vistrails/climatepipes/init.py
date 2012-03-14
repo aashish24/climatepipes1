@@ -1,9 +1,11 @@
 import os, sys
 import shutil
+import urllib
 import uuid
 
 from core.modules.vistrails_module import Module, ModuleError
-from core.modules.basic_modules import Constant, File, String, Integer, List
+from core.modules.basic_modules import Constant, File, String, Integer, List, \
+    PythonSource
 import core.modules.module_registry
 
 from identifiers import *
@@ -55,6 +57,27 @@ class WebSink(Module):
             print 'Content-Type: %s' % contentType
             print strValue,
 
+class WebConfigSink(PythonSource):
+    _input_ports = [("contentType", "(edu.utah.sci.vistrails.basic:String)")]
+    def push_to_web(self, fname):
+        if isinstance(fname, File):
+            fname = fname.name
+        if not os.path.exists(fname):
+            raise ModuleError(self, "Cannot push file '%s' to the web because "
+                              "it does not exist" % fname)
+        suffix = os.path.splitext(fname)[1]
+        output_fname = os.path.join(web_out_dir,
+                                    'vt_%s%s' % (uuid.uuid4().hex, suffix))
+        shutil.copyfile(fname, os.path.join(web_server_path, output_fname))
+        return "/" + output_fname
+
+    def compute(self):
+        contentType = self.forceGetInputFromPort("contentType", None)
+        if contentType is None:
+            contentType = 'text/plain'
+        print "Content-Type: %s" % contentType
+        s = urllib.unquote(str(self.forceGetInputFromPort('source', '')))
+        self.run_code(s, use_input=True, use_output=False)
 
 ##############################################################################
 
@@ -64,9 +87,9 @@ class CDMSVariable(Module):
     _output_ports = [("value", "(%s:CDMSVariable)" % identifier)]
 
     def compute(self):
-        data = self.getInputFromPort("data")
-        var_name = self.getInputFromPort("variable")
-        self.var = vcs_util.get_variable(data.name, var_name)
+        self.data_file = self.getInputFromPort("data")
+        self.var_name = self.getInputFromPort("variable")
+        self.var = vcs_util.get_variable(self.data_file.name, self.var_name)
         self.setResult("value", self)
 
 class ListVariables(Module):
@@ -183,7 +206,10 @@ class ESGFSource(cpSource):
             tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
             if(esgf_utils.httpDownloadFile(self._keyCertFile.name, f["url"], tmpfile)):
                 cdms = CDMSVariable()
-                cdms.var = vcs_util.get_variable(tmpfile, f["var"][0]["short_name"])
+                cdms.data_file = File();
+                cdms.data_file.name = tmpfile;
+                cdms.var_name = f["var"][0]["short_name"]
+                cdms.var = vcs_util.get_variable(tmpfile, cdms.var_name); 
                 datalist[len(datalist):] = [cdms]
             else:
                 print "Error downloading file %s" % f["url"]
@@ -386,7 +412,10 @@ class KitwareSource(cpSource):
             tmpfile = esgf_utils.extractFileNameFromURL(f["url"])
             if(esgf_utils.httpDownloadFile(self._keyCertFile.name, f["url"], tmpfile)):
                 cdms = CDMSVariable()
-                cdms.var = vcs_util.get_variable(tmpfile, f["var"][0]["short_name"])
+                cdms.data_file = File();
+                cdms.data_file.name = tmpfile;
+                cdms.var_name = f["var"][0]["short_name"]
+                cdms.var = vcs_util.get_variable(tmpfile, cdms.var_name)
                 datalist[len(datalist):] = [cdms]
             else:
                 print "Error downloading file %s" % f["url"]
@@ -394,11 +423,25 @@ class KitwareSource(cpSource):
 
     _output_ports = [("source", "(%s:cpSource)" % identifier)]
 
-_modules = [KitwareSource,
-            (cpSource, {'abstract': True})]
+
+
+class NetCDFToCSV(Module):
+    _input_ports = [("variable", "(%s:CDMSVariable)" % identifier)]
+
+    _output_ports = [("csv", "(edu.utah.sci.vistrails.basic:File)")]
+
+    def compute(self):
+        from csvDownload import convertNetCDFToCSV
+        variable = self.getInputFromPort("variable")
+        output = File()
+        output.name = convertNetCDFToCSV(variable.data_file.name, variable.var_name)
+        self.setResult("csv", output)
 
 # ----------------------------------------------------------------------Modules
 _modules = [WebSink, 
+            (WebConfigSink, {'configureWidgetType': 
+                             ('userpackages.climatepipes.widgets', 
+                              'WebConfigSinkWidget')}),
             CDMSVariable, 
             CropImage, 
             (cpQuery, {'abstract': True}),
@@ -406,6 +449,7 @@ _modules = [WebSink,
             DataFile,
             GetFirstQueryData,
             QueryToJSON,
+            NetCDFToCSV,
             (cpSource, {'abstract': True}),
             ESGFSource,
             KitwareSource,
@@ -422,7 +466,7 @@ for plot_type in ['Boxfill', 'Isofill', 'Isoline', 'Meshfill', 'Outfill', \
     _modules.append(klass)
 
 def initialize():
-    global web_out_dir
+    global web_out_dir, web_server_path
 
     if configuration.check('web_out_dir'):
         web_out_dir = configuration.web_out_dir

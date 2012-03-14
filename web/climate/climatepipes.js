@@ -22,7 +22,7 @@ if(typeof http_modules == 'object') {
 
 function manageError(error) {
     // Some message 
-    resultmap.innerHTML = '';
+    climatePipes.busy.hide();
     alert(error);
     return true; // Propagate the error
 }
@@ -79,8 +79,38 @@ var climatePipes = {
     
     this.editor = new climatePipes.WiringEditor(this.language);
 
+    // add listener for right panel resizing to manually resize maps and data table
+    this.editor.layout.getUnitByPosition("right").subscribe("widthChange",  this.resizeMapAndTable);
+
     // Open the infos panel
-    editor.accordionView.openPanel(2);
+    this.editor.accordionView.openPanel(2);
+
+    // init busy modal
+    this.busy = busyWait();
+
+  },
+
+  resizeMapAndTable: function(event) {
+    if(resultMap)
+      google.maps.event.trigger(resultMap, "resize");
+
+    if(listView.hasOwnProperty('dataTable') && typeof listView.dataTable != "undefined") {
+      var newVal = event.newValue;
+      if (newVal == 0)
+	newVal = this.editor.layout.getUnitByPosition("right").getSizes().body.w;
+      var diff = newVal - listView.dataTable.getTableEl().offsetWidth;
+
+      var urlCol = listView.dataTable.getColumn("url");
+
+      if(listView.defaultUrlWidth == 0)
+	listView.defualtUrlWidth = urlCol.getThEl().offsetWidth;
+
+      if(urlCol.getThEl().offsetWidth + diff < listView.defaultUrlWidth)
+	urlCol.getThEl().style.width = listView.defaultUrlWidth + "px";
+      else
+	urlCol.getThEl().style.width = urlCol.getThEl().offsetWidth + diff + "px";
+    }
+
   },
   
   /**
@@ -88,16 +118,17 @@ var climatePipes = {
    * @method run
    * @static
    */
-  run: function() {
+  run: function(message) {
+      message = typeof message !== 'undefined' ? message : "Executing Pipeline...";
+      this.busy.setFooter(message);
+      this.busy.show();
+
       var jsonObject = this.editor.getValue();
       var workflowxml = json2workflowxml(jsonObject.working);
 
       var resultmap = document.getElementById("result-map");
       var resultlist = document.getElementById("result-list");
-
-      // show progress wheel gif
-      resultmap.innerHTML = '<div class="busy-wait"></div>';
-
+      
       var serverUrl = "/PWService";
       var paraview = new Paraview(serverUrl);
       paraview.errorListener = window;
@@ -105,30 +136,34 @@ var climatePipes = {
       var vtPlugin = paraview.getPlugin("vt_plugin");
       vtPlugin.Asyncexecute(function(result){
 	  resultmap.innerHTML = '';
-       	  var resultArr = result.split("\n", 2);
-      	  if (resultArr[0] == "Content-Type: text/plain") {
-      	      restulmap.innerHTML = resultArr[1];
+       	  var resultArr = result.split("\n");
+      	  if (resultArr[0] == "Content-Type: text/plain" ||
+	      resultArr[0] == "Content-Type: text/html") {
+      	      resultmap.innerHTML = resultArr.slice(1).join("\n");
       	  } else if (resultArr[0] == "Content-Type: image/png" || 
       		     resultArr[0] == "Content-Type: image/jpg") {
 	      overlayImage(resultArr[1]);
       	      //resultmap.innerHTML = "<img src=\"" + resultArr[1] + "\">";
-      	  } 
-
-      	  if (resultArr[0] == "Content-Type: application/json") {
-	      var files = YAHOO.lang.JSON.parse(resultArr[1]);
-	      for(var i = 0; i < files.length; ++i) {
-		  if(files[i].var.length > 0)
-		      files[i].Variable = files[i].var[0].short_name;
-		  else
-		      files[i].Variable = 'unknown';
-		  files[i].Id = i;
-		  files[i].Visualize = "Visualize"; //placeholder for the button
-	      }
-	      resultlist.innerHTML='<div id="listViewTable"></div>';
-	      listView.Data = files;
-	      BuildDataTable();
+      	  } else if (resultArr[0] == "Content-Type: application/json") {
+	    var files = YAHOO.lang.JSON.parse(resultArr[1]);
+	    for(var i = 0; i < files.length; ++i) {
+	      if(files[i].var.length > 0)
+		files[i].Variable = files[i].var[0].short_name;
+	      else
+		files[i].Variable = 'unknown';
+	      files[i].Id = i;
+	      files[i].Visualize = "Visualize"; //placeholder for the button
+	      files[i].DownloadCSV = "DownloadCSV"; //placeholder for the button
+	    }
+	    resultlist.innerHTML='<div id="listViewTable"></div>';
+	    listView.Data = files;
+	    BuildDataTable();
+	    climatePipes.resizeMapAndTable({newValue:0});
+	  } else if (resultArr[0] == "Content-Type: text/csv") {
+	    startCSVDownload(resultArr[1]);
 	  }
       	  paraview.disconnect();
+	  climatePipes.busy.hide();
 	  }, workflowxml);
   },
 
@@ -153,108 +188,187 @@ var climatePipes = {
     myPanel.show();
     },
 
+  getModuleConfig: function(name) {
+    for(var i = 0; i < this.language.modules.length; i++)
+      if(this.language.modules[i].name == name) {
+	var config = this.language.modules[i].container;
+	config.title = name;
+	return config;
+      }
+
+    return {};
+  },
+
+  wire0_1_source_source : {"src":{"moduleId":0,"terminal":"source"},"tgt":{"moduleId":1,"terminal":"source"}},
+  wire1_2_query_query : {"src":{"moduleId":1,"terminal":"query"},"tgt":{"moduleId":2,"terminal":"query"}},
+
+
   createVisualizePipeline: function(url, vari) {
-	this.clear();
+    this.clear();
 
-	DataFileConfig.fields[0].inputParams.value = url;
-	DataFileConfig.fields[1].inputParams.value = vari;
+    var dataFile = this.getModuleConfig("DataFile"),
+    esgfSource = this.getModuleConfig("ESGFSource"),
+    visualize = this.getModuleConfig("Visualize");
 
-	this.editor.layer.addContainer(ESGFSourceConfig);
-	this.editor.layer.addContainer(DataFileConfig);
-	this.editor.layer.addContainer(VisualizeConfig);
+    esgfSource.position = [20, 20];
+    dataFile.position = [40, 160];
+    visualize.position = [60, 260];
 
-	this.editor.layer.addWire(wire0_1_source_source);
-	this.editor.layer.addWire(wire1_2_query_query);
+    dataFile.fields[0].inputParams.value = url;
+    dataFile.fields[1].inputParams.value = vari;
+    
+    this.editor.layer.addContainer(esgfSource);
+    this.editor.layer.addContainer(dataFile);
+    this.editor.layer.addContainer(visualize);
+    
+    this.editor.layer.addWire(this.wire0_1_source_source);
+    this.editor.layer.addWire(this.wire1_2_query_query);
 
-	this.run();
-    },
+    this.run();
+  },
+
+  createDownloadCSVPipeline: function(url, vari) {
+    this.clear();
+
+    var dataFile = this.getModuleConfig("DataFile"),
+    esgfSource = this.getModuleConfig("ESGFSource"),
+    download = this.getModuleConfig("DownloadCSV");
+
+    esgfSource.position = [20, 20];
+    dataFile.position = [40, 160];
+    download.position = [60, 260];
+
+    dataFile.fields[0].inputParams.value = url;
+    dataFile.fields[1].inputParams.value = vari;
+    
+    this.editor.layer.addContainer(esgfSource);
+    this.editor.layer.addContainer(dataFile);
+    this.editor.layer.addContainer(download);
+    
+    this.editor.layer.addWire(this.wire0_1_source_source);
+    this.editor.layer.addWire(this.wire1_2_query_query);
+
+    this.run();
+  },
 
   googleMapSubmit: function() {
-	//determine which source to use
-	var elSource = document.getElementById("selectSource");
-	var source = elSource.options[elSource.selectedIndex].text;
+    //determine which source to use
+    var elSource = document.getElementById("selectSource");
+    var source = elSource.options[elSource.selectedIndex].text;
 
-	var keywords = document.getElementById("search_text_input").value;
-	var from     = document.getElementById("date1").value;
-	var to       = document.getElementById("date2").value;
-	var location = document.getElementById("bounds").value;
-	var numitems = document.getElementById("numitems").value;
+    var keywords = document.getElementById("search_text_input").value;
+    var from     = document.getElementById("date1").value;
+    var to       = document.getElementById("date2").value;
+    var location = document.getElementById("bounds").value;
+    var numitems = document.getElementById("numitems").value;
 
-	if(keywords == 'Keywords') keywords = '';
-	if(from == 'From (mm-dd-yy)') from = '';
-	if(to == 'To (mm-dd-yy)') to = '';
-	if(location == 'Region (minLat,maxLat,minLng,maxLng)') location = '';
-	if(numitems == '# of Items') numitems = 1;
+    if(keywords == 'Keywords') keywords = '';
+    if(from == 'From (mm-dd-yy)') from = '';
+    if(to == 'To (mm-dd-yy)') to = '';
+    if(location == 'Region (minLat,maxLat,minLng,maxLng)') location = '';
+    if(numitems == '# of Items') numitems = 1;
 
-	//determine which view to use
-	var elView = document.getElementById("selectView");
-	var view = elView.options[elView.selectedIndex].text;
+    //determine which view to use
+    var elView = document.getElementById("selectView");
+    var view = elView.options[elView.selectedIndex].text;
 
-	this.createQueryPipeline(source, keywords, from, to, location, numitems, view);
-    },
+    this.createQueryPipeline(source, keywords, from, to, location, numitems, view);
+  },
 
   createQueryPipeline: function(source, keywords, from, to, location, numitems, view) {
-	this.clear();
+    this.clear();
 
-	QueryConfig.fields[0].inputParams.value = keywords;
-	QueryConfig.fields[1].inputParams.value = from;
-	QueryConfig.fields[2].inputParams.value = to;
-	QueryConfig.fields[3].inputParams.value = location;
-	QueryConfig.fields[4].inputParams.value = numitems;
+    var sourceConfig = this.getModuleConfig(source),
+    query = this.getModuleConfig("Query"),
+    viewConfig = this.getModuleConfig(view);
 
-	switch(source) {
-	case 'KitwareSource': //TODO: add kitware source once we have one
-	case 'ESGFSource': this.editor.layer.addContainer(ESGFSourceConfig); break;
-	default: this.editor.layer.addContainer(ESGFSourceConfig); break;
-	}
+    sourceConfig.position = [20,20];
+    query.position = [40,160];
+    viewConfig.position = [60,320];
 
-	this.editor.layer.addContainer(QueryConfig);
+    query.fields[0].inputParams.value = keywords;
+    query.fields[1].inputParams.value = from;
+    query.fields[2].inputParams.value = to;
+    query.fields[3].inputParams.value = location;
+    query.fields[4].inputParams.value = numitems;
 
-	switch(view) {
-	case 'ListData': this.editor.layer.addContainer(ListDataConfig); break;
-	case 'Visualize': this.editor.layer.addContainer(VisualizeConfig); break;
-	default: this.editor.layer.addContainer(ListDataConfig); break;
-	}
+    this.editor.layer.addContainer(sourceConfig);
+    this.editor.layer.addContainer(query);
+    this.editor.layer.addContainer(viewConfig);
 
-	this.editor.layer.addWire(wire0_1_source_source);
-	this.editor.layer.addWire(wire1_2_query_query);
+    this.editor.layer.addWire(this.wire0_1_source_source);
+    this.editor.layer.addWire(this.wire1_2_query_query);
 
-	this.run();
-    },
+    this.run();
+  },
 
   clear: function() {
 	this.editor.layer.clear();
     },
 
   testing: function() {
-	/* Testing module and wire creation */
-	var modules = VisualizePipelineConfig.containers;
-	modules[1].fields[0].inputParams.value = 'someurl';
-	modules[1].fields[1].inputParams.value = 'somevarname';
-	var wires = VisualizePipelineConfig.wires;
-	for(var i in modules)
-	    this.editor.layer.addContainer(modules[i]);
-	for(var j in wires)
-	    this.editor.layer.addWire(wires[j]);
+    /* Test busy modal  */
+    // this.busy.show();
 
+    /* Testing module and wire creation */
+    this.clear();
 
-	/* Testing List View */
-	// var resultsPanel = document.getElementById("result-list");
-	// resultsPanel.innerHTML='<div id="listViewTable"></div>';
-	// listView.Data = [
-        //    {'url':'http://www.google.com/somereallylongfilenamefile.nc', 
-	//     	    'var':[{'rank':1.0,'name':'North Atlantic Draft','short_name':'nad'}, 
-	//          {'rank':1.2,'name':'South Atlantic Draft','short_name':'sad'}],
-	//     'rank': 1.5, 
-	//     'Variable':'nad', 
-	//     'Id':0,
-	//     'Visualize':'Visualize',
-	//     'randomotherthing':'withval'}];
-	// listView.varOptions = [[{label:'Lable1', value:'val1'},
-        //     {label:'Lable2', value:'val2'},
-        //     {label:'Lable3', value:'val3'}]];
-	// BuildDataTable();
-    }
+    var sourceConfig = this.getModuleConfig('KitwareSource'),
+    query = this.getModuleConfig("Query"),
+    viewConfig = this.getModuleConfig('Visualize');
+
+    sourceConfig.position = [20,20];
+    query.position = [40,160];
+    viewConfig.position = [60,320];
+
+    query.fields[0].inputParams.value = 'keywords';
+    query.fields[1].inputParams.value = 'from';
+    query.fields[2].inputParams.value = 'to';
+    query.fields[3].inputParams.value = 'location';
+    query.fields[4].inputParams.value = 'numitems';
+
+    this.editor.layer.addContainer(sourceConfig);
+    this.editor.layer.addContainer(query);
+    this.editor.layer.addContainer(viewConfig);
+
+    this.editor.layer.addWire(this.wire0_1_source_source);
+    this.editor.layer.addWire(this.wire1_2_query_query);
+
+    /* Testing List View */
+    var resultsPanel = document.getElementById("result-list");
+    resultsPanel.innerHTML='<div id="listViewTable"></div>';
+    var testData =
+      {'url':'http://www.google.com/extremelylongandincrediblyuselessfilenamefile.nc', 
+       'var':[{'rank':1.0,'name':'North Atlantic Draft','short_name':'nad'}, 
+	      {'rank':1.2,'name':'South Atlantic Draft','short_name':'sad'}],
+       'rank': 1.5, 
+       'Variable':'nad', 
+       'Id':0,
+       'Visualize':'Visualize',
+       'DownloadCSV':'DownloadCSV',
+       'randomotherthing':'withval'};
+
+    listView.Data = [];
+    for(var i = 0; i < 25; i++)
+      listView.Data.push(testData);
+
+    listView.varOptions = [[{label:'Lable1', value:'val1'},
+			    {label:'Lable2', value:'val2'},
+			    {label:'Lable3', value:'val3'}]];
+    BuildDataTable();	      
+    this.resizeMapAndTable({newValue: this.editor.layout.getUnitByPosition("right").getSizes().body.w});
+
+    overlayImage('tmp/vt_cff77b203877472aa85c86d5987ccc07.png');
+  },
+
+  testDownload: function() {
+
+    //generate a hidden iframe and make it download the returned URL
+    var iframe = document.createElement("iframe");
+    iframe.src = 'tmp/test.csv';
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+  }
 };
 
 /**
@@ -280,8 +394,10 @@ YAHOO.lang.extend(climatePipes.WiringEditor, WireIt.WiringEditor, {
      xmlButton.on("click", climatePipes.xml, climatePipes, true);
      var clrButton = new YAHOO.widget.Button({ label:"Clear", id:"WiringEditor-clrButton", container: toolbar });
      clrButton.on("click", climatePipes.clear, climatePipes, true);
-     //var tstButton = new YAHOO.widget.Button({ label:"TestPipelineCreation", id:"WiringEditor-tstButton", container: toolbar });
-     //tstButton.on("click", climatePipes.testing, climatePipes, true);
+     // var tstButton = new YAHOO.widget.Button({ label:"TestDataTableMap", id:"WiringEditor-tstButton", container: toolbar });
+     // tstButton.on("click", climatePipes.testing, climatePipes, true);
+     // var tstDownload = new YAHOO.widget.Button({ label:"TestDownload", id:"WiringEditor-dnlButton", container: toolbar });
+     // tstDownload.on("click", climatePipes.testDownload, climatePipes, true);
    }
 });
 
@@ -368,7 +484,7 @@ function overlayImage( filename )
       new google.maps.LatLng( 89.9999, 179.9999));
 
   // \NOTE Hard coded base URL for now
-  var imageUrl =  'http://localhost:8080' + '/' + filename;
+  var imageUrl=  'http://localhost:8080' + '/' + filename;
   // \TODO Remove later
   alert( imageUrl );
   var myOverlay = new google.maps.GroundOverlay( filename, imageBounds );
@@ -406,25 +522,29 @@ function BuildDataTable() {
     };
 
     var columnDefs = 
-	[{key:"Id", formatter:"number"},
-	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink},
-	 {key:"Variable", formatter:"variableDD"},
-	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton}];
+	[{key:"Id", formatter:"number", resizeable:true},
+	 {key:"url", label: "Filename", formatter:YAHOO.widget.DataTable.formatLink, resizeable:true},
+	 {key:"Variable", formatter:"variableDD", resizeable:true},
+	 {key:"Visualize", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true},
+	 {key:"DownloadCSV", label: "DownloadCSV", formatter:YAHOO.widget.DataTable.formatButton, resizeable:true}];
 
     listView.dataSource = new YAHOO.util.DataSource(listView.Data);
     listView.dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
     listView.dataSource.responseSchema = {
-	fields: ['Id', 'url', 'Variable', 'Visualize']
+	fields: ['Id', 'url', 'Variable', 'Visualize', 'DownloadCSV']
     };
 
-    listView.dataTable = new YAHOO.widget.ScrollingDataTable("listViewTable", columnDefs, listView.dataSource, {
-							       width: "640px",height:"490px"});
+    listView.dataTable = new YAHOO.widget.DataTable("listViewTable", columnDefs, listView.dataSource);
 	
     listView.dataTable.subscribe("buttonClickEvent", function(oArgs) {
 	    var oRec = this.getRecord(oArgs.target);
 	    var url = oRec.getData("url");
 	    var vari = oRec.getData("Variable");
-	    climatePipes.createVisualizePipeline(url, vari);
+	    if (oArgs.target.innerText == "Visualize")
+	      climatePipes.createVisualizePipeline(url, vari);
+	    if (oArgs.target.innerText == "DownloadCSV")
+	      climatePipes.createDownloadCSVPipeline(url, vari);
+
 	});
 
     var variableDropDownChanged = function(evt) {
@@ -435,21 +555,9 @@ function BuildDataTable() {
 
     // add a listener to drop down changed on table
     YAHOO.util.Event.delegate(listView.dataTable.getTbodyEl(), "change", variableDropDownChanged, "select");
+
+  listView.defaultUrlWidth = 0;
 };
-
-var ESGFSourceConfig = {"fields":[{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"host","label":"host"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:Integer","type":"string","inputParams":{"required":true,"name":"port","label":"port"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"user","label":"user"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"password","label":"password"}}],"terminals":[{"direction":[0,-1],"name":"host","offsetPosition":{"top":-15,"left":64},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"port","offsetPosition":{"top":-15,"left":128},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:Integer)","allowedTypes":["o(edu.utah.sci.vistrails.basic:Integer)"]}},{"direction":[0,-1],"name":"user","offsetPosition":{"top":-15,"left":192},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"password","offsetPosition":{"top":-15,"left":256},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,1],"name":"source","offsetPosition":{"bottom":-15,"left":160},"ddConfig":{"type":"o(org.vistrails.climatepipes:cpSource)","allowedTypes":["i(org.vistrails.climatepipes:cpSource)","i(edu.utah.sci.vistrails.basic:Module)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[20,20],"title":"ESGFSource"};
-
-var QueryConfig = {"fields":[{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"Keywords","label":"Keywords"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"From","label":"From"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"To","label":"To"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"Location","label":"Location"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:Integer","type":"string","inputParams":{"required":true,"name":"numitems","label":"numitems"}}],"terminals":[{"direction":[0,-1],"name":"source","offsetPosition":{"top":-15,"left":45.714285714285715},"ddConfig":{"type":"i(org.vistrails.climatepipes:cpSource)","allowedTypes":["o(org.vistrails.climatepipes:cpSource)"]}},{"direction":[0,-1],"name":"Keywords","offsetPosition":{"top":-15,"left":91.42857142857143},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"From","offsetPosition":{"top":-15,"left":137.14285714285714},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"To","offsetPosition":{"top":-15,"left":182.85714285714286},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"Location","offsetPosition":{"top":-15,"left":228.57142857142858},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"numitems","offsetPosition":{"top":-15,"left":274.2857142857143},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:Integer)","allowedTypes":["o(edu.utah.sci.vistrails.basic:Integer)"]}},{"direction":[0,1],"name":"query","offsetPosition":{"bottom":-15,"left":160},"ddConfig":{"type":"o(org.vistrails.climatepipes:cpQuery)","allowedTypes":["i(org.vistrails.climatepipes:cpQuery)","i(edu.utah.sci.vistrails.basic:Module)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[203,177],"title":"Query"};
-
-var DataFileConfig = {"fields":[{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"url","label":"url"}},{"alias":"","vtype":"edu.utah.sci.vistrails.basic:String","type":"string","inputParams":{"required":true,"name":"variable","label":"variable"}}],"terminals":[{"direction":[0,-1],"name":"source","offsetPosition":{"top":-15,"left":80},"ddConfig":{"type":"i(org.vistrails.climatepipes:cpSource)","allowedTypes":["o(org.vistrails.climatepipes:cpSource)"]}},{"direction":[0,-1],"name":"url","offsetPosition":{"top":-15,"left":160},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,-1],"name":"variable","offsetPosition":{"top":-15,"left":240},"ddConfig":{"type":"i(edu.utah.sci.vistrails.basic:String)","allowedTypes":["o(edu.utah.sci.vistrails.basic:String)"]}},{"direction":[0,1],"name":"query","offsetPosition":{"bottom":-15,"left":160},"ddConfig":{"type":"o(org.vistrails.climatepipes:cpQuery)","allowedTypes":["i(org.vistrails.climatepipes:cpQuery)","i(edu.utah.sci.vistrails.basic:Module)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[125,163],"title":"DataFile"};
-
-var VisualizeConfig = {"fields":[],"terminals":[{"direction":[0,-1],"name":"query","offsetPosition":{"top":-15,"left":160},"ddConfig":{"type":"i(org.vistrails.climatepipes:cpQuery)","allowedTypes":["o(org.vistrails.climatepipes:cpQuery)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes.simplified"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[248,270],"title":"Visualize"};
-
-var ListDataConfig = {"fields":[],"terminals":[{"direction":[0,-1],"name":"query","offsetPosition":{"top":-15,"left":160},"ddConfig":{"type":"i(org.vistrails.climatepipes:cpQuery)","allowedTypes":["o(org.vistrails.climatepipes:cpQuery)"]}}],"vt":{"cache":1,"namespace":"","version":"0.0.1","package":"org.vistrails.climatepipes.simplified"},"xtype":"climatePipes.Container","icon":"wireit/res/icons/application_edit.png","position":[400,350],"title":"ListData"};
-
-var wire0_1_source_source = {"src":{"moduleId":0,"terminal":"source"},"tgt":{"moduleId":1,"terminal":"source"}};
-
-var wire1_2_query_query = {"src":{"moduleId":1,"terminal":"query"},"tgt":{"moduleId":2,"terminal":"query"}};
 
 function json2workflowxml(json, newLine, indent) {
     // default params
@@ -544,4 +652,32 @@ function json2workflowxml(json, newLine, indent) {
     }
     result+="</workflow>" + newLine;
     return result;
+}
+
+function startCSVDownload(url) {
+  //generate a hidden iframe and make it download the returned URL
+  var iframe = document.createElement("iframe");
+  iframe.src = url;
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+}
+
+function busyWait() {
+  modalDialog = new YAHOO.widget.SimpleDialog(
+    "Please wait...",
+    {  width: "300px",
+       fixedcenter: true,
+       modal:true,
+       visible: false,
+       draggable: true,
+       close: false,
+       icon: null,
+       constraintoviewport: true,
+       buttons: []
+    }
+  );
+  modalDialog.setHeader("Please wait...");
+  modalDialog.setBody('<div class="busy-wait"></div>');
+  modalDialog.render(document.body);
+  return modalDialog;
 }

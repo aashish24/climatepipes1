@@ -1,0 +1,94 @@
+<vistrail id="" name="" version="1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vistrails.org/vistrail.xsd">
+  <action date="2012-03-13 20:41:39" id="1" prevId="0" session="0" user="benbu">
+    <annotation id="0" key="__description__" value="Copied from pipeline" />
+    <add id="0" objectId="0" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="0" name="GetFirstQueryData" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="1" objectId="0" parentObjId="0" parentObjType="module" what="location">
+      <location id="0" x="-43.6407914764" y="117.674277017" />
+    </add>
+    <add id="2" objectId="1" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="1" name="NetCDFToCSV" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="3" objectId="1" parentObjId="1" parentObjType="module" what="location">
+      <location id="1" x="31.9512937595" y="23.3789954337" />
+    </add>
+    <add id="4" objectId="2" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="2" name="WebConfigSink" namespace="" package="org.vistrails.climatepipes" version="0.0.1" />
+    </add>
+    <add id="5" objectId="0" parentObjId="2" parentObjType="module" what="portSpec">
+      <portSpec defaults="" id="0" labels="" name="csvFile" optional="0" sigstring="(edu.utah.sci.vistrails.basic:File)" sortKey="0" type="input" />
+    </add>
+    <add id="6" objectId="0" parentObjId="2" parentObjType="module" what="function">
+      <function id="0" name="source" pos="0" />
+    </add>
+    <add id="7" objectId="0" parentObjId="0" parentObjType="function" what="parameter">
+      <parameter alias="" id="0" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="print%20self.push_to_web%28csvFile%29" />
+    </add>
+    <add id="8" objectId="2" parentObjId="2" parentObjType="module" what="location">
+      <location id="2" x="103.646879756" y="-72.4748858448" />
+    </add>
+    <add id="9" objectId="3" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="3" name="String" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="10" objectId="1" parentObjId="3" parentObjType="module" what="function">
+      <function id="1" name="value" pos="0" />
+    </add>
+    <add id="11" objectId="1" parentObjId="1" parentObjType="function" what="parameter">
+      <parameter alias="" id="1" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="text/csv" />
+    </add>
+    <add id="12" objectId="3" parentObjId="3" parentObjType="module" what="location">
+      <location id="3" x="-91.9573820396" y="-68.5783866058" />
+    </add>
+    <add id="13" objectId="4" parentObjId="" parentObjType="" what="module">
+      <module cache="1" id="4" name="InputPort" namespace="" package="edu.utah.sci.vistrails.basic" version="1.6" />
+    </add>
+    <add id="14" objectId="2" parentObjId="4" parentObjType="module" what="function">
+      <function id="2" name="name" pos="0" />
+    </add>
+    <add id="15" objectId="2" parentObjId="2" parentObjType="function" what="parameter">
+      <parameter alias="" id="2" name="&lt;no description&gt;" pos="0" type="edu.utah.sci.vistrails.basic:String" val="query" />
+    </add>
+    <add id="16" objectId="4" parentObjId="4" parentObjType="module" what="location">
+      <location id="4" x="-178.459665145" y="229.893455099" />
+    </add>
+    <add id="17" objectId="0" parentObjId="" parentObjType="" what="connection">
+      <connection id="0" />
+    </add>
+    <add id="18" objectId="1" parentObjId="0" parentObjType="connection" what="port">
+      <port id="1" moduleId="1" moduleName="NetCDFToCSV" name="variable" signature="(org.vistrails.climatepipes:CDMSVariable)" type="destination" />
+    </add>
+    <add id="19" objectId="0" parentObjId="0" parentObjType="connection" what="port">
+      <port id="0" moduleId="0" moduleName="GetFirstQueryData" name="value" signature="(org.vistrails.climatepipes:CDMSVariable)" type="source" />
+    </add>
+    <add id="20" objectId="1" parentObjId="" parentObjType="" what="connection">
+      <connection id="1" />
+    </add>
+    <add id="21" objectId="3" parentObjId="1" parentObjType="connection" what="port">
+      <port id="3" moduleId="2" moduleName="WebConfigSink" name="csvFile" signature="(edu.utah.sci.vistrails.basic:File)" type="destination" />
+    </add>
+    <add id="22" objectId="2" parentObjId="1" parentObjType="connection" what="port">
+      <port id="2" moduleId="1" moduleName="NetCDFToCSV" name="csv" signature="(edu.utah.sci.vistrails.basic:File)" type="source" />
+    </add>
+    <add id="23" objectId="2" parentObjId="" parentObjType="" what="connection">
+      <connection id="2" />
+    </add>
+    <add id="24" objectId="5" parentObjId="2" parentObjType="connection" what="port">
+      <port id="5" moduleId="2" moduleName="WebConfigSink" name="contentType" signature="(edu.utah.sci.vistrails.basic:String)" type="destination" />
+    </add>
+    <add id="25" objectId="4" parentObjId="2" parentObjType="connection" what="port">
+      <port id="4" moduleId="3" moduleName="String" name="value" signature="(edu.utah.sci.vistrails.basic:String)" type="source" />
+    </add>
+    <add id="26" objectId="3" parentObjId="" parentObjType="" what="connection">
+      <connection id="3" />
+    </add>
+    <add id="27" objectId="7" parentObjId="3" parentObjType="connection" what="port">
+      <port id="7" moduleId="4" moduleName="InputPort" name="InternalPipe" signature="(edu.utah.sci.vistrails.basic:Variant)" type="source" />
+    </add>
+    <add id="28" objectId="6" parentObjId="3" parentObjType="connection" what="port">
+      <port id="6" moduleId="0" moduleName="GetFirstQueryData" name="query" signature="(org.vistrails.climatepipes:cpQuery)" type="destination" />
+    </add>
+  </action>
+  <annotation id="1" key="__abstraction_origin_uuid__" value="397ef2f8-6d7f-11e1-9152-4061860bd70d" />
+  <annotation id="2" key="__abstraction_uuid__" value="397ef2f8-6d7f-11e1-9152-4061860bd70d" />
+</vistrail>
